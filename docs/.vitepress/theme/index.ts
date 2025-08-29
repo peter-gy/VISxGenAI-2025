@@ -5,6 +5,7 @@ import ReportIframe from "./components/ReportIframe.vue";
 import ReportLink from "./components/ReportLink.vue";
 import GalleryGrid from "./components/GalleryGrid.vue";
 import GalleryCard from "./components/GalleryCard.vue";
+import Link from "./components/Link.vue";
 import "./custom.css";
 import { withBase } from "./utils";
 
@@ -21,7 +22,7 @@ export default {
 		// Register the report components globally
 		app.component("ReportIframe", ReportIframe);
 		app.component("ReportLink", ReportLink);
-
+		app.component("Link", Link);
 		// Register the gallery components globally
 		app.component("GalleryGrid", GalleryGrid);
 		app.component("GalleryCard", GalleryCard);

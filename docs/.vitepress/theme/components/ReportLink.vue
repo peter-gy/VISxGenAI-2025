@@ -1,6 +1,8 @@
 <template>
   <div class="report-controls">
-    <a :href="linkUrl" target="_blank">Open in Full Page ↗</a>
+    <a :href="linkUrl" target="_blank">
+      {{ linkText }}
+    </a>
   </div>
 </template>
 
@@ -12,6 +14,10 @@ const props = defineProps({
 	src: {
 		type: String,
 		required: true,
+	},
+	linkText: {
+		type: String,
+		default: "Open in Full Page ↗",
 	},
 });
 

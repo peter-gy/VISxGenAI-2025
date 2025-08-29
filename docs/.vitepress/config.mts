@@ -45,7 +45,8 @@ export default defineConfig({
 		nav: [
 			{ text: "Overview", link: "/" },
 			{ text: "Report Gallery", link: "/gallery/" },
-			{ text: "Design Principles", link: "/paper/" },
+			{ text: "Principles", link: "/principles/" },
+			{ text: "System Design", link: "/paper/" },
 		],
 
 		sidebar: {
@@ -54,8 +55,12 @@ export default defineConfig({
 				{
 					text: "Project Overview",
 					items: [
-						{ text: "Our Submission", link: "/gallery/vispub-submission" },
+						{
+							text: "Challenge Submission",
+							link: "/gallery/vispub-submission",
+						},
 						{ text: "Explore the Report Gallery", link: "/gallery/" },
+						{ text: "Read our Whitepaper", link: "/paper/" },
 					],
 				},
 			],
@@ -100,6 +105,31 @@ export default defineConfig({
 								{ text: "Iris", link: "/gallery/iris" },
 								{ text: "Mammal Sleep", link: "/gallery/mammal-sleep" },
 							],
+						},
+					],
+				},
+			],
+
+			"/features/": [
+				{
+					text: "Features",
+					collapsed: false,
+					items: [
+						{
+							text: "🔍 Explainability & Trust",
+							link: "/features/explainability-and-trust",
+						},
+						{
+							text: "🧩 Composability & Modularity",
+							link: "/features/composability-and-modularity",
+						},
+						{
+							text: "🎯 Granularity & Agency",
+							link: "/features/granularity-and-agency",
+						},
+						{
+							text: "🧭 Interactive Exploration",
+							link: "/features/interactive-exploration",
 						},
 					],
 				},
