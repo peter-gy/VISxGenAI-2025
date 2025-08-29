@@ -56,10 +56,11 @@ export default defineConfig({
 					text: "Project Overview",
 					items: [
 						{
-							text: "Challenge Submission",
+							text: "Read Challenge Submission",
 							link: "/gallery/vispub-submission",
 						},
 						{ text: "Explore the Report Gallery", link: "/gallery/" },
+						{ text: "See Design Principles in Action", link: "/principles/" },
 						{ text: "Read our Whitepaper", link: "/paper/" },
 					],
 				},
@@ -110,26 +111,26 @@ export default defineConfig({
 				},
 			],
 
-			"/features/": [
+			"/principles/": [
 				{
-					text: "Features",
+					text: "Principles",
 					collapsed: false,
 					items: [
 						{
-							text: "🔍 Explainability & Trust",
-							link: "/features/explainability-and-trust",
-						},
-						{
 							text: "🧩 Composability & Modularity",
-							link: "/features/composability-and-modularity",
+							link: "/principles/composability-and-modularity",
 						},
 						{
-							text: "🎯 Granularity & Agency",
-							link: "/features/granularity-and-agency",
+							text: "🔍 Explainability & Trust",
+							link: "/principles/explainability-and-trust",
 						},
 						{
 							text: "🧭 Interactive Exploration",
-							link: "/features/interactive-exploration",
+							link: "/principles/interactive-exploration",
+						},
+						{
+							text: "🎯 Granularity & Agency",
+							link: "/principles/granularity-and-agency",
 						},
 					],
 				},
