@@ -15,7 +15,10 @@
 			"**/*",
 			"!docs/public/**",
 			"!docs/.vitepress/dist/**",
-			"!**/*.vue"
+			"!**/*.vue",
+			"!dist/**",
+			"!.venv/**",
+			"!*cache*/**"
 		]
 	}
 }
