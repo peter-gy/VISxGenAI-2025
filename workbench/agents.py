@@ -4,7 +4,13 @@ __generated_with = "0.15.1"
 app = marimo.App(width="columns")
 
 
-@app.cell(column=0)
+@app.cell(column=0, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("01"))
+    return
+
+
+@app.cell
 def _(df):
     df
     return
@@ -25,6 +31,11 @@ def _(lm_registry_from_env, load_env, make_session_id):
     return env, lm_registry, session_id
 
 
+@app.function(hide_code=True)
+def agent_diagram_url(id: str):
+    return f"https://peter-gy.github.io/VISxGenAI-2025/assets/agents/{id}.svg"
+
+
 @app.cell
 def _():
     import marimo as mo
@@ -38,7 +49,13 @@ def _():
     return lm_registry_from_env, load_env, make_session_id, mo, read_dataset
 
 
-@app.cell(column=1)
+@app.cell(column=1, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("02"))
+    return
+
+
+@app.cell
 def _(field_refiner_output):
     dict(field_refiner_output)
     return
@@ -66,7 +83,13 @@ def _():
     return (FieldRefinerAgent,)
 
 
-@app.cell(column=2)
+@app.cell(column=2, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("03"))
+    return
+
+
+@app.cell
 def _(dataset_describer_output):
     dict(dataset_describer_output)
     return
@@ -99,7 +122,13 @@ def _():
     return (DatasetDescriberAgent,)
 
 
-@app.cell(column=3)
+@app.cell(column=3, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("04"))
+    return
+
+
+@app.cell
 def _(field_expander_output):
     dict(field_expander_output)
     return
@@ -138,7 +167,13 @@ def _():
     return (FieldExpanderAgent,)
 
 
-@app.cell(column=4)
+@app.cell(column=4, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("05"))
+    return
+
+
+@app.cell
 def _(dataset_profiler_output):
     dict(dataset_profiler_output)
     return
@@ -168,7 +203,13 @@ def _():
     return (DatasetProfilerAgent,)
 
 
-@app.cell(column=5)
+@app.cell(column=5, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("06"))
+    return
+
+
+@app.cell
 def _(insight_planner_output):
     [m.model_dump() for m in insight_planner_output.plan]
     return
@@ -240,7 +281,13 @@ def _():
     return InsightPlanTools, InsightPlannerAgent
 
 
-@app.cell(column=6)
+@app.cell(column=6, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("07"))
+    return
+
+
+@app.cell
 def _(datset_deriver_output):
     materialized_insights = [
         {"goal": ds["goal"]} | dict(zip(("dataset", "sql"), ds["materialize"]()))
@@ -311,7 +358,13 @@ def _():
     return (DatasetDeriverAgent,)
 
 
-@app.cell(column=7)
+@app.cell(column=7, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("08"))
+    return
+
+
+@app.cell
 def _(dataset_publisher_output):
     dict(dataset_publisher_output)
     return
@@ -346,7 +399,13 @@ def _():
     return (DatasetPublisherAgent,)
 
 
-@app.cell(column=8)
+@app.cell(column=8, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("09"))
+    return
+
+
+@app.cell
 def _(dataset_visualizer_output):
     dict(dataset_visualizer_output)
     return
@@ -382,7 +441,13 @@ def _():
     return (DatasetVisualizerAgent,)
 
 
-@app.cell(column=9)
+@app.cell(column=9, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("10"))
+    return
+
+
+@app.cell
 def _(report_narrator_output):
     report_narrator_output.content
     return
@@ -428,7 +493,13 @@ def _():
     return (DataReportNarratorAgent,)
 
 
-@app.cell(column=10)
+@app.cell(column=10, hide_code=True)
+def _(mo):
+    mo.image(agent_diagram_url("11"))
+    return
+
+
+@app.cell
 def _(dataset_reporter_output):
     dict(dataset_reporter_output)
     return

@@ -4,7 +4,13 @@ __generated_with = "0.15.1"
 app = marimo.App(width="columns")
 
 
-@app.cell(column=0)
+@app.cell(column=0, hide_code=True)
+def _(mo):
+    mo.image("https://peter-gy.github.io/VISxGenAI-2025/assets/teaser.svg")
+    return
+
+
+@app.cell
 def _(report_output):
     dict(report_output.artifacts)
     return
