@@ -1,0 +1,2095 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">/* Copyright 2025 Observable, Inc. */
+
+:root {
+  --serif:
+    "Source Serif 4", "Iowan Old Style", "Apple Garamond", "Palatino Linotype", "Times New Roman",
+    "Droid Serif", Times, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --sans-serif:
+    "Inter", -apple-system, BlinkMacSystemFont, "avenir next", avenir, helvetica, "helvetica neue",
+    ubuntu, roboto, noto, "segoe ui", arial, sans-serif;
+  --monospace: "Spline Sans Mono", Menlo, Consolas, monospace;
+  --monospace-font: 14px/1.5 var(--monospace);
+  --max-width: calc(1024px - 4 * 16px); /* max-w-5xl p-4 */
+}
+
+html {
+  font: 17px/1.5 var(--serif);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--theme-background);
+  color: var(--theme-foreground);
+  margin-top: 16px;
+  padding: 16px 24px;
+}
+
+body {
+  margin: auto;
+  max-width: var(--max-width);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--theme-foreground-alt);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  text-wrap: balance;
+}
+
+h2 + p,
+h3 + p,
+h4 + p,
+h2 + table,
+h3 + table,
+h4 + table {
+  margin-top: 0;
+}
+
+.observablehq:first-of-type h1 + h2 {
+  color: var(--theme-foreground);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: normal;
+  margin-bottom: 1rem; /* see h2 ~ p */
+}
+
+a[href] {
+  color: var(--theme-foreground-focus);
+  text-decoration: none;
+}
+
+a[href]:hover,
+a[href]:focus {
+  text-decoration: underline;
+}
+
+pre,
+code,
+tt {
+  font-family: var(--monospace);
+  font-size: 82.35294117%; /* from 17px to 14px */
+}
+
+pre code,
+figcaption code {
+  font-size: inherit;
+}
+
+pre[data-language] {
+  position: relative;
+}
+
+pre[data-language]::before {
+  content: attr(data-language);
+  float: right;
+  margin: -4px -8px -4px -4px;
+  padding: 4px;
+  font-size: 12px;
+  line-height: 21px;
+  color: var(--theme-foreground-muted);
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: 88.235294117%; /* from 17px to 15px */
+}
+
+h2[id] a[href],
+h3[id] a[href] {
+  color: inherit;
+}
+
+pre {
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+}
+
+p,
+table,
+figure,
+figcaption,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.katex-display {
+  max-width: 640px;
+}
+
+blockquote,
+ol,
+ul {
+  max-width: 600px;
+}
+
+blockquote {
+  margin: 1rem 1.5rem;
+}
+
+ul,
+ol {
+  padding-left: 28px;
+}
+
+hr {
+  height: 1px;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border: none;
+  background: no-repeat center/100% 1px
+    linear-gradient(to right, var(--theme-foreground-faintest), var(--theme-foreground-faintest));
+}
+
+pre {
+  background-color: var(--theme-background-alt);
+  border-radius: 4px;
+  margin: 1rem -1rem;
+  /* max-width: 960px; */
+  min-height: 1.5em;
+  padding: 4px 1rem;
+  overflow-x: auto;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+}
+
+input:not([type]),
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="range"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"] {
+  width: 240px;
+}
+
+input,
+canvas,
+button {
+  vertical-align: middle;
+}
+
+button,
+input,
+textarea {
+  accent-color: var(--theme-foreground-focus);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 13px/1.2 var(--sans-serif);
+}
+
+table pre,
+table code,
+table tt {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+th > pre:only-child,
+td > pre:only-child {
+  margin: 0;
+  padding: 0;
+}
+
+th {
+  color: var(--theme-foreground);
+  text-align: left;
+  vertical-align: bottom;
+}
+
+td {
+  color: var(--theme-foreground-alt);
+  vertical-align: top;
+}
+
+th,
+td {
+  padding: 3px 6.5px 3px 0;
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+}
+
+tr:not(:last-child) {
+  border-bottom: solid 1px var(--theme-foreground-faintest);
+}
+
+thead tr {
+  border-bottom: solid 1px var(--theme-foreground-fainter);
+}
+
+figure,
+table {
+  margin: 1rem 0;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figure > h2,
+figure > h3 {
+  font-family: var(--sans-serif);
+}
+
+figure > h2 {
+  font-size: 20px;
+}
+
+figure > h3 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+figcaption {
+  font: small var(--sans-serif);
+  color: var(--theme-foreground-muted);
+}
+
+.observablehq--collapsed,
+.observablehq--expanded.observablehq--inspect a {
+  cursor: pointer;
+}
+
+.observablehq--caret {
+  margin-right: 4px;
+  vertical-align: baseline;
+}
+
+.observablehq--field {
+  text-indent: -1rem;
+  margin-left: 1rem;
+}
+
+.observablehq--inspect {
+  font: var(--monospace-font);
+  overflow-x: auto;
+  white-space: pre;
+  display: block;
+  padding: 2px 0;
+}
+
+.observablehq--inspect.observablehq--import {
+  white-space: normal;
+}
+
+.observablehq--inspect::-webkit-scrollbar {
+  display: none;
+}
+
+.observablehq--error .observablehq--inspect {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.observablehq--string-expand {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 80%;
+  background: var(--theme-background-alt);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.observablehq--keyword {
+  color: var(--syntax-keyword);
+}
+
+.observablehq--index,
+.observablehq--key {
+  color: var(--syntax-definition);
+}
+
+.observablehq--symbol,
+.observablehq--regexp,
+.observablehq--string {
+  color: var(--syntax-string);
+}
+
+.observablehq--null {
+  color: var(--syntax-keyword);
+}
+
+.observablehq--undefined {
+  color: var(--syntax-variable);
+}
+
+.observablehq--prototype-key {
+  color: var(--syntax-comment);
+}
+
+.observablehq--bigint,
+.observablehq--boolean,
+.observablehq--date,
+.observablehq--forbidden,
+.observablehq--number {
+  color: var(--syntax-literal);
+}
+
+.observablehq--error {
+  color: var(--theme-error);
+}
+
+.observablehq--cell {
+  margin: 17px 0;
+  min-height: 1px; /* prevent margin collapse when empty */
+}
+
+.tok-link {
+  color: var(--syntax-link);
+}
+
+.tok-strong {
+  font-weight: 600;
+}
+
+.tok-emphasis {
+  font-style: italic;
+}
+
+.tok-keyword {
+  color: var(--syntax-keyword);
+}
+
+.tok-atom {
+  color: var(--syntax-atom);
+}
+
+.tok-literal {
+  color: var(--syntax-literal);
+}
+
+.tok-string {
+  color: var(--syntax-string);
+}
+
+.tok-comment {
+  color: var(--syntax-comment);
+}
+
+.tok-invalid {
+  color: var(--syntax-invalid);
+}
+
+.tok-variable {
+  color: var(--syntax-variable);
+}
+
+.tok-definition {
+  color: var(--syntax-definition);
+}
+
+.tok-meta {
+  color: var(--syntax-meta);
+}
+
+.plot-d6a7b5 {
+  --plot-background: var(--theme-background);
+}
+
+p .plot-d6a7b5 {
+  display: inline-block;
+}
+
+.observablehq--cell:empty {
+  min-height: 0;
+}
+
+.observablehq--cell:not(:empty) + pre {
+  margin-top: -11px;
+}
+
+/* spline-sans-mono-latin-ext-400-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/spline-sans-mono-latin-ext-400-normal-BfWvPoNT.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-400-normal-BkT5i7fe.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-400-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/spline-sans-mono-latin-400-normal-mUpA6Mve.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-400-normal-739QRW1l.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* spline-sans-mono-latin-ext-600-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/spline-sans-mono-latin-ext-600-normal-CYO0557q.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-600-normal-es3wdE0V.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-600-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/spline-sans-mono-latin-600-normal-BrWm9FVc.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-600-normal-ZCqv2Jod.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* spline-sans-mono-latin-ext-700-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/spline-sans-mono-latin-ext-700-normal-CIwA9V33.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-700-normal-OD-FaHeD.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-700-normal */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/spline-sans-mono-latin-700-normal-BwW4xXNM.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-700-normal-BLdnetBw.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* spline-sans-mono-latin-ext-400-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/spline-sans-mono-latin-ext-400-italic-Bgx7hsPO.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-400-italic-ByCpokw0.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-400-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/spline-sans-mono-latin-400-italic-DP081DET.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-400-italic-Z_tpZbsx.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* spline-sans-mono-latin-ext-600-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/spline-sans-mono-latin-ext-600-italic-CJ3g_dA0.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-600-italic-QnP7nD6P.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-600-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/spline-sans-mono-latin-600-italic-DUvxu3FQ.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-600-italic-B7XC_fUc.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* spline-sans-mono-latin-ext-700-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/spline-sans-mono-latin-ext-700-italic-DIdep8Er.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-ext-700-italic-CIqQYA0i.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* spline-sans-mono-latin-700-italic */
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/spline-sans-mono-latin-700-italic-shtgotnr.woff2) format('woff2'), url(./assets/spline-sans-mono-latin-700-italic-6zMndKap.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* source-serif-4-cyrillic-ext-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-cyrillic-ext-400-normal-CWV284fw.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-ext-400-normal-DLkyKLvH.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* source-serif-4-cyrillic-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-cyrillic-400-normal-C44pakCn.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-400-normal-B8Z6Jvzv.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* source-serif-4-greek-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-greek-400-normal-Cw5-AHNN.woff2) format('woff2'), url(./assets/source-serif-4-greek-400-normal-BccYJ-vZ.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* source-serif-4-vietnamese-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-vietnamese-400-normal-BbG3LG1A.woff2) format('woff2'), url(./assets/source-serif-4-vietnamese-400-normal-DR1UuFon.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* source-serif-4-latin-ext-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-latin-ext-400-normal-Cp7z-ARB.woff2) format('woff2'), url(./assets/source-serif-4-latin-ext-400-normal-CEpydyUl.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* source-serif-4-latin-400-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-latin-400-normal-DJ5YJwmz.woff2) format('woff2'), url(./assets/source-serif-4-latin-400-normal-Dn3IlU-Z.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* source-serif-4-cyrillic-ext-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-cyrillic-ext-700-normal-B9R79AaY.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-ext-700-normal-DsKdgJCr.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* source-serif-4-cyrillic-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-cyrillic-700-normal-BmBwwUw2.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-700-normal-DVvE-KHB.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* source-serif-4-greek-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-greek-700-normal-BzuEQSqJ.woff2) format('woff2'), url(./assets/source-serif-4-greek-700-normal-C5Ojiwey.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* source-serif-4-vietnamese-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-vietnamese-700-normal-CCAt8c4x.woff2) format('woff2'), url(./assets/source-serif-4-vietnamese-700-normal-BBU5i_d1.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* source-serif-4-latin-ext-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-latin-ext-700-normal-C8ywwcuQ.woff2) format('woff2'), url(./assets/source-serif-4-latin-ext-700-normal-BZsvHpal.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* source-serif-4-latin-700-normal */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-latin-700-normal-CGGdTIBe.woff2) format('woff2'), url(./assets/source-serif-4-latin-700-normal-3V4Pv1hj.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* source-serif-4-cyrillic-ext-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-cyrillic-ext-400-italic-zoDFlEzN.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-ext-400-italic-Dx4A8QUO.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* source-serif-4-cyrillic-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-cyrillic-400-italic-BLN19cOa.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-400-italic-Dx8qIUN3.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* source-serif-4-greek-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-greek-400-italic-C7D4Dq0H.woff2) format('woff2'), url(./assets/source-serif-4-greek-400-italic-DcuniPAV.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* source-serif-4-vietnamese-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-vietnamese-400-italic-CjUPRDIa.woff2) format('woff2'), url(./assets/source-serif-4-vietnamese-400-italic-DyjhI2GX.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* source-serif-4-latin-ext-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-latin-ext-400-italic-JynPwBMj.woff2) format('woff2'), url(./assets/source-serif-4-latin-ext-400-italic-G7LDTi7t.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* source-serif-4-latin-400-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/source-serif-4-latin-400-italic-0j97Jm6B.woff2) format('woff2'), url(./assets/source-serif-4-latin-400-italic-Dv9jnFA_.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* source-serif-4-cyrillic-ext-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-cyrillic-ext-700-italic-BdFI3uD2.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-ext-700-italic-CW6u860k.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* source-serif-4-cyrillic-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-cyrillic-700-italic-C5vSpb1a.woff2) format('woff2'), url(./assets/source-serif-4-cyrillic-700-italic-BNXt_5iO.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* source-serif-4-greek-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-greek-700-italic-DbF55r_P.woff2) format('woff2'), url(./assets/source-serif-4-greek-700-italic-bfz8xsri.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* source-serif-4-vietnamese-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-vietnamese-700-italic-CqUud9yW.woff2) format('woff2'), url(./assets/source-serif-4-vietnamese-700-italic-CmYmx5Sm.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* source-serif-4-latin-ext-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-latin-ext-700-italic-D3ZlY63u.woff2) format('woff2'), url(./assets/source-serif-4-latin-ext-700-italic-DppnFcZR.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* source-serif-4-latin-700-italic */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/source-serif-4-latin-700-italic-JqVfbRzb.woff2) format('woff2'), url(./assets/source-serif-4-latin-700-italic-BU_ZoKoz.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-cyrillic-ext-400-normal-Dc4VJyIJ.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-400-normal-BE2fNs0E.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-cyrillic-400-normal-BLGc9T1a.woff2) format('woff2'), url(./assets/inter-cyrillic-400-normal-alAqRL36.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-greek-ext-400-normal-Bput3-QP.woff2) format('woff2'), url(./assets/inter-greek-ext-400-normal-XIH6-K3k.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-greek-400-normal-DxZsaF_h.woff2) format('woff2'), url(./assets/inter-greek-400-normal-C3I71FoW.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-vietnamese-400-normal-DMkecbls.woff2) format('woff2'), url(./assets/inter-vietnamese-400-normal-Bbgyi5SW.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-latin-ext-400-normal-C1nco2VV.woff2) format('woff2'), url(./assets/inter-latin-ext-400-normal-77YHD8bZ.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-400-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-latin-400-normal-C38fXH4l.woff2) format('woff2'), url(./assets/inter-latin-400-normal-CyCys3Eg.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-cyrillic-ext-500-normal-BShVwWPj.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-500-normal-NrhEyngK.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-cyrillic-500-normal-D4Vwzodn.woff2) format('woff2'), url(./assets/inter-cyrillic-500-normal-BoeW9iIj.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-greek-ext-500-normal-B6guLgqG.woff2) format('woff2'), url(./assets/inter-greek-ext-500-normal-1SJLBQ3N.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-greek-500-normal-CeQXL5ds.woff2) format('woff2'), url(./assets/inter-greek-500-normal-CSBZZ4CI.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-vietnamese-500-normal-DOriooB6.woff2) format('woff2'), url(./assets/inter-vietnamese-500-normal-mJboJaSs.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-latin-ext-500-normal-CV4jyFjo.woff2) format('woff2'), url(./assets/inter-latin-ext-500-normal-BxGbmqWO.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-500-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-latin-500-normal-Cerq10X2.woff2) format('woff2'), url(./assets/inter-latin-500-normal-BL9OpVg8.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-cyrillic-ext-600-normal-CaqZN2hq.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-600-normal-t7rHAwBu.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-cyrillic-600-normal-BGBWG807.woff2) format('woff2'), url(./assets/inter-cyrillic-600-normal-vZ-N8GHY.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-greek-ext-600-normal-Cnui8OiR.woff2) format('woff2'), url(./assets/inter-greek-ext-600-normal-CCFnzSpK.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-greek-600-normal-Dhlb-90d.woff2) format('woff2'), url(./assets/inter-greek-600-normal-BVGIV3oK.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2) format('woff2'), url(./assets/inter-vietnamese-600-normal-BuLX-rYi.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2) format('woff2'), url(./assets/inter-latin-ext-600-normal-CIVaiw4L.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-600-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-latin-600-normal-LgqL8muc.woff2) format('woff2'), url(./assets/inter-latin-600-normal-CiBQ2DWP.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-cyrillic-ext-700-normal-ClVoMEGq.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-700-normal-Cg0zx2i8.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-cyrillic-700-normal-bGtGjVdZ.woff2) format('woff2'), url(./assets/inter-cyrillic-700-normal-oWiwobpV.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-greek-ext-700-normal-SzCdnevJ.woff2) format('woff2'), url(./assets/inter-greek-ext-700-normal-D0KHSs-V.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-greek-700-normal-Cxpycf-U.woff2) format('woff2'), url(./assets/inter-greek-700-normal-DtGkhywV.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-vietnamese-700-normal-CGpBpxLq.woff2) format('woff2'), url(./assets/inter-vietnamese-700-normal-DL6eWghQ.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-latin-ext-700-normal-CfWAu3Qq.woff2) format('woff2'), url(./assets/inter-latin-ext-700-normal-Z3s-4e5M.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-700-normal */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-latin-700-normal-Drs_5D37.woff2) format('woff2'), url(./assets/inter-latin-700-normal-KTwiWvO9.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-cyrillic-ext-400-italic-CehB8t-8.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-400-italic-nTurEaSu.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-cyrillic-400-italic-CKyytblM.woff2) format('woff2'), url(./assets/inter-cyrillic-400-italic-vANaBym1.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-greek-ext-400-italic-MxoIabFE.woff2) format('woff2'), url(./assets/inter-greek-ext-400-italic-fwfMSvUC.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-greek-400-italic-C_qJDahm.woff2) format('woff2'), url(./assets/inter-greek-400-italic-CJ86Nr4G.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-vietnamese-400-italic-Ceaj4WUo.woff2) format('woff2'), url(./assets/inter-vietnamese-400-italic-E-DnQMHp.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-latin-ext-400-italic-CGFCRmTM.woff2) format('woff2'), url(./assets/inter-latin-ext-400-italic-DpQ6ZOoA.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-400-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./assets/inter-latin-400-italic-D1l0FflY.woff2) format('woff2'), url(./assets/inter-latin-400-italic-BmFrN47l.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-cyrillic-ext-500-italic-Bx8SeCYt.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-500-italic-9Xx2Q3PI.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-cyrillic-500-italic-4speQOfI.woff2) format('woff2'), url(./assets/inter-cyrillic-500-italic-BOni0Cyk.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-greek-ext-500-italic-B6pJyy6Z.woff2) format('woff2'), url(./assets/inter-greek-ext-500-italic-Bccyr9Gt.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-greek-500-italic-DZ4GW5_M.woff2) format('woff2'), url(./assets/inter-greek-500-italic-CGefo6TM.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-vietnamese-500-italic-Ci6hLotD.woff2) format('woff2'), url(./assets/inter-vietnamese-500-italic-BDm3lIJY.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-latin-ext-500-italic-6uvZyJeQ.woff2) format('woff2'), url(./assets/inter-latin-ext-500-italic-O82l3e5v.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-500-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url(./assets/inter-latin-500-italic-CmxAJXy_.woff2) format('woff2'), url(./assets/inter-latin-500-italic-BaBk7Nya.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-cyrillic-ext-600-italic-DIv3VbJ3.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-600-italic-BIHeN5NP.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-cyrillic-600-italic-DlcfoU7n.woff2) format('woff2'), url(./assets/inter-cyrillic-600-italic-B9biYJZN.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-greek-ext-600-italic-BehS7mmu.woff2) format('woff2'), url(./assets/inter-greek-ext-600-italic-B7VSimn1.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-greek-600-italic-Bl6euVqm.woff2) format('woff2'), url(./assets/inter-greek-600-italic-BghegE-E.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-vietnamese-600-italic-BuG6-S9s.woff2) format('woff2'), url(./assets/inter-vietnamese-600-italic-CKjJHBAp.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-latin-ext-600-italic-4pxPPAsx.woff2) format('woff2'), url(./assets/inter-latin-ext-600-italic-DgI6rDWk.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-600-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600;
+  src: url(./assets/inter-latin-600-italic-BJYrns_i.woff2) format('woff2'), url(./assets/inter-latin-600-italic-CIYS91tl.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* inter-cyrillic-ext-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-cyrillic-ext-700-italic-zNftX4Ap.woff2) format('woff2'), url(./assets/inter-cyrillic-ext-700-italic-ovu678TW.woff) format('woff');
+  unicode-range: U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;
+}
+
+/* inter-cyrillic-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-cyrillic-700-italic-hrd_O5x6.woff2) format('woff2'), url(./assets/inter-cyrillic-700-italic-CYn0WAO5.woff) format('woff');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+/* inter-greek-ext-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-greek-ext-700-italic-CVhTt7Au.woff2) format('woff2'), url(./assets/inter-greek-ext-700-italic-lj1OV0dH.woff) format('woff');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* inter-greek-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-greek-700-italic-8_7f-yBK.woff2) format('woff2'), url(./assets/inter-greek-700-italic-WAr0TkHx.woff) format('woff');
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;
+}
+
+/* inter-vietnamese-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-vietnamese-700-italic-DeYDD1t8.woff2) format('woff2'), url(./assets/inter-vietnamese-700-italic-DlTkVA-t.woff) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* inter-latin-ext-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-latin-ext-700-italic-BouXvm2p.woff2) format('woff2'), url(./assets/inter-latin-ext-700-italic-BnVTCIQ6.woff) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* inter-latin-700-italic */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url(./assets/inter-latin-700-italic-B-R1LdaJ.woff2) format('woff2'), url(./assets/inter-latin-700-italic-u1DKaYGd.woff) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+    </style>
+  <meta name="generator" content="Observable Notebook Kit v1.0.1" /><title>Understanding Diamond Value and Characteristics</title>  <script type="module" crossorigin src="./assets/index-BiqD6cW6.js"></script>
+</head>
+  <body>
+    <main><div id="cell-1" class="observablehq observablehq--cell"><style>
+@import url("https://unpkg.com/tippy.js@6/dist/tippy.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.css");
+:root {
+  --max-width: calc(1400px - 4 * 16px) !important;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --muted: #6b7280;
+  --text: #111827;
+  --accent: #374151;
+  --accent-light: #f9fafb;
+  --accent-hover: #1f2937;
+}
+p,
+table,
+figure,
+figcaption,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.katex-display {
+  max-width: 1080px !important;
+}
+p {
+  line-height: 2;
+}
+/* Header */
+.report-header {
+  max-width: var(--max-width);
+  padding: 24px 0 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+.report-header h1 {
+  margin: 0 0 6px 0;
+  line-height: 1.2;
+}
+.report-header p {
+  color: var(--muted);
+  margin-top: 6px;
+}
+/* Link to artifacts like model traces and observable notebook source code */
+.report-header .artifacts-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.report-header .artifacts-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  color: #1f2937;
+  text-decoration: none;
+  background: #ffffff;
+  line-height: 1.1;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.report-header .artifacts-links a:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+.report-header .artifacts-links i {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 16px;
+}
+/* Inject header lucide icons via url */
+i[data-lucide="external-link"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWV4dGVybmFsLWxpbmstaWNvbiBsdWNpZGUtZXh0ZXJuYWwtbGluayI+PHBhdGggZD0iTTE1IDNoNnY2Ii8+PHBhdGggZD0iTTEwIDE0IDIxIDMiLz48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4YTIgMiAwIDAgMSAyLTJoNiIvPjwvc3ZnPg==");
+}
+i[data-lucide="bot"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWJvdC1pY29uIGx1Y2lkZS1ib3QiPjxwYXRoIGQ9Ik0xMiA4VjRIOCIvPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgeD0iNCIgeT0iOCIgcng9IjIiLz48cGF0aCBkPSJNMiAxNGgyIi8+PHBhdGggZD0iTTIwIDE0aDIiLz48cGF0aCBkPSJNMTUgMTN2MiIvPjxwYXRoIGQ9Ik05IDEzdjIiLz48L3N2Zz4=");
+}
+i[data-lucide="database"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWRhdGFiYXNlLWljb24gbHVjaWRlLWRhdGFiYXNlIj48ZWxsaXBzZSBjeD0iMTIiIGN5PSI1IiByeD0iOSIgcnk9IjMiLz48cGF0aCBkPSJNMyA1VjE5QTkgMyAwIDAgMCAyMSAxOVY1Ii8+PHBhdGggZD0iTTMgMTJBOSAzIDAgMCAwIDIxIDEyIi8+PC9zdmc+");
+}
+i[data-lucide="file-down"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZpbGUtZG93bi1pY29uIGx1Y2lkZS1maWxlLWRvd24iPjxwYXRoIGQ9Ik0xNSAySDZhMiAyIDAgMCAwLTIgMnYxNmEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJWN1oiLz48cGF0aCBkPSJNMTQgMnY0YTIgMiAwIDAgMCAyIDJoNCIvPjxwYXRoIGQ9Ik0xMiAxOHYtNiIvPjxwYXRoIGQ9Im05IDE1IDMgMyAzLTMiLz48L3N2Zz4=");
+}
+i[data-lucide="chart-column-increasing"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoYXJ0LWNvbHVtbi1pbmNyZWFzaW5nLWljb24gbHVjaWRlLWNoYXJ0LWNvbHVtbi1pbmNyZWFzaW5nIj48cGF0aCBkPSJNMTMgMTdWOSIvPjxwYXRoIGQ9Ik0xOCAxN1Y1Ii8+PHBhdGggZD0iTTMgM3YxNmEyIDIgMCAwIDAgMiAyaDE2Ii8+PHBhdGggZD0iTTggMTd2LTMiLz48L3N2Zz4=");
+}
+i[data-lucide="messages-square"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW1lc3NhZ2VzLXNxdWFyZS1pY29uIGx1Y2lkZS1tZXNzYWdlcy1zcXVhcmUiPjxwYXRoIGQ9Ik0xNiAxMGEyIDIgMCAwIDEtMiAySDYuODI4YTIgMiAwIDAgMC0xLjQxNC41ODZsLTIuMjAyIDIuMjAyQS43MS43MSAwIDAgMSAyIDE0LjI4NlY0YTIgMiAwIDAgMSAyLTJoMTBhMiAyIDAgMCAxIDIgMnoiLz48cGF0aCBkPSJNMjAgOWEyIDIgMCAwIDEgMiAydjEwLjI4NmEuNzEuNzEgMCAwIDEtMS4yMTIuNTAybC0yLjIwMi0yLjIwMkEyIDIgMCAwIDAgMTcuMTcyIDE5SDEwYTIgMiAwIDAgMS0yLTJ2LTEiLz48L3N2Zz4=");
+}
+i[data-lucide="chart-gantt"]::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoYXJ0LWdhbnR0LWljb24gbHVjaWRlLWNoYXJ0LWdhbnR0Ij48cGF0aCBkPSJNMTAgNmg4Ii8+PHBhdGggZD0iTTEyIDE2aDYiLz48cGF0aCBkPSJNMyAzdjE2YTIgMiAwIDAgMCAyIDJoMTYiLz48cGF0aCBkPSJNOCAxMWg3Ii8+PC9zdmc+");
+}
+/* subtle styling for column names in data report narrative */
+span.data-field {
+  background-color: #f5f6f8;
+  color: #4a5568;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 2px 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: help;
+}
+span.data-field:hover {
+  background-color: #e2e8f0;
+  color: #2d3748;
+}
+/* Ensure info icon alongside data-field has spacing */
+.data-field + i[data-lucide] {
+  margin-left: 6px;
+  color: #64748b;
+}
+/* Make data value references visually distinct */
+span.data-value {
+  font-style: italic;
+}
+/* Lucide icon defaults */
+i[data-lucide] {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  color: #475569;
+}
+i[data-lucide]::before {
+  display: block;
+  line-height: 0;
+}
+.loading-skeleton {
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #f5f5f5 20%,
+    #ffffff 40%,
+    #f5f5f5 60%,
+    #f0f0f0 80%,
+    #f0f0f0 100%
+  );
+  background-size: 300% 100%;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  animation: loading-skeleton-shimmer 3.5s ease-in-out infinite;
+}
+.loading-skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: loading-skeleton-shine 3.5s ease-in-out infinite;
+}
+@keyframes loading-skeleton-shimmer {
+  0% {
+    background-position: -300% 0;
+  }
+  100% {
+    background-position: 300% 0;
+  }
+}
+@keyframes loading-skeleton-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+/* Section spacing */
+h2 {
+  margin-top: 28px;
+  margin-bottom: 8px;
+}
+h3 {
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+/* Narrative paragraph for each subsection */
+p[id^="subsection-"] {
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+/* Make the two displayed nodes (vega view and data table) look like cards */
+p[id^="subsection-"] + div,
+p[id^="subsection-"] + div + div {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 10px 8px;
+  margin: 10px 0;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+/* On wide screens, give the chart a bit more visual weight */
+@media (min-width: 1100px) {
+  p[id^="subsection-"] + div {
+    padding: 12px 10px;
+  }
+}
+/* Tables (fallback for any standard HTML tables rendered in narrative) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+table th,
+table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+table tr:nth-child(even) {
+  background: #f9fafb;
+}
+/* Tippy light theme fine tuning */
+.tippy-box[data-theme~="light"] {
+  background-color: #ffffff !important;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(2, 6, 23, 0.08);
+}
+.tippy-box[data-theme~="light"] .tippy-content {
+  padding: 10px 12px;
+  line-height: 1.5;
+}
+.subsection-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .trace-links {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: -10px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 3px;
+      color: #475569;
+      text-decoration: none;
+      background: #ffffff;
+      font-weight: 500;
+      font-size: 13px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    a:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #334155;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    a:active {
+      background: #f1f5f9;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .icon {
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+    }
+
+    a:hover .icon {
+      opacity: 1;
+    }
+  }
+}
+/* Sticky Table of Contents */
+.js-toc {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 260px;
+  max-height: calc(100vh - 40px);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 1000;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+/* TOC Header - clickable to collapse/expand */
+.js-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--card-border);
+  cursor: pointer;
+  user-select: none;
+  background: var(--card-bg);
+  transition: background-color 0.2s ease;
+  flex: 0 0 auto;
+}
+.js-toc-header:hover {
+  background: var(--accent-light);
+}
+.js-toc-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.js-toc-toggle {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+.js-toc.collapsed .js-toc-toggle {
+  transform: rotate(-90deg);
+}
+.js-toc-header:hover .js-toc-toggle {
+  color: var(--text);
+}
+/* TOC Content Container */
+.js-toc-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+  max-height: calc(100vh - 120px);
+  transition: max-height 0.15s ease, opacity 0.15s ease, padding 0.15s ease;
+}
+.js-toc.collapsed .js-toc-content {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.js-toc-content::-webkit-scrollbar {
+  width: 6px;
+}
+.js-toc-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.js-toc-content::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+.js-toc-content::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+/* Override tocbot default styles for better integration */
+.js-toc .toc-list,
+.js-toc-content .toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.js-toc .toc-list-item,
+.js-toc-content .toc-list-item {
+  margin: 0;
+  padding: 0;
+}
+.js-toc .toc-link,
+.js-toc-content .toc-link {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  font-size: 14px;
+  font-weight: 400;
+}
+.js-toc .toc-link:hover,
+.js-toc-content .toc-link:hover {
+  color: var(--accent-hover);
+  background: var(--accent-light);
+}
+.js-toc .toc-link.is-active-link,
+.js-toc-content .toc-link.is-active-link {
+  color: var(--accent-hover);
+  background: #f7fafc;
+  font-weight: 500;
+}
+.toc-link::before {
+  margin-top: -8px;
+}
+.is-active-link::before {
+  background-color: #4a5568;
+}
+.toc-list {
+  a[href] {
+    color: var(--text);
+    font-weight: 400;
+  }
+}
+/* Nested TOC items - more minimal */
+.js-toc .toc-list .toc-list,
+.js-toc-content .toc-list .toc-list {
+  margin: 0;
+}
+.js-toc .toc-list .toc-list .toc-link,
+.js-toc-content .toc-list .toc-list .toc-link {
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 36px;
+  font-weight: 400;
+}
+.js-toc .toc-list .toc-list .toc-link:hover,
+.js-toc-content .toc-list .toc-list .toc-link:hover {
+  color: var(--text);
+}
+/* Responsive behavior - hide TOC on smaller screens */
+@media (max-width: 1400px) {
+  .js-toc {
+    display: none;
+  }
+}
+/* On medium screens, make TOC even more compact */
+@media (min-width: 1401px) and (max-width: 1600px) {
+  .js-toc {
+    width: 240px;
+    right: 10px;
+    font-size: 14px;
+  }
+
+  .js-toc-title {
+    font-size: 14px;
+  }
+
+  .js-toc .toc-link,
+  .js-toc-content .toc-link {
+    font-size: 13px;
+    padding: 7px 18px;
+  }
+
+  .js-toc .toc-list .toc-list .toc-link,
+  .js-toc-content .toc-list .toc-list .toc-link {
+    font-size: 12px;
+    padding-left: 32px;
+  }
+}
+/* AnchorJS Styling */
+.anchor-link {
+  color: var(--muted) !important;
+  text-decoration: none !important;
+  margin-left: -1.2em !important;
+  padding-right: 0.3em !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+  font-size: 0.9em !important;
+  line-height: 1 !important;
+  font-weight: normal !important;
+}
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h2:focus .anchor-link,
+h3:focus .anchor-link {
+  opacity: 0.7 !important;
+}
+.anchor-link:hover,
+.anchor-link:focus {
+  opacity: 1 !important;
+  color: var(--accent) !important;
+}
+/* Ensure headings have proper positioning for anchor links */
+h2,
+h3 {
+  position: relative;
+}
+/* Adjust heading padding to accommodate anchor links */
+h2 {
+  padding-left: 1.2em;
+  margin-left: -1.2em;
+}
+h3 {
+  padding-left: 1.2em;
+  margin-left: -1.2em;
+}
+/* Smooth scroll offset for anchor navigation */
+h2[id]::before,
+h3[id]::before {
+  content: "";
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+}
+
+</style></div><div id="cell-2" class="observablehq observablehq--cell">
+        <div class="report-header">
+            <h1>Understanding Diamond Value and Characteristics</h1>
+            <div class="artifacts-links">
+                <a id="full-report-link" href="./index.html" target="_blank" data-tippy-content="Open full report in new tab">
+                    <i data-lucide="external-link"></i>
+                    <span>Full Report</span>
+                </a>
+                
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline" target="_blank" data-tippy-content="View AI agent execution traces for generating this report">
+                    <i data-lucide="bot"></i>
+                    <span>Agent Traces</span>
+                </a>
+                
+                <a href="./artifacts/notebook.html" download="" data-tippy-content="Download Observable Notebook 2.0 source code of this report">
+                    <i data-lucide="file-down"></i>
+                    <span>Notebook</span>
+                </a>
+                <a href="./artifacts/history.json" download="" data-tippy-content="Download AI conversation logs of this report">
+                    <i data-lucide="messages-square"></i>
+                    <span>AI Chat Logs</span>
+                </a>
+                <a href="./artifacts/provenance.json" id="provenance-json" style="display: none;">
+                </a>
+            </div>
+            <p>The value and physical properties of diamonds are influenced by a complex interplay of factors, including cut, color, clarity, and carat weight. This report explores how these attributes combine to determine a diamond's price and typical physical dimensions, revealing key patterns and trade-offs within the market.</p>
+            <aside class="js-toc"></aside>
+        </div>
+        </div><div id="cell-3" class="observablehq observablehq--cell"><div><h2 id="diamond-value-drivers" tabindex="-1"><a href="#diamond-value-drivers">Diamond Value Drivers</a></h2>
+</div></div><div id="cell-4" class="observablehq observablehq--cell"><div><p>Building on the foundational understanding of diamond attributes, this section explores how specific combinations of cut, color, and clarity influence a diamond’s price, revealing the primary drivers of value.</p>
+</div></div><div id="cell-5" class="observablehq observablehq--cell">
+                    <div class="subsection-header">
+                        <h3>Price and Carat Weight by Cut Quality</h3>
+                        <div class="trace-links">
+                            <a id="provenance-nb-link-dataset_01" href="#" data-tippy-content="Explore provenance interactively" target="_blank">
+                                <i class="icon" data-lucide="chart-gantt"></i>
+                            </a>
+                            
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=ecf1f3df7184fc9b" data-tippy-content="Dataset traces" target="_blank">
+                    <i class="icon" data-lucide="database"></i>
+                </a>
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=f7f4f76d03d33346" data-tippy-content="Visualization traces" target="_blank">
+                    <i class="icon" data-lucide="chart-column-increasing"></i>
+                </a>
+                
+                        </div>
+                    </div>
+                    </div><div id="cell-6" class="observablehq observablehq--cell"><p id="subsection-dataset_01">A counter-intuitive relationship emerges where diamonds with a lower quality <span class="data-field">Cut</span>, such as <span class="data-value" data-field="Cut">Fair</span>, have both the highest <span class="data-field">Avg Carat</span> and the highest <span class="data-field">Avg Price</span>. This pattern suggests that, on average, carat weight is a more dominant driver of price than the quality of the cut. However, a distinction appears among higher-quality cuts, as <span class="data-value" data-field="Cut">Ideal</span> cut diamonds command a higher average price than <span class="data-value" data-field="Cut">Very Good</span> stones, despite having a smaller average carat weight.</p></div><div id="cell-7" class="observablehq observablehq--cell"><div id="loading-skeleton-dataset_01"><div class="loading-skeleton"></div></div></div><div id="cell-8" class="observablehq observablehq--cell"></div><div id="cell-9" class="observablehq observablehq--cell">
+                    <div class="subsection-header">
+                        <h3>Median Price by Color and Clarity</h3>
+                        <div class="trace-links">
+                            <a id="provenance-nb-link-dataset_02" href="#" data-tippy-content="Explore provenance interactively" target="_blank">
+                                <i class="icon" data-lucide="chart-gantt"></i>
+                            </a>
+                            
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=08c1872900f5027a" data-tippy-content="Dataset traces" target="_blank">
+                    <i class="icon" data-lucide="database"></i>
+                </a>
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=147f94ed32d0971a" data-tippy-content="Visualization traces" target="_blank">
+                    <i class="icon" data-lucide="chart-column-increasing"></i>
+                </a>
+                
+                        </div>
+                    </div>
+                    </div><div id="cell-10" class="observablehq observablehq--cell"><p id="subsection-dataset_02">The relationship between a diamond's <span class="data-field">Median Price</span>, <span class="data-field">Color</span>, and <span class="data-field">Clarity</span> is complex, as price does not consistently increase with seemingly better grades. For instance, <span class="data-value" data-field="Color">Colorless</span> diamonds with a lower <span class="data-value" data-field="Clarity">Included 1</span> clarity show a higher median price than those with a top-tier <span class="data-value" data-field="Clarity">Internally Flawless</span> grade. This pattern suggests that value is maximized in specific combinations of attributes rather than following a simple linear scale, with distinct pockets of high prices appearing for various pairings.</p></div><div id="cell-11" class="observablehq observablehq--cell"><div id="loading-skeleton-dataset_02"><div class="loading-skeleton"></div></div></div><div id="cell-12" class="observablehq observablehq--cell"></div><div id="cell-13" class="observablehq observablehq--cell"><div><h2 id="diamond-characteristics-and-physical-properties" tabindex="-1"><a href="#diamond-characteristics-and-physical-properties">Diamond Characteristics and Physical Properties</a></h2>
+</div></div><div id="cell-14" class="observablehq observablehq--cell"><div><p>Following the analysis of value drivers, this section examines the physical characteristics of diamonds, focusing on how cut, color, and clarity relate to average carat weight and overall size.</p>
+</div></div><div id="cell-15" class="observablehq observablehq--cell">
+                    <div class="subsection-header">
+                        <h3>Average Carat Weight by Cut and Color</h3>
+                        <div class="trace-links">
+                            <a id="provenance-nb-link-dataset_03" href="#" data-tippy-content="Explore provenance interactively" target="_blank">
+                                <i class="icon" data-lucide="chart-gantt"></i>
+                            </a>
+                            
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=fad9157c45c8dba3" data-tippy-content="Dataset traces" target="_blank">
+                    <i class="icon" data-lucide="database"></i>
+                </a>
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=b91850d188569b06" data-tippy-content="Visualization traces" target="_blank">
+                    <i class="icon" data-lucide="chart-column-increasing"></i>
+                </a>
+                
+                        </div>
+                    </div>
+                    </div><div id="cell-16" class="observablehq observablehq--cell"><p id="subsection-dataset_03">A clear inverse relationship exists between diamond quality and size, where the <span class="data-field">Average Carat</span> weight generally decreases as the quality of the <span class="data-field">Cut</span> and <span class="data-field">Color</span> improves. Diamonds with lower-quality grades, such as a <span class="data-value" data-field="Cut">Fair</span> cut and <span class="data-value" data-field="Color">Light Yellow</span> color, tend to have the highest average carat weight. Conversely, stones with top-tier grades like an <span class="data-value" data-field="Cut">Ideal</span> cut and <span class="data-value" data-field="Color">Colorless</span> rating are typically smaller, suggesting a common market trade-off between a diamond's size and its other quality attributes.</p></div><div id="cell-17" class="observablehq observablehq--cell"><div id="loading-skeleton-dataset_03"><div class="loading-skeleton"></div></div></div><div id="cell-18" class="observablehq observablehq--cell"></div><div id="cell-19" class="observablehq observablehq--cell">
+                    <div class="subsection-header">
+                        <h3>Physical Dimensions and Clarity</h3>
+                        <div class="trace-links">
+                            <a id="provenance-nb-link-dataset_04" href="#" data-tippy-content="Explore provenance interactively" target="_blank">
+                                <i class="icon" data-lucide="chart-gantt"></i>
+                            </a>
+                            
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=a9e7100018f0f130" data-tippy-content="Dataset traces" target="_blank">
+                    <i class="icon" data-lucide="database"></i>
+                </a>
+                <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/99c00a1cc6866b7e04c474f01566688d?display=timeline&amp;observation=c5e3aef02b8b9daa" data-tippy-content="Visualization traces" target="_blank">
+                    <i class="icon" data-lucide="chart-column-increasing"></i>
+                </a>
+                
+                        </div>
+                    </div>
+                    </div><div id="cell-20" class="observablehq observablehq--cell"><p id="subsection-dataset_04">A clear inverse relationship exists between a diamond's <span class="data-field">Clarity</span> and its physical size, as diamonds with lower clarity grades like <span class="data-value" data-field="Clarity">Included 1</span> have a substantially higher <span class="data-field">Avg Carat</span>. This trend is mirrored by <span class="data-field">Avg Volume</span>, indicated by color intensity, which also decreases as clarity improves towards grades like <span class="data-value" data-field="Clarity">Internally Flawless</span>. This pattern suggests that larger diamonds are more likely to contain inclusions, reflecting the natural rarity of finding large, high-clarity stones.</p></div><div id="cell-21" class="observablehq observablehq--cell"><div id="loading-skeleton-dataset_04"><div class="loading-skeleton"></div></div></div><div id="cell-22" class="observablehq observablehq--cell"></div><div id="cell-23" class="observablehq observablehq--cell"><div><hr />
+</div></div><div id="cell-24" class="observablehq observablehq--cell"><div><p>The analysis reveals that diamond value is not solely determined by individual attributes but by their complex interactions, with carat weight often dominating price, even for lower-quality cuts. Furthermore, a clear inverse relationship exists between a diamond’s quality grades and its average physical size, indicating a natural trade-off in the market. These insights highlight the nuanced factors that shape diamond pricing and physical characteristics, offering a deeper understanding for buyers and sellers.</p>
+</div></div><div id="cell-25" class="observablehq observablehq--cell"></div><div id="cell-26" class="observablehq observablehq--cell"></div><div id="cell-27" class="observablehq observablehq--cell"></div></main>
+  
+
+<style type="text/css">:root {
+  --syntax-link: var(--theme-foreground-focus);
+  --syntax-keyword: #e36209;
+  --syntax-atom: #032f62;
+  --syntax-literal: #6f42c1;
+  --syntax-string: #22863a;
+  --syntax-comment: var(--theme-foreground-muted);
+  --syntax-invalid: var(--theme-error);
+  --syntax-definition: #005cc5;
+  --syntax-variable: var(--theme-foreground-alt);
+  --syntax-meta: #d73a49;
+}
+
+:root {
+  --theme-background-b: color-mix(in srgb, var(--theme-foreground) 4%, var(--theme-background-a));
+  --theme-background: var(--theme-background-a);
+  --theme-background-alt: var(--theme-background-b);
+  --theme-foreground-alt: color-mix(in srgb, var(--theme-foreground) 90%, var(--theme-background-a));
+  --theme-foreground-muted: color-mix(in srgb, var(--theme-foreground) 60%, var(--theme-background-a));
+  --theme-foreground-faint: color-mix(in srgb, var(--theme-foreground) 50%, var(--theme-background-a));
+  --theme-foreground-fainter: color-mix(in srgb, var(--theme-foreground) 30%, var(--theme-background-a));
+  --theme-foreground-faintest: color-mix(in srgb, var(--theme-foreground) 14%, var(--theme-background-a));
+  --theme-error: #e7040f;
+  color-scheme: light;
+}
+
+:root {
+  --theme-foreground: #1b1e23;
+  --theme-foreground-focus: #3b5fc0;
+  --theme-background-a: #ffffff;
+}
+</style></body></html>

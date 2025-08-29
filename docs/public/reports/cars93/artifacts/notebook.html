@@ -1,0 +1,1593 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Vehicle Characteristics and Market Trends</title>
+  <script id="1" type="text/html">
+    <style>
+    @import url("https://unpkg.com/tippy.js@6/dist/tippy.css");
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.css");
+    
+    :root {
+      --max-width: calc(1400px - 4 * 16px) !important;
+      --card-bg: #ffffff;
+      --card-border: #e5e7eb;
+      --muted: #6b7280;
+      --text: #111827;
+      --accent: #374151;
+      --accent-light: #f9fafb;
+      --accent-hover: #1f2937;
+    }
+    
+    p,
+    table,
+    figure,
+    figcaption,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .katex-display {
+      max-width: 1080px !important;
+    }
+    
+    p {
+      line-height: 2;
+    }
+    
+    /* Header */
+    .report-header {
+      max-width: var(--max-width);
+      padding: 24px 0 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 20px;
+    }
+    
+    .report-header h1 {
+      margin: 0 0 6px 0;
+      line-height: 1.2;
+    }
+    
+    .report-header p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    
+    /* Link to artifacts like model traces and observable notebook source code */
+    .report-header .artifacts-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .report-header .artifacts-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      color: #1f2937;
+      text-decoration: none;
+      background: #ffffff;
+      line-height: 1.1;
+      transition: background-color 0.2s ease, border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+    
+    .report-header .artifacts-links a:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+    }
+    
+    .report-header .artifacts-links i {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 16px;
+    }
+    
+    /* Inject header lucide icons via url */
+    i[data-lucide="external-link"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWV4dGVybmFsLWxpbmstaWNvbiBsdWNpZGUtZXh0ZXJuYWwtbGluayI+PHBhdGggZD0iTTE1IDNoNnY2Ii8+PHBhdGggZD0iTTEwIDE0IDIxIDMiLz48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4YTIgMiAwIDAgMSAyLTJoNiIvPjwvc3ZnPg==");
+    }
+    i[data-lucide="bot"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWJvdC1pY29uIGx1Y2lkZS1ib3QiPjxwYXRoIGQ9Ik0xMiA4VjRIOCIvPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgeD0iNCIgeT0iOCIgcng9IjIiLz48cGF0aCBkPSJNMiAxNGgyIi8+PHBhdGggZD0iTTIwIDE0aDIiLz48cGF0aCBkPSJNMTUgMTN2MiIvPjxwYXRoIGQ9Ik05IDEzdjIiLz48L3N2Zz4=");
+    }
+    i[data-lucide="database"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWRhdGFiYXNlLWljb24gbHVjaWRlLWRhdGFiYXNlIj48ZWxsaXBzZSBjeD0iMTIiIGN5PSI1IiByeD0iOSIgcnk9IjMiLz48cGF0aCBkPSJNMyA1VjE5QTkgMyAwIDAgMCAyMSAxOVY1Ii8+PHBhdGggZD0iTTMgMTJBOSAzIDAgMCAwIDIxIDEyIi8+PC9zdmc+");
+    }
+    i[data-lucide="file-down"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZpbGUtZG93bi1pY29uIGx1Y2lkZS1maWxlLWRvd24iPjxwYXRoIGQ9Ik0xNSAySDZhMiAyIDAgMCAwLTIgMnYxNmEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJWN1oiLz48cGF0aCBkPSJNMTQgMnY0YTIgMiAwIDAgMCAyIDJoNCIvPjxwYXRoIGQ9Ik0xMiAxOHYtNiIvPjxwYXRoIGQ9Im05IDE1IDMgMyAzLTMiLz48L3N2Zz4=");
+    }
+    i[data-lucide="chart-column-increasing"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoYXJ0LWNvbHVtbi1pbmNyZWFzaW5nLWljb24gbHVjaWRlLWNoYXJ0LWNvbHVtbi1pbmNyZWFzaW5nIj48cGF0aCBkPSJNMTMgMTdWOSIvPjxwYXRoIGQ9Ik0xOCAxN1Y1Ii8+PHBhdGggZD0iTTMgM3YxNmEyIDIgMCAwIDAgMiAyaDE2Ii8+PHBhdGggZD0iTTggMTd2LTMiLz48L3N2Zz4=");
+    }
+    i[data-lucide="messages-square"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW1lc3NhZ2VzLXNxdWFyZS1pY29uIGx1Y2lkZS1tZXNzYWdlcy1zcXVhcmUiPjxwYXRoIGQ9Ik0xNiAxMGEyIDIgMCAwIDEtMiAySDYuODI4YTIgMiAwIDAgMC0xLjQxNC41ODZsLTIuMjAyIDIuMjAyQS43MS43MSAwIDAgMSAyIDE0LjI4NlY0YTIgMiAwIDAgMSAyLTJoMTBhMiAyIDAgMCAxIDIgMnoiLz48cGF0aCBkPSJNMjAgOWEyIDIgMCAwIDEgMiAydjEwLjI4NmEuNzEuNzEgMCAwIDEtMS4yMTIuNTAybC0yLjIwMi0yLjIwMkEyIDIgMCAwIDAgMTcuMTcyIDE5SDEwYTIgMiAwIDAgMS0yLTJ2LTEiLz48L3N2Zz4=");
+    }
+    i[data-lucide="chart-gantt"]::before {
+      content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoYXJ0LWdhbnR0LWljb24gbHVjaWRlLWNoYXJ0LWdhbnR0Ij48cGF0aCBkPSJNMTAgNmg4Ii8+PHBhdGggZD0iTTEyIDE2aDYiLz48cGF0aCBkPSJNMyAzdjE2YTIgMiAwIDAgMCAyIDJoMTYiLz48cGF0aCBkPSJNOCAxMWg3Ii8+PC9zdmc+");
+    }
+    
+    /* subtle styling for column names in data report narrative */
+    span.data-field {
+      background-color: #f5f6f8;
+      color: #4a5568;
+      font-weight: 500;
+      border-radius: 4px;
+      padding: 2px 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      cursor: help;
+    }
+    
+    span.data-field:hover {
+      background-color: #e2e8f0;
+      color: #2d3748;
+    }
+    
+    /* Ensure info icon alongside data-field has spacing */
+    .data-field + i[data-lucide] {
+      margin-left: 6px;
+      color: #64748b;
+    }
+    
+    /* Make data value references visually distinct */
+    span.data-value {
+      font-style: italic;
+    }
+    
+    /* Lucide icon defaults */
+    i[data-lucide] {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      color: #475569;
+    }
+    
+    i[data-lucide]::before {
+      display: block;
+      line-height: 0;
+    }
+    
+    .loading-skeleton {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #f5f5f5 20%,
+        #ffffff 40%,
+        #f5f5f5 60%,
+        #f0f0f0 80%,
+        #f0f0f0 100%
+      );
+      background-size: 300% 100%;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      animation: loading-skeleton-shimmer 3.5s ease-in-out infinite;
+    }
+    
+    .loading-skeleton::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+      animation: loading-skeleton-shine 3.5s ease-in-out infinite;
+    }
+    
+    @keyframes loading-skeleton-shimmer {
+      0% {
+        background-position: -300% 0;
+      }
+      100% {
+        background-position: 300% 0;
+      }
+    }
+    
+    @keyframes loading-skeleton-shine {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+    
+    /* Section spacing */
+    h2 {
+      margin-top: 28px;
+      margin-bottom: 8px;
+    }
+    
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+    
+    /* Narrative paragraph for each subsection */
+    p[id^="subsection-"] {
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+    
+    /* Make the two displayed nodes (vega view and data table) look like cards */
+    p[id^="subsection-"] + div,
+    p[id^="subsection-"] + div + div {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      margin: 10px 0;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    }
+    
+    /* On wide screens, give the chart a bit more visual weight */
+    @media (min-width: 1100px) {
+      p[id^="subsection-"] + div {
+        padding: 12px 10px;
+      }
+    }
+    
+    /* Tables (fallback for any standard HTML tables rendered in narrative) */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    
+    table th,
+    table td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    table tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    
+    /* Tippy light theme fine tuning */
+    .tippy-box[data-theme~="light"] {
+      background-color: #ffffff !important;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 16px rgba(2, 6, 23, 0.08);
+    }
+    
+    .tippy-box[data-theme~="light"] .tippy-content {
+      padding: 10px 12px;
+      line-height: 1.5;
+    }
+    
+    .subsection-header {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    
+      .trace-links {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: -10px;
+    
+        a {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 16px;
+          border: 1px solid #cbd5e1;
+          border-radius: 3px;
+          color: #475569;
+          text-decoration: none;
+          background: #ffffff;
+          font-weight: 500;
+          font-size: 13px;
+          transition: all 0.2s ease;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+    
+        a:hover {
+          background: #f8fafc;
+          border-color: #94a3b8;
+          color: #334155;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        a:active {
+          background: #f1f5f9;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+    
+        .icon {
+          opacity: 0.75;
+          transition: opacity 0.2s ease;
+        }
+    
+        a:hover .icon {
+          opacity: 1;
+        }
+      }
+    }
+    
+    /* Sticky Table of Contents */
+    .js-toc {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 260px;
+      max-height: calc(100vh - 40px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      z-index: 1000;
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+    
+    /* TOC Header - clickable to collapse/expand */
+    .js-toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--card-border);
+      cursor: pointer;
+      user-select: none;
+      background: var(--card-bg);
+      transition: background-color 0.2s ease;
+      flex: 0 0 auto;
+    }
+    
+    .js-toc-header:hover {
+      background: var(--accent-light);
+    }
+    
+    .js-toc-title {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    
+    .js-toc-toggle {
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transition: transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    
+    .js-toc.collapsed .js-toc-toggle {
+      transform: rotate(-90deg);
+    }
+    
+    .js-toc-header:hover .js-toc-toggle {
+      color: var(--text);
+    }
+    
+    /* TOC Content Container */
+    .js-toc-content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #d1d5db transparent;
+      max-height: calc(100vh - 120px);
+      transition: max-height 0.15s ease, opacity 0.15s ease, padding 0.15s ease;
+    }
+    
+    .js-toc.collapsed .js-toc-content {
+      max-height: 0;
+      opacity: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .js-toc-content::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .js-toc-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .js-toc-content::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+    
+    .js-toc-content::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+    
+    /* Override tocbot default styles for better integration */
+    .js-toc .toc-list,
+    .js-toc-content .toc-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    
+    .js-toc .toc-list-item,
+    .js-toc-content .toc-list-item {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .js-toc .toc-link,
+    .js-toc-content .toc-link {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 20px;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    .js-toc .toc-link:hover,
+    .js-toc-content .toc-link:hover {
+      color: var(--accent-hover);
+      background: var(--accent-light);
+    }
+    
+    .js-toc .toc-link.is-active-link,
+    .js-toc-content .toc-link.is-active-link {
+      color: var(--accent-hover);
+      background: #f7fafc;
+      font-weight: 500;
+    }
+    
+    .toc-link::before {
+      margin-top: -8px;
+    }
+    
+    .is-active-link::before {
+      background-color: #4a5568;
+    }
+    
+    .toc-list {
+      a[href] {
+        color: var(--text);
+        font-weight: 400;
+      }
+    }
+    
+    /* Nested TOC items - more minimal */
+    .js-toc .toc-list .toc-list,
+    .js-toc-content .toc-list .toc-list {
+      margin: 0;
+    }
+    
+    .js-toc .toc-list .toc-list .toc-link,
+    .js-toc-content .toc-list .toc-list .toc-link {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 36px;
+      font-weight: 400;
+    }
+    
+    .js-toc .toc-list .toc-list .toc-link:hover,
+    .js-toc-content .toc-list .toc-list .toc-link:hover {
+      color: var(--text);
+    }
+    
+    /* Responsive behavior - hide TOC on smaller screens */
+    @media (max-width: 1400px) {
+      .js-toc {
+        display: none;
+      }
+    }
+    
+    /* On medium screens, make TOC even more compact */
+    @media (min-width: 1401px) and (max-width: 1600px) {
+      .js-toc {
+        width: 240px;
+        right: 10px;
+        font-size: 14px;
+      }
+    
+      .js-toc-title {
+        font-size: 14px;
+      }
+    
+      .js-toc .toc-link,
+      .js-toc-content .toc-link {
+        font-size: 13px;
+        padding: 7px 18px;
+      }
+    
+      .js-toc .toc-list .toc-list .toc-link,
+      .js-toc-content .toc-list .toc-list .toc-link {
+        font-size: 12px;
+        padding-left: 32px;
+      }
+    }
+    
+    /* AnchorJS Styling */
+    .anchor-link {
+      color: var(--muted) !important;
+      text-decoration: none !important;
+      margin-left: -1.2em !important;
+      padding-right: 0.3em !important;
+      opacity: 0 !important;
+      transition: opacity 0.2s ease !important;
+      font-size: 0.9em !important;
+      line-height: 1 !important;
+      font-weight: normal !important;
+    }
+    
+    h2:hover .anchor-link,
+    h3:hover .anchor-link,
+    h2:focus .anchor-link,
+    h3:focus .anchor-link {
+      opacity: 0.7 !important;
+    }
+    
+    .anchor-link:hover,
+    .anchor-link:focus {
+      opacity: 1 !important;
+      color: var(--accent) !important;
+    }
+    
+    /* Ensure headings have proper positioning for anchor links */
+    h2,
+    h3 {
+      position: relative;
+    }
+    
+    /* Adjust heading padding to accommodate anchor links */
+    h2 {
+      padding-left: 1.2em;
+      margin-left: -1.2em;
+    }
+    
+    h3 {
+      padding-left: 1.2em;
+      margin-left: -1.2em;
+    }
+    
+    /* Smooth scroll offset for anchor navigation */
+    h2[id]::before,
+    h3[id]::before {
+      content: "";
+      display: block;
+      height: 80px;
+      margin-top: -80px;
+      visibility: hidden;
+    }
+    
+    </style>
+  </script>
+  <script id="2" type="text/html">
+    
+            <div class="report-header">
+                <h1>Vehicle Characteristics and Market Trends</h1>
+                <div class="artifacts-links">
+                    <a id="full-report-link" 
+                       href="https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/index.html" 
+                       target="_blank" 
+                       data-tippy-content="Open full report in new tab">
+                        <i data-lucide="external-link"></i>
+                        <span>Full Report</span>
+                    </a>
+                    
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline" 
+                       target="_blank" 
+                       data-tippy-content="View AI agent execution traces for generating this report">
+                        <i data-lucide="bot"></i>
+                        <span>Agent Traces</span>
+                    </a>
+                    
+                    <a href="https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/notebook.html" 
+                       download 
+                       data-tippy-content="Download Observable Notebook 2.0 source code of this report">
+                        <i data-lucide="file-down"></i>
+                        <span>Notebook</span>
+                    </a>
+                    <a href="https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/history.json" 
+                       download 
+                       data-tippy-content="Download AI conversation logs of this report">
+                        <i data-lucide="messages-square"></i>
+                        <span>AI Chat Logs</span>
+                    </a>
+                    <a href="https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/provenance.json" 
+                       id="provenance-json"
+                       style="display: none;">
+                    </a>
+                </div>
+                <p>An analysis of vehicle characteristics reveals distinct patterns in pricing, performance, and design across different manufacturing origins and vehicle types. These insights highlight how factors like horsepower, fuel efficiency, and safety features influence market segmentation and consumer choices.</p>
+                <aside class="js-toc"></aside>
+            </div>
+            
+  </script>
+  <script id="3" type="text/markdown">
+    ## Performance and Efficiency Dynamics
+  </script>
+  <script id="4" type="text/markdown">
+    Exploring the relationship between vehicle performance and efficiency reveals how factors such as engine power, transmission type, and vehicle size influence both cost and fuel consumption across various market segments.
+  </script>
+  <script id="5" type="text/html">
+    
+                        <div class="subsection-header">
+                            <h3>Horsepower and Price Relationship by Drivetrain</h3>
+                            <div class="trace-links">
+                                <a id="provenance-nb-link-dataset_01" 
+                                   href="#"
+                                   data-tippy-content="Explore provenance interactively"
+                                   target="_blank">
+                                    <i class="icon" data-lucide="chart-gantt"></i>
+                                </a>
+                                
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=70513cbddff46998" 
+                        data-tippy-content="Dataset traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="database"></i>
+                    </a>
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=326c8a0d2e0cb1e0" 
+                        data-tippy-content="Visualization traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="chart-column-increasing"></i>
+                    </a>
+                    
+                            </div>
+                        </div>
+                        
+  </script>
+  <script id="6" type="text/html">
+    <p id="subsection-dataset_01">A positive relationship between vehicle <span class="data-field">Price</span> and <span class="data-field">Horsepower</span> is generally visible across different <span class="data-field">Drive Train</span> types for vehicles of both <span class="data-value" data-field="Origin">USA</span> and <span class="data-value" data-field="Origin">non-USA</span> <span class="data-field">Origin</span>. This trend is most clearly defined in the <span class="data-value" data-field="Drive Train">Front</span>-wheel drive category, which contains the highest concentration of data points. In contrast, the <span class="data-value" data-field="Drive Train">4WD</span> and <span class="data-value" data-field="Drive Train">Rear</span>-drive segments are sparsely populated, making definitive trend comparisons for these types more challenging.</p>
+  </script>
+  <script id="7" type="text/html">
+    <div id="loading-skeleton-dataset_01"><div class="loading-skeleton" /></div>
+  </script>
+  <script id="8" type="module">
+    // Declare metadata variables
+    const dataset_01_metadata = {
+      "goal": "Show individual vehicle prices against horsepower, segmented by origin and faceted by drive_train, to understand how power influences cost across different manufacturing regions and drivetrain types.",
+      "summary": "A dataset of individual vehicles, showing the relationship between price and horsepower, segmented by origin and faceted by drivetrain type, with additional contextual details for interactive exploration.",
+      "fields": [
+        {
+          "name": "make",
+          "label": "Make",
+          "description": "Original field make used without modification.",
+          "semantic_type": "Name",
+          "role": "detail"
+        },
+        {
+          "name": "model",
+          "label": "Model",
+          "description": "Original field model used without modification.",
+          "semantic_type": "Identifier",
+          "role": "detail"
+        },
+        {
+          "name": "price",
+          "label": "Price",
+          "description": "Original field price used without modification.",
+          "semantic_type": "Money",
+          "role": "primary"
+        },
+        {
+          "name": "horsepower",
+          "label": "Horsepower",
+          "description": "Original field horsepower used without modification.",
+          "semantic_type": "Numeric",
+          "role": "primary"
+        },
+        {
+          "name": "origin",
+          "label": "Origin",
+          "description": "Original field origin used without modification.",
+          "semantic_type": "Category",
+          "role": "segment"
+        },
+        {
+          "name": "drive_train",
+          "label": "Drive Train",
+          "description": "Original field drive_train used without modification.",
+          "semantic_type": "Category",
+          "role": "facet"
+        },
+        {
+          "name": "manufacturer",
+          "label": "Manufacturer",
+          "description": "Original field manufacturer used without modification.",
+          "semantic_type": "Category",
+          "role": "detail"
+        },
+        {
+          "name": "type",
+          "label": "Type",
+          "description": "Original field type used without modification.",
+          "semantic_type": "Category",
+          "role": "detail"
+        },
+        {
+          "name": "cylinders",
+          "label": "Cylinders",
+          "description": "Original field cylinders used without modification.",
+          "semantic_type": "Category",
+          "role": "detail"
+        },
+        {
+          "name": "manual_transmission_availability",
+          "label": "Manual Transmission",
+          "description": "Derived from man_trans_avail: Transformed boolean into human-readable labels 'Manual Available' or 'Manual Not Available'.",
+          "semantic_type": "Category",
+          "role": "detail"
+        },
+        {
+          "name": "passengers",
+          "label": "Passengers",
+          "description": "Original field passengers used without modification.",
+          "semantic_type": "Numeric",
+          "role": "detail"
+        }
+      ]
+    }
+    const dataset_01_vegalite = {
+      "config": {
+        "view": {
+          "continuousWidth": 300,
+          "continuousHeight": 300
+        }
+      },
+      "data": {
+        "name": "dataset_01"
+      },
+      "facet": {
+        "column": {
+          "field": "origin",
+          "title": "Origin",
+          "type": "nominal"
+        },
+        "row": {
+          "field": "drive_train",
+          "title": "Drive Train",
+          "type": "nominal"
+        }
+      },
+      "spec": {
+        "mark": {
+          "type": "point"
+        },
+        "encoding": {
+          "tooltip": [
+            {
+              "field": "make",
+              "title": "Make",
+              "type": "nominal"
+            },
+            {
+              "field": "model",
+              "title": "Model",
+              "type": "nominal"
+            },
+            {
+              "field": "price",
+              "title": "Price",
+              "type": "quantitative"
+            },
+            {
+              "field": "horsepower",
+              "title": "Horsepower",
+              "type": "quantitative"
+            },
+            {
+              "field": "origin",
+              "title": "Origin",
+              "type": "nominal"
+            },
+            {
+              "field": "drive_train",
+              "title": "Drive Train",
+              "type": "nominal"
+            },
+            {
+              "field": "manufacturer",
+              "title": "Manufacturer",
+              "type": "nominal"
+            },
+            {
+              "field": "type",
+              "title": "Type",
+              "type": "nominal"
+            },
+            {
+              "field": "cylinders",
+              "title": "Cylinders",
+              "type": "nominal"
+            },
+            {
+              "field": "manual_transmission_availability",
+              "title": "Manual Transmission",
+              "type": "nominal"
+            },
+            {
+              "field": "passengers",
+              "title": "Passengers",
+              "type": "quantitative"
+            }
+          ],
+          "x": {
+            "field": "price",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "title": "Price",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "horsepower",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "title": "Horsepower",
+            "type": "quantitative"
+          }
+        }
+      },
+      "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json"
+    }
+    
+    // Register field provenance tooltips
+    registerDataFieldTooltips(document.querySelectorAll('#subsection-dataset_01 .data-field'), dataset_01_metadata.fields)
+    
+    // Set href of provenance notebook link
+    const dataset_01_provenance_nb_link = document.getElementById('provenance-nb-link-dataset_01')
+    dataset_01_provenance_nb_link && dataset_01_provenance_nb_link.setAttribute('href', constructProvenanceNotebookUrl(provenanceNotebookTemplate, dataset_01_metadata.goal, dataset_01_vegalite))
+    
+    // Register Dataset
+    const dataset_01_table = "dataset_01"
+    const dataset_01_url = "https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/datasets.parquet"
+    await registerDataset(db, dataset_01_table, dataset_01_url)
+    
+    // Initialize Mosaic Clients
+    const dataset_01_clients = await datatableWithView({table: dataset_01_table, spec: dataset_01_vegalite, metadata: dataset_01_metadata, coordinator})
+    
+    // Display Mosaic Clients
+    display(dataset_01_clients.viewClient.node())
+    display(dataset_01_clients.tableClient.node())
+    
+    // Remove loading skeleton after nodes are displayed
+    const dataset_01_loading_skeleton = document.getElementById('loading-skeleton-dataset_01')
+    dataset_01_loading_skeleton && dataset_01_loading_skeleton.remove()
+  </script>
+  <script id="9" type="text/html">
+    
+                        <div class="subsection-header">
+                            <h3>Fuel Efficiency Trends Across Vehicle Types</h3>
+                            <div class="trace-links">
+                                <a id="provenance-nb-link-dataset_02" 
+                                   href="#"
+                                   data-tippy-content="Explore provenance interactively"
+                                   target="_blank">
+                                    <i class="icon" data-lucide="chart-gantt"></i>
+                                </a>
+                                
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=63e63e5e92aa9b37" 
+                        data-tippy-content="Dataset traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="database"></i>
+                    </a>
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=c17dca43c1ddeb89" 
+                        data-tippy-content="Visualization traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="chart-column-increasing"></i>
+                    </a>
+                    
+                            </div>
+                        </div>
+                        
+  </script>
+  <script id="10" type="text/html">
+    <p id="subsection-dataset_02">A clear market segmentation appears based on <span class="data-field">Transmission</span> availability and <span class="data-field">Vehicle Type</span>. <span class="data-value" data-field="Vehicle Type">Small</span> vehicles, which are only represented with a <span class="data-value" data-field="Transmission">Manual Available</span> option in this dataset, show the highest <span class="data-field">Median City MPG</span>. Conversely, <span class="data-value" data-field="Vehicle Type">Large</span> vehicles are exclusively shown with the <span class="data-value" data-field="Transmission">Manual Not Available</span> option and demonstrate lower fuel efficiency. For vehicle types where both transmission options are present, such as <span class="data-value" data-field="Vehicle Type">Compact</span> and <span class="data-value" data-field="Vehicle Type">Midsize</span>, there is no substantial difference in median fuel efficiency between the two.</p>
+  </script>
+  <script id="11" type="text/html">
+    <div id="loading-skeleton-dataset_02"><div class="loading-skeleton" /></div>
+  </script>
+  <script id="12" type="module">
+    // Declare metadata variables
+    const dataset_02_metadata = {
+      "goal": "Analyze the median mpg_city for each vehicle type, faceted by whether a manual transmission is available, to identify fuel efficiency trends across vehicle categories and transmission options.",
+      "summary": "A summary of median city MPG for each vehicle type, segmented by the availability of manual transmission, to highlight fuel efficiency trends.",
+      "fields": [
+        {
+          "name": "vehicle_type",
+          "label": "Vehicle Type",
+          "description": "Original field [type] used without modification.",
+          "semantic_type": "Category",
+          "role": "primary"
+        },
+        {
+          "name": "manual_transmission",
+          "label": "Transmission",
+          "description": "Derived from [man_trans_avail]: Transformed boolean values into human-readable labels: 'Manual Available' for true and 'Manual Not Available' for false.",
+          "semantic_type": "Category",
+          "role": "facet"
+        },
+        {
+          "name": "median_city_mpg",
+          "label": "Median City MPG",
+          "description": "Derived from [mpg_city]: Median of city MPG, calculated for each vehicle type and transmission availability.",
+          "semantic_type": "Numeric",
+          "role": "primary"
+        }
+      ]
+    }
+    const dataset_02_vegalite = {
+      "config": {
+        "view": {
+          "continuousWidth": 300,
+          "continuousHeight": 300
+        }
+      },
+      "data": {
+        "name": "dataset_02"
+      },
+      "mark": {
+        "type": "rect"
+      },
+      "encoding": {
+        "color": {
+          "field": "median_city_mpg",
+          "scale": {
+            "type": "symlog"
+          },
+          "title": "Median City MPG",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "vehicle_type",
+            "title": "Vehicle Type",
+            "type": "nominal"
+          },
+          {
+            "field": "manual_transmission",
+            "title": "Transmission",
+            "type": "nominal"
+          },
+          {
+            "field": "median_city_mpg",
+            "title": "Median City MPG",
+            "type": "quantitative"
+          }
+        ],
+        "x": {
+          "field": "manual_transmission",
+          "sort": "-y",
+          "title": "Transmission",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "vehicle_type",
+          "sort": "-x",
+          "title": "Vehicle Type",
+          "type": "ordinal"
+        }
+      },
+      "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json"
+    }
+    
+    // Register field provenance tooltips
+    registerDataFieldTooltips(document.querySelectorAll('#subsection-dataset_02 .data-field'), dataset_02_metadata.fields)
+    
+    // Set href of provenance notebook link
+    const dataset_02_provenance_nb_link = document.getElementById('provenance-nb-link-dataset_02')
+    dataset_02_provenance_nb_link && dataset_02_provenance_nb_link.setAttribute('href', constructProvenanceNotebookUrl(provenanceNotebookTemplate, dataset_02_metadata.goal, dataset_02_vegalite))
+    
+    // Register Dataset
+    const dataset_02_table = "dataset_02"
+    const dataset_02_url = "https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/datasets.parquet"
+    await registerDataset(db, dataset_02_table, dataset_02_url)
+    
+    // Initialize Mosaic Clients
+    const dataset_02_clients = await datatableWithView({table: dataset_02_table, spec: dataset_02_vegalite, metadata: dataset_02_metadata, coordinator})
+    
+    // Display Mosaic Clients
+    display(dataset_02_clients.viewClient.node())
+    display(dataset_02_clients.tableClient.node())
+    
+    // Remove loading skeleton after nodes are displayed
+    const dataset_02_loading_skeleton = document.getElementById('loading-skeleton-dataset_02')
+    dataset_02_loading_skeleton && dataset_02_loading_skeleton.remove()
+  </script>
+  <script id="13" type="text/markdown">
+    ## Design and Utility Considerations
+  </script>
+  <script id="14" type="text/markdown">
+    Building on performance insights, an examination of design and utility features, such as fuel tank capacity and safety systems, provides a deeper understanding of manufacturer priorities and their impact on vehicle functionality.
+  </script>
+  <script id="15" type="text/html">
+    
+                        <div class="subsection-header">
+                            <h3>Fuel Tank Capacity and Airbag Configurations</h3>
+                            <div class="trace-links">
+                                <a id="provenance-nb-link-dataset_03" 
+                                   href="#"
+                                   data-tippy-content="Explore provenance interactively"
+                                   target="_blank">
+                                    <i class="icon" data-lucide="chart-gantt"></i>
+                                </a>
+                                
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=3d40432e4b986532" 
+                        data-tippy-content="Dataset traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="database"></i>
+                    </a>
+                    <a href="https://langfuse.peter.gy/project/cme1wh1l00006qj07v328noo8/traces/17763fbb819c1bf7d6eb76d13231b4c5?display=timeline&observation=315e6e79933ce6be" 
+                        data-tippy-content="Visualization traces"
+                        target="_blank">
+                        <i class="icon" data-lucide="chart-column-increasing"></i>
+                    </a>
+                    
+                            </div>
+                        </div>
+                        
+  </script>
+  <script id="16" type="text/html">
+    <p id="subsection-dataset_03">A clear relationship exists between safety features and utility, as vehicles equipped with <span class="data-field">Air Bags</span> generally have a larger <span class="data-field">Avg Fuel Tank Capacity</span>. The <span class="data-value" data-field="Air Bags">Driver only</span> configuration is the most widely available option across the different <span class="data-field">Manufacturer</span>s, while far fewer offer models with no airbags. Certain brands, such as <span class="data-value" data-field="Manufacturer">Lincoln</span>, <span class="data-value" data-field="Manufacturer">Chevrolet</span>, and <span class="data-value" data-field="Manufacturer">Chrysler</span>, tend to provide larger fuel capacities regardless of the airbag system installed.</p>
+  </script>
+  <script id="17" type="text/html">
+    <div id="loading-skeleton-dataset_03"><div class="loading-skeleton" /></div>
+  </script>
+  <script id="18" type="module">
+    // Declare metadata variables
+    const dataset_03_metadata = {
+      "goal": "Rank manufacturers by their average fuel_tank_capacity, segmented by the type of air_bags offered, to highlight which manufacturers prioritize larger fuel tanks and how this relates to safety features.",
+      "summary": "A ranked list of automobile manufacturers by their average fuel tank capacity, segmented by the type of airbags offered. This highlights which brands provide larger fuel tanks and how this capacity varies with the vehicle's safety features.",
+      "fields": [
+        {
+          "name": "manufacturer",
+          "label": "Manufacturer",
+          "description": "Derived from manufacturer: Vehicle manufacturer, used as a grouping dimension. TRIM() has been applied to remove leading/trailing whitespace.",
+          "semantic_type": "Name",
+          "role": "primary"
+        },
+        {
+          "name": "air_bags",
+          "label": "Air Bags",
+          "description": "Derived from air_bags: Type of airbags, used as a grouping dimension. Cleaned using TRIM() and COALESCE() to handle empty or NULL values, defaulting to 'Not Specified'.",
+          "semantic_type": "Category",
+          "role": "segment"
+        },
+        {
+          "name": "average_fuel_tank_capacity",
+          "label": "Avg Fuel Tank Capacity",
+          "description": "Derived from fuel_tank_capacity: The average fuel tank capacity, calculated for each manufacturer and airbag type combination. NULL values in the source data were excluded from the average calculation.",
+          "semantic_type": "Numeric",
+          "role": "primary"
+        }
+      ]
+    }
+    const dataset_03_vegalite = {
+      "config": {
+        "view": {
+          "continuousWidth": 300,
+          "continuousHeight": 300
+        }
+      },
+      "data": {
+        "name": "dataset_03"
+      },
+      "mark": {
+        "type": "point"
+      },
+      "encoding": {
+        "size": {
+          "field": "average_fuel_tank_capacity",
+          "scale": {
+            "type": "linear",
+            "zero": true
+          },
+          "title": "Avg Fuel Tank Capacity",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "manufacturer",
+            "title": "Manufacturer",
+            "type": "nominal"
+          },
+          {
+            "field": "air_bags",
+            "title": "Air Bags",
+            "type": "nominal"
+          },
+          {
+            "field": "average_fuel_tank_capacity",
+            "title": "Avg Fuel Tank Capacity",
+            "type": "quantitative"
+          }
+        ],
+        "x": {
+          "field": "manufacturer",
+          "sort": "-y",
+          "title": "Manufacturer",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "air_bags",
+          "sort": "-x",
+          "title": "Air Bags",
+          "type": "ordinal"
+        }
+      },
+      "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json"
+    }
+    
+    // Register field provenance tooltips
+    registerDataFieldTooltips(document.querySelectorAll('#subsection-dataset_03 .data-field'), dataset_03_metadata.fields)
+    
+    // Set href of provenance notebook link
+    const dataset_03_provenance_nb_link = document.getElementById('provenance-nb-link-dataset_03')
+    dataset_03_provenance_nb_link && dataset_03_provenance_nb_link.setAttribute('href', constructProvenanceNotebookUrl(provenanceNotebookTemplate, dataset_03_metadata.goal, dataset_03_vegalite))
+    
+    // Register Dataset
+    const dataset_03_table = "dataset_03"
+    const dataset_03_url = "https://visxgenai-cdn.peter.gy/sessions/slimmer-enclosure-rained-oddly/artifacts/datasets.parquet"
+    await registerDataset(db, dataset_03_table, dataset_03_url)
+    
+    // Initialize Mosaic Clients
+    const dataset_03_clients = await datatableWithView({table: dataset_03_table, spec: dataset_03_vegalite, metadata: dataset_03_metadata, coordinator})
+    
+    // Display Mosaic Clients
+    display(dataset_03_clients.viewClient.node())
+    display(dataset_03_clients.tableClient.node())
+    
+    // Remove loading skeleton after nodes are displayed
+    const dataset_03_loading_skeleton = document.getElementById('loading-skeleton-dataset_03')
+    dataset_03_loading_skeleton && dataset_03_loading_skeleton.remove()
+  </script>
+  <script id="19" type="text/markdown">
+    ---
+  </script>
+  <script id="20" type="text/markdown">
+    The interplay of performance, efficiency, and design elements shapes distinct market segments within the automotive industry. Understanding how horsepower influences pricing, how vehicle type and transmission affect fuel efficiency, and how safety features correlate with utility provides valuable insights for both manufacturers and consumers. These patterns underscore the diverse priorities that drive vehicle development and purchasing decisions.
+  </script>
+  <script id="21" type="module">
+    // Mosaic, Quak and Vega with Arrow for high-performance cross-filtered visualizations
+    // Custom, self-hosted Quak build based on https://github.com/manzt/quak/pull/90
+    import { datatable } from "https://visxgenai-cdn.peter.gy/npm/quak/DataTable.js";
+    import * as vgplot from "npm:@uwdata/vgplot";
+    import AnchorJS from "npm:anchor-js";
+    import lzString from "npm:lz-string";
+    import tippy from "npm:tippy.js";
+    import * as tocbot from "npm:tocbot";
+    import * as vega from "npm:vega";
+    import vegaEmbed from "npm:vega-embed";
+    import arrow from "npm:vega-loader-arrow";
+    
+    const Icons = {
+      info: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWluZm8taWNvbiBsdWNpZGUtaW5mbyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJNMTIgMTZ2LTQiLz48cGF0aCBkPSJNMTIgOGguMDEiLz48L3N2Zz4=",
+      chevronDown: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bi1pY29uIGx1Y2lkZS1jaGV2cm9uLWRvd24iPjxwYXRoIGQ9Im02IDkgNiA2IDYtNiIvPjwvc3ZnPg==",
+    };
+    
+    // We use an Observable-native DuckDB client, so that the report can be further explored in a reactive env
+    const db = await DuckDBClient.of();
+    const coordinator = new vgplot.Coordinator();
+    coordinator.databaseConnector(vgplot.wasmConnector({ duckdb: db._db }));
+    
+    // On the server side, for n datasets we create 1 parquet file with n columns
+    // where each column is a list of structs representing a standalone dataset.
+    // Accordingly, we must unnest the list of structs recursively to a depth of 2
+    function registerDataset(db, name, url) {
+      const tableQuery = `SELECT UNNEST("${name}", max_depth := 2) FROM '${url}'`;
+      return db.query(`CREATE TABLE IF NOT EXISTS "${name}" AS ${tableQuery}`);
+    }
+    
+    // Allows us to update vega view contents using a Flechette table
+    vega.formats("arrow", arrow);
+    
+    // Process VL spec to include conditioning
+    function specWithSelectionConditioning(
+      input,
+      defaultColor = "#677389",
+      unselectedColor = "gray",
+      unselectedOpacity = 0.125,
+      selectionFieldName = "__selected__"
+    ) {
+      // Deep clone the input to avoid mutating the original
+      const cloned = JSON.parse(JSON.stringify(input));
+    
+      // Determine if we're working with a top-level spec or nested under "spec" key
+      let spec;
+      let isNested = false;
+    
+      if (cloned.spec && typeof cloned.spec === "object") {
+        // Nested case: spec is under a "spec" key
+        spec = cloned.spec;
+        isNested = true;
+      } else if (
+        cloned.encoding ||
+        cloned.mark ||
+        cloned.layer ||
+        cloned.concat ||
+        cloned.facet ||
+        cloned.repeat
+      ) {
+        // Top-level case: the input itself is the spec
+        spec = cloned;
+      } else {
+        throw new Error("Invalid input: could not find Vega-Lite spec");
+      }
+    
+      // Ensure encoding object exists
+      if (!spec.encoding) {
+        spec.encoding = {};
+      }
+    
+      // Helper function to add conditioning to an encoding channel
+      function addCondition(channel, selectedValue, unselectedValue) {
+        if (spec.encoding[channel]) {
+          const originalEncoding = spec.encoding[channel];
+    
+          // Create the conditioned encoding
+          spec.encoding[channel] = {
+            condition: {
+              test: `datum.${selectionFieldName}`,
+              ...originalEncoding,
+            },
+            value: unselectedValue,
+          };
+        }
+      }
+    
+      // Add conditioning to color if it exists
+      if (spec.encoding?.color) {
+        addCondition("color", null, unselectedColor);
+      } else {
+        // If no color encoding exists, create one with just the condition
+        spec.encoding.color = {
+          condition: {
+            test: `datum.${selectionFieldName}`,
+            value: defaultColor,
+          },
+          value: unselectedColor,
+        };
+      }
+    
+      // Add conditioning to opacity if it exists, otherwise create it
+      if (spec.encoding?.opacity) {
+        addCondition("opacity", null, unselectedOpacity);
+      } else {
+        // If no opacity encoding exists, create one with just the condition
+        spec.encoding.opacity = {
+          condition: {
+            test: `datum.${selectionFieldName}`,
+            value: 1.0,
+          },
+          value: unselectedOpacity,
+        };
+      }
+    
+      // Return the appropriate structure
+      return isNested ? cloned : spec;
+    }
+    
+    const TIPPY_CONFIG_DEFAULT = {
+      theme: "light",
+      animation: "fade",
+      duration: [0, 100],
+      maxWidth: 500,
+      placement: "top",
+      arrow: false,
+      offset: [0, 8],
+    };
+    
+    function registerTooltipOnFieldSpan(span, content) {
+      tippy(span, {
+        content,
+        ...TIPPY_CONFIG_DEFAULT,
+      });
+    }
+    
+    // Processes a list of spans such as "<span class="data-field" data-field="Publication Count">publication count</span>" and attaches tooltip to each
+    function registerDataFieldTooltips(spans, fields) {
+      const findFieldByLabel = (label) =>
+        fields.find((field) => field.label === label);
+      for (const span of spans) {
+        const fieldLabel =
+          span.getAttribute("data-field")?.trim() || span.textContent.trim();
+        const field = findFieldByLabel(fieldLabel);
+        if (field) {
+          const tooltipContent = field.description;
+          registerTooltipOnFieldSpan(span, tooltipContent);
+        } else {
+          console.warn(`Field "${fieldLabel}" not found in metadata.`);
+          // Removing data-field class if no field is found
+          span.classList.remove("data-field");
+        }
+      }
+    }
+    
+    // Shares crossfilter with quak.DataTable data profiler and updates the vega view with filtered items
+    class VegaView extends vgplot.MosaicClient {
+      #table;
+      #spec;
+      #el = htl.html`<div style="width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden;">`;
+      #view;
+    
+      constructor(options) {
+        super(options.filterBy);
+        this.#table = options.table;
+        this.#spec = specWithSelectionConditioning(options.spec);
+      }
+    
+      async initView() {
+        // Ensure the spec uses container width and has proper sizing
+        const embedSpec = {
+          ...this.#spec,
+          width: "container",
+          padding: { top: 20, bottom: 20, left: 10, right: 10 },
+          config: {
+            view: {
+              continuousWidth: 250,
+              continuousHeight: 250,
+            },
+          },
+          autosize: {
+            type: "fit",
+            contains: "padding",
+          },
+        };
+    
+        // Embed the view which will be empty initially, as this client will get its data from the linked Quak table
+        const { view } = await vegaEmbed(this.#el, embedSpec, {
+          renderer: "canvas",
+          actions: false, // Disable actions to save space
+          scaleFactor: 1,
+        });
+        this.#view = view;
+    
+        // This will have effect only once `#handleSignalChange` is implemented
+        const signals = (this.#spec.params || []).map((param) => param.name);
+        for (const signal of signals) {
+          view.addSignalListener(signal, (name, value) =>
+            this.#handleSignalChange(name, value)
+          );
+        }
+      }
+    
+      #handleSignalChange(name, value) {
+        // TODO: implement this and emit queries to the coordinator based on interactions within the vega view
+      }
+    
+      query(filter = []) {
+        // Instead of actually filtering away all the data, we just update the value of each spec's `__selected__` field to gray out "filtered" items
+        return vgplot.Query.from(this.#table).select("*", {
+          __selected__: filter.length ? vgplot.and(filter) : true,
+        });
+      }
+    
+      queryResult(data) {
+        const datasetName = this.#spec.data.name;
+    
+        // Update displayed data points with query result
+        this.#view
+          .change(
+            datasetName,
+            vega
+              .changeset()
+              .remove(() => true)
+              .insert(vega.format.arrow(data))
+          )
+          .run();
+    
+        // Resize the view to fit the new data
+        this.#view.resize();
+        this.#view.run();
+    
+        // Emit resize event to window to ensure refresh
+        window.dispatchEvent(new Event("resize"));
+    
+        return this;
+      }
+    
+      get vegaView() {
+        return this.#view;
+      }
+    
+      node() {
+        return this.#el;
+      }
+    }
+    
+    // Convenience API to initialize a VegaView instance
+    async function vegaview(spec, options) {
+      const { coordinator, table, filterBy } = options;
+      const client = new VegaView({ spec, table, filterBy });
+      await client.initView();
+      coordinator.connect(client);
+      return client;
+    }
+    
+    // Convenience API to initialize a linked quak.DataTable and VegaView
+    async function datatableWithView(options) {
+      const { table, metadata, spec, coordinator, tableHeight = 225 } = options;
+    
+      // We use the field labels generated by the backend
+      const getColumnLabelByName = (name) =>
+        metadata.fields.filter((f) => f.name === name)[0]?.label || name;
+    
+      function getColumnLabel(field) {
+        const fieldMetadata = metadata.fields.find((f) => f.name === field.name);
+        const label = fieldMetadata?.label ?? field.name;
+        const description = fieldMetadata?.description ?? "";
+        if (description) {
+          const infoIcon = html`<img
+            src="${Icons.info}"
+            alt="info"
+            style="width: 14px; height: 14px; margin-left: 4px; cursor: help; margin-bottom: -2px;"
+          />`;
+          registerTooltipOnFieldSpan(infoIcon, description);
+          return html`
+            <span>
+              <span class="data-field">${label}</span>
+              ${infoIcon}
+            </span>
+          `;
+        } else {
+          return html`<span class="data-field">${label}</span>`;
+        }
+      }
+    
+      const tableClient = await datatable(table, {
+        coordinator,
+        height: tableHeight,
+        getColumnLabel,
+        getColumnWidth: (field) =>
+          Math.max(125, getColumnLabelByName(field.name).length * 10 + 24),
+      });
+    
+      // Syncing Vega view with table contents by sharing its crossfilter selection
+      const viewClient = await vegaview(spec, {
+        coordinator,
+        table,
+        filterBy: tableClient.filterBy,
+      });
+    
+      return { tableClient, viewClient };
+    }
+    
+    /* Copyright 2024 Marimo. All rights reserved. */
+    function createMarimoWASMLink(opts) {
+      const { code, baseUrl = "https://marimo.app" } = opts;
+      const url = new URL(baseUrl);
+      if (code) {
+        const compressed = lzString.compressToEncodedURIComponent(code);
+        url.hash = `#code/${compressed}`;
+      }
+      return url.href;
+    }
+    
+    function renderProvenanceNotebookTemplate(nb, vars) {
+      let template = nb;
+      for (const [key, value] of Object.entries(vars)) {
+        template = template.replace(new RegExp("\\$" + key, "g"), value);
+      }
+      return template;
+    }
+    
+    function constructProvenanceNotebookUrl(nb, goal, vl_spec) {
+      const provenance_json_url = document.getElementById("provenance-json").href;
+      const vars = { provenance_json_url, goal, vl_spec: JSON.stringify(vl_spec) };
+      const code = renderProvenanceNotebookTemplate(nb, vars);
+      return createMarimoWASMLink({ code });
+    }
+    
+    function initializeReportUI() {
+      // Initialize tooltips
+      const renderedTooltips = tippy("[data-tippy-content]", TIPPY_CONFIG_DEFAULT);
+    
+      // Remove full report link if we're already on the full report page
+      const fullReportLink = document.getElementById("full-report-link");
+      if (window && fullReportLink?.href === window.location.href) {
+        fullReportLink.remove();
+      }
+    
+      // Setup table of contents structure with collapsible header
+      const tocContainer = document.querySelector(".js-toc");
+      if (tocContainer) {
+        // Create header with title and toggle
+        const tocHeader = document.createElement("div");
+        tocHeader.className = "js-toc-header";
+        
+        const tocTitle = document.createElement("span");
+        tocTitle.className = "js-toc-title";
+        tocTitle.textContent = "Contents";
+        
+        const tocToggle = document.createElement("img");
+        tocToggle.className = "js-toc-toggle";
+        tocToggle.src = Icons.chevronDown;
+        tocToggle.alt = "Toggle table of contents";
+        
+        tocHeader.appendChild(tocTitle);
+        tocHeader.appendChild(tocToggle);
+        
+        // Create content container
+        const tocContent = document.createElement("div");
+        tocContent.className = "js-toc-content";
+        
+        // Add header and content to container
+        tocContainer.appendChild(tocHeader);
+        tocContainer.appendChild(tocContent);
+        
+        // Add click handler for collapsible functionality
+        tocHeader.addEventListener("click", () => {
+          tocContainer.classList.toggle("collapsed");
+        });
+      }
+    
+      // Setup AnchorJS for heading anchors
+      const anchors = new AnchorJS({
+        icon: "#",
+        placement: "left",
+        visible: "hover",
+        class: "anchor-link",
+        truncate: 64,
+      });
+    
+      // Add anchors after a brief delay to ensure headings are rendered
+      setTimeout(() => {
+        anchors.add("h2, h3");
+      }, 100);
+    
+      // Initialize tocbot after anchors are added
+      setTimeout(() => {
+        tocbot.init({
+          tocSelector: ".js-toc-content",
+          contentSelector: "body main",
+          headingSelector: "h2, h3",
+          hasInnerContainers: true,
+          scrollSmooth: true,
+          scrollSmoothDuration: 420,
+          throttleTimeout: 50,
+          positionFixedSelector: ".js-toc",
+          fixedSidebarOffset: "auto",
+          headingsOffset: 80,
+          includeHtml: true,
+          orderedList: false,
+        });
+      }, 150);
+    }
+  </script>
+  <script id="22" type="module">
+    // The per-paragraph provenance notebooks will be based on this template
+    const provenanceNotebookTemplateBase64 = 'IiIiClRoaXMgaXMgYSBNYXJpbW8gbm90ZWJvb2sgdGVtcGxhdGUgcmVxdWlyaW5nIHRoZSBmb2xsb3dpbmcgdGVtcGxhdGUgdmFyaWFibGVzIGFzIGlucHV0OgoKLSBwcm92ZW5hbmNlX2pzb25fdXJsOiBzdHIKLSBnb2FsOiBzdHIKLSB2bF9zcGVjOiBzdHIKIiIiCgppbXBvcnQgbWFyaW1vCgpfX2dlbmVyYXRlZF93aXRoID0gIjAuMTQuMTcuZGV2MTMiCmFwcCA9IG1hcmltby5BcHAod2lkdGg9ImNvbHVtbnMiKQoKCkBhcHAuY2VsbChjb2x1bW49MCwgaGlkZV9jb2RlPVRydWUpCmRlZiBfKGZsb3djaGFydCwgbW8pOgogICAgbW8ubWQoCiAgICAgICAgcmYiIiIKICAgICMgNS4gVmlzdWFsaXphdGlvbgoKICAgIHtmbG93Y2hhcnQoc2VsZWN0ZWQ9NSl9CgogICAgVGhlIHN5c3RlbSBwaWNrZWQgdGhlIGtleSBmaWVsZHMgZnJvbSB0aGUgW2Rlcml2ZWQgZGF0YV0oI2RhdGFzZXQtZGVyaXZhdGlvbikgYW5kIHVzZWQgW0RyYWNvXShodHRwczovL2dpdGh1Yi5jb20vY211ZGlnL2RyYWNvMikgdG8gY3JlYXRlIHRoaXMgY2hhcnQuCiAgICAiIiIKICAgICkKICAgIHJldHVybgoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oYWx0LCBkZXJpdmVkX2RmLCBwbCwgdmxfc3BlYyk6CiAgICBjaGFydCA9IGFsdC5DaGFydC5mcm9tX2pzb24odmxfc3BlYykucHJvcGVydGllcyhkYXRhPXBsLmZyb21fYXJyb3coZGVyaXZlZF9kZikpCiAgICBjaGFydAogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhtbyk6CiAgICBtby5tZCgKICAgICAgICByIiIiCiAgICAjIEZyb20gU291cmNlIERhdGEgdG8gRmluYWwgQ2hhcnQKCiAgICBUaGlzIG5vdGVib29rIHNob3dzIGhvdyBjb29yZGluYXRlZCBBSSBhZ2VudHMgdHVybmVkIGlucHV0IGRhdGEgaW50byB0aGUgdmlzdWFsaXphdGlvbiB5b3Ugc2VlIGluIHRoZSByZXBvcnQuIFdlJ2xsIHdhbGsgdGhyb3VnaCBlYWNoIHN0ZXAsIHN0YXJ0aW5nIHdpdGggdGhlIGZpbmFsIGNoYXJ0IGFuZCB3b3JraW5nIGJhY2t3YXJkcyB0byBzZWUgaG93IGl0IHdhcyBidWlsdC4gU3RhcnQgc2Nyb2xsaW5nIHRvIHRoZSByaWdodCBvciB1c2UgdGhlIGxpbmtzIGJlbG93IHRvIGp1bXAgdG8gYW55IHNlY3Rpb24uCgogICAgLSBbMS4gT3JpZ2luYWwgRGF0YXNldF0oIzEtb3JpZ2luYWwtZGF0YXNldCk6IFRoZSBkYXRhIHdlIHN0YXJ0ZWQgd2l0aAogICAgLSBbMi4gRGF0YXNldCBSZWZpbmVtZW50XSgjMi1kYXRhc2V0LXJlZmluZW1lbnQpOiBDbGVhbi11cCBhbmQgZm9ybWF0dGluZyBpbXByb3ZlbWVudHMKICAgIC0gWzMuIEZpZWxkIFJlbWFwcGluZ10oIzMtZmllbGQtcmVtYXBwaW5nKTogTWFraW5nIGNyeXB0aWMgY29kZXMgcmVhZGFibGUKICAgIC0gWzQuIERhdGFzZXQgRGVyaXZhdGlvbl0oIzQtZGF0YXNldC1kZXJpdmF0aW9uKTogVGhlIFtEdWNrREJdKGh0dHA6Ly9kdWNrZGIub3JnKSBxdWVyeSB0aGF0IGZpbHRlcmVkIGFuZCBzaGFwZWQgdGhlIGRhdGEKICAgIC0gWzUuIFZpc3VhbGl6YXRpb25dKCM1LXZpc3VhbGl6YXRpb24pOiBUaGUgY2hhcnQgY3JlYXRlZCBieSBbRHJhY29dKGh0dHBzOi8vZ2l0aHViLmNvbS9jbXVkaWcvZHJhY28yKQogICAgIiIiCiAgICApCiAgICByZXR1cm4KCgpAYXBwLmNlbGwoY29sdW1uPTEsIGhpZGVfY29kZT1UcnVlKQpkZWYgXyhmbG93Y2hhcnQsIG1vKToKICAgIG1vLm1kKHJmIiIiCiAgICAjIDQuIERhdGFzZXQgRGVyaXZhdGlvbgoKICAgIHtmbG93Y2hhcnQoc2VsZWN0ZWQ9NCl9CiAgICAiIiIpCiAgICByZXR1cm4KCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKGdvYWwsIG1vLCBzcWwpOgogICAgbW8ubWQocmYiIiIKICAgIEFmdGVyIHRoZSBzeXN0ZW0gYW5hbHl6ZWQgdGhlIHN0YXRpc3RpY2FsIHByb2ZpbGUgb2YgdGhlIGRhdGFzZXQgYW5kIGl0cyBzZW1hbnRpY3MsIGFuIEFJIGFnZW50IGNvbmNsdWRlZCB0aGF0IGl0IHdvdWxkIGJlIGludGVyZXN0aW5nIHRvIHB1cnN1ZSB0aGUgZm9sbG93aW5nIGFuYWx5dGljYWwgZ29hbDoKCiAgICA+IHtnb2FsfQoKICAgIFRvIHNhdGlzZnkgdGhpcyBnb2FsLCB0aGUgc3lzdGVtIHdyb3RlIHRoaXMgU1FMIHF1ZXJ5OgoKICAgIGBgYHNxbAogICAge3NxbH0KICAgIGBgYAoKICAgIFRoaXMgcXVlcnkgZ290IGV4ZWN1dGVkIGFnYWluc3QgYHJlbWFwcGVkX2RmYCwgd2hpY2ggd2FzIGJ1aWx0IGJ5OgoKICAgIDEuIFN0YXJ0aW5nIHdpdGggdGhlIFtvcmlnaW5hbCBkYXRhXSgjb3JpZ2luYWwtZGF0YXNldCkKICAgIDIuIEFwcGx5aW5nIFtkYXRhIGNsZWFuLXVwXSgjZGF0YXNldC1yZWZpbmVtZW50KQogICAgMy4gTWFraW5nIFtjcnlwdGljIGNvZGVzIHJlYWRhYmxlXSgjZmllbGQtcmVtYXBwaW5nKQogICAgIiIiKQogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhkdWNrZGIsIHJlbWFwcGVkX2RmLCBzcWwpOgogICAgcmVtYXBwZWRfZGYgICMgVGhpcyBlbnN1cmVzIHRoYXQgYnkgdGhlIHRpbWUgTWFyaW1vJ3MgZGF0YWZsb3cgZ3JhcGggcmVhY2hlcyB0aGlzIG5vZGUsIGByZW1hcHBlZF9kZmAgaXMgYXZhaWxhYmxlCiAgICBkZXJpdmVkX2RmID0gZHVja2RiLnF1ZXJ5KHNxbCkuYXJyb3coKQogICAgZGVyaXZlZF9kZgogICAgcmV0dXJuIChkZXJpdmVkX2RmLCkKCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKElOUFVUUywgZ29hbCwgc3RyaW5nKToKICAgIHNxbCA9IHN0cmluZy5UZW1wbGF0ZShJTlBVVFNbImdvYWxzIl1bZ29hbF1bInNxbCJdKS5zdWJzdGl0dXRlKAogICAgICAgIHRhYmxlbmFtZT0icmVtYXBwZWRfZGYiCiAgICApCiAgICByZXR1cm4gKHNxbCwpCgoKQGFwcC5jZWxsKGNvbHVtbj0yLCBoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oZmxvd2NoYXJ0LCBtbyk6CiAgICBtby5tZChyZiIiIgogICAgIyAzLiBGaWVsZCBSZW1hcHBpbmcKCiAgICB7Zmxvd2NoYXJ0KHNlbGVjdGVkPTMpfQogICAgIiIiKQogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhleHBhbmRlZF9maWVsZHMsIGZpZWxkX2V4cGFuc2lvbnMsIGZpZWxkX2V4cGFuc2lvbnNfdG9fbWQsIG1vKToKICAgIG1vLm1kKAogICAgICAgIHJmIiIiCiAgICBUaGUgc3lzdGVtIGxvb2tlZCBhdCBzYW1wbGUgdmFsdWVzIGFuZCBkZWNpZGVkIHRoYXQgZmllbGRzIHsiLCAiLmpvaW4oW2YiYHtmaWVsZH1gIiBmb3IgZmllbGQgaW4gZXhwYW5kZWRfZmllbGRzXSl9IG5lZWRlZCB0byBiZSBtYWRlIG1vcmUgcmVhZGFibGUuCgogICAgSGVyZSBhcmUgdGhlIG1hcHBpbmdzIHRoYXQgd2VyZSBhcHBsaWVkIHRvIHRoZSBbY2xlYW5lZCBkYXRhXSgjZGF0YXNldC1yZWZpbmVtZW50KToKCiAgICB7ZmllbGRfZXhwYW5zaW9uc190b19tZChmaWVsZF9leHBhbnNpb25zKX0KCiAgICBUaGlzIGdhdmUgdXMgYSBkYXRhc2V0IHdoZXJlIGNyeXB0aWMgY29kZXMgYXJlIHJlcGxhY2VkIHdpdGggY2xlYXIsIGh1bWFuLXJlYWRhYmxlIGxhYmVscy4KICAgICIiIgogICAgKQogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhhcHBseV9maWVsZF9leHBhbnNpb25zX3RvX2RmLCBmaWVsZF9leHBhbnNpb25zLCByZWZpbmVkX2RmKToKICAgIHJlbWFwcGVkX2RmID0gYXBwbHlfZmllbGRfZXhwYW5zaW9uc190b19kZihyZWZpbmVkX2RmLCBmaWVsZF9leHBhbnNpb25zKQogICAgcmVtYXBwZWRfZGYKICAgIHJldHVybiAocmVtYXBwZWRfZGYsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oSU5QVVRTKToKICAgICMgTWFwcGluZ3MgZ2VuZXJhdGVkIGZvciBmaWVsZHMgIHdoZXJlIGBpc19jcnlwdGljX2NvZGVgIHdhcyBzZXQgdG8gVHJ1ZSBieSBhbiB1cHN0cmVhbSBhZ2VudCByZWZpbmluZyBmaWVsZHMKICAgIGZpZWxkX2V4cGFuc2lvbnMgPSBJTlBVVFNbImZpZWxkX2V4cGFuc2lvbnMiXQogICAgcmV0dXJuIChmaWVsZF9leHBhbnNpb25zLCkKCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKFR5cGVkRGljdCwgcGEsIHBsKToKICAgIGNsYXNzIEV4cGFuZGVkRmllbGQoVHlwZWREaWN0KToKICAgICAgICBmaWVsZDogc3RyCiAgICAgICAgbWFwcGluZzogZGljdFtzdHIsIHN0cl0KCiAgICBkZWYgcmVtYXBfbGlzdF92YWx1ZXMoCiAgICAgICAgZmllbGQ6IHBsLlNlcmllcywKICAgICAgICBtYXBwaW5nOiBkaWN0W3N0ciwgc3RyXSwKICAgICkgLT4gcGwuU2VyaWVzOgogICAgICAgIGZpZWxkbmFtZSA9IGZpZWxkLm5hbWUKICAgICAgICByZXR1cm4gKAogICAgICAgICAgICBmaWVsZC50b19mcmFtZSgpCiAgICAgICAgICAgIC53aXRoX3Jvd19pbmRleCgpCiAgICAgICAgICAgIC5leHBsb2RlKGZpZWxkbmFtZSkKICAgICAgICAgICAgLndpdGhfY29sdW1ucygKICAgICAgICAgICAgICAgIHBsLmNvbChmaWVsZG5hbWUpLnJlcGxhY2UoCiAgICAgICAgICAgICAgICAgICAgb2xkPWxpc3QobWFwcGluZy5rZXlzKCkpLAogICAgICAgICAgICAgICAgICAgIG5ldz1saXN0KG1hcHBpbmcudmFsdWVzKCkpLAogICAgICAgICAgICAgICAgKQogICAgICAgICAgICApCiAgICAgICAgICAgIC5ncm91cF9ieSgiaW5kZXgiKQogICAgICAgICAgICAuYWdnKGZpZWxkbmFtZSkKICAgICAgICAgICAgLnNlbGVjdChwbC5jb2woZmllbGRuYW1lKS5saXN0LmRyb3BfbnVsbHMoKSlbZmllbGRuYW1lXQogICAgICAgICkKCiAgICBkZWYgcmVtYXBfc2NhbGFyX3ZhbHVlcygKICAgICAgICBmaWVsZDogcGwuU2VyaWVzLAogICAgICAgIG1hcHBpbmc6IGRpY3Rbc3RyLCBzdHJdLAogICAgKSAtPiBwbC5TZXJpZXM6CiAgICAgICAgcmV0dXJuIGZpZWxkLnJlcGxhY2UoCiAgICAgICAgICAgIG9sZD1saXN0KG1hcHBpbmcua2V5cygpKSwKICAgICAgICAgICAgbmV3PWxpc3QobWFwcGluZy52YWx1ZXMoKSksCiAgICAgICAgKQoKICAgIGRlZiBfYXBwbHlfZmllbGRfZXhwYW5zaW9uc190b19kZigKICAgICAgICBkZjogcGwuRGF0YUZyYW1lLAogICAgICAgIGZpZWxkX2V4cGFuc2lvbnM6IGxpc3RbRXhwYW5kZWRGaWVsZF0sCiAgICApIC0+IHBsLkRhdGFGcmFtZToKICAgICAgICBmaW5hbF9kZiA9IGRmCiAgICAgICAgZm9yIGV4cGFuc2lvbiBpbiBmaWVsZF9leHBhbnNpb25zOgogICAgICAgICAgICBmaWVsZG5hbWUgPSBleHBhbnNpb25bImZpZWxkIl0KICAgICAgICAgICAgbWFwcGluZyA9IGV4cGFuc2lvblsibWFwcGluZyJdCiAgICAgICAgICAgIGZpZWxkID0gZGZbZmllbGRuYW1lXQogICAgICAgICAgICBpZiBmaWVsZC5kdHlwZS5iYXNlX3R5cGUoKSBpcyBwbC5MaXN0OgogICAgICAgICAgICAgICAgcmVtYXBwZWRfZmllbGQgPSByZW1hcF9saXN0X3ZhbHVlcyhmaWVsZCwgbWFwcGluZykKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJlbWFwcGVkX2ZpZWxkID0gcmVtYXBfc2NhbGFyX3ZhbHVlcyhmaWVsZCwgbWFwcGluZykKCiAgICAgICAgICAgIGZpbmFsX2RmID0gZmluYWxfZGYud2l0aF9jb2x1bW5zKHJlbWFwcGVkX2ZpZWxkKQoKICAgICAgICByZXR1cm4gZmluYWxfZGYKCiAgICBkZWYgYXBwbHlfZmllbGRfZXhwYW5zaW9uc190b19kZigKICAgICAgICBkZjogcGEuVGFibGUsCiAgICAgICAgZmllbGRfZXhwYW5zaW9uczogbGlzdFtFeHBhbmRlZEZpZWxkXSwKICAgICkgLT4gcGEuVGFibGU6CiAgICAgICAgZGYgPSBfYXBwbHlfZmllbGRfZXhwYW5zaW9uc190b19kZihwbC5mcm9tX2Fycm93KGRmKSwgZmllbGRfZXhwYW5zaW9ucykKICAgICAgICByZXR1cm4gcGEuVGFibGUuZnJvbV9weWxpc3QoZGYudG9fZGljdHMoKSkKCiAgICByZXR1cm4gKGFwcGx5X2ZpZWxkX2V4cGFuc2lvbnNfdG9fZGYsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oZmllbGRfZXhwYW5zaW9ucyk6CiAgICBleHBhbmRlZF9maWVsZHMgPSBbaXRlbVsiZmllbGQiXSBmb3IgaXRlbSBpbiBmaWVsZF9leHBhbnNpb25zXQoKICAgIGRlZiBmaWVsZF9leHBhbnNpb25fdG9fbWQoZmllbGQ6IHN0ciwgbWFwcGluZzogZGljdFtzdHIsIHN0cl0pIC0+IHN0cjoKICAgICAgICBsaW5lcyA9IFsKICAgICAgICAgICAgZiIqKntmaWVsZH0qKiIsCiAgICAgICAgICAgICpbZiItIHtrZXl9OiB7dmFsdWV9IiBmb3Iga2V5LCB2YWx1ZSBpbiBtYXBwaW5nLml0ZW1zKCldLAogICAgICAgIF0KCiAgICAgICAgcmV0dXJuICJcblxuIi5qb2luKGxpbmVzKQoKICAgIGRlZiBmaWVsZF9leHBhbnNpb25zX3RvX21kKGZpZWxkX2V4cGFuc2lvbnM6IGxpc3QpOgogICAgICAgIHJldHVybiAiXG5cbiIuam9pbigKICAgICAgICAgICAgWwogICAgICAgICAgICAgICAgZmllbGRfZXhwYW5zaW9uX3RvX21kKGl0ZW1bImZpZWxkIl0sIGl0ZW1bIm1hcHBpbmciXSkKICAgICAgICAgICAgICAgIGZvciBpdGVtIGluIGZpZWxkX2V4cGFuc2lvbnMKICAgICAgICAgICAgXQogICAgICAgICkKCiAgICByZXR1cm4gZXhwYW5kZWRfZmllbGRzLCBmaWVsZF9leHBhbnNpb25zX3RvX21kCgoKQGFwcC5jZWxsKGNvbHVtbj0zLCBoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oZmxvd2NoYXJ0LCBtbyk6CiAgICBtby5tZCgKICAgICAgICByZiIiIgogICAgIyAyLiBEYXRhc2V0IFJlZmluZW1lbnQKCiAgICB7Zmxvd2NoYXJ0KHNlbGVjdGVkPTIpfQoKICAgIFRoZSBzeXN0ZW0gbG9va2VkIGF0IHNhbXBsZSBkYXRhIGZyb20gZWFjaCBmaWVsZCBhbmQgbWFkZSB0aGVzZSBpbXByb3ZlbWVudHMgdG8gZml4IGZvcm1hdHRpbmcgaXNzdWVzIGFuZCBtYXRjaCBob3cgdGhlIGRhdGEgc2hvdWxkIHJlYWxseSBiZSB1c2VkLgogICAgIiIiCiAgICApCiAgICByZXR1cm4KCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKGZpZWxkX3JlZmluZW1lbnRzLCBwYSwgcGQpOgogICAgcGEuVGFibGUuZnJvbV9wYW5kYXMocGQuRGF0YUZyYW1lKGZpZWxkX3JlZmluZW1lbnRzKS5kcm9wKCJfX21ldGFkYXRhX18iLCBheGlzPTEpKQogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhtbyk6CiAgICBtby5tZCgKICAgICAgICByIiIiQWZ0ZXIgYXBwbHlpbmcgdGhlc2UgY2hhbmdlcywgd2UgZ2V0IHRoZSBjbGVhbmVkIGRhdGFzZXQgYmVsb3csIHdoaWNoIGNvbWVzIGRpcmVjdGx5IGZyb20gdGhlIFtvcmlnaW5hbCBkYXRhXSgjb3JpZ2luYWwtZGF0YXNldCkuIiIiCiAgICApCiAgICByZXR1cm4KCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKGFwcGx5X2ZpZWxkX3JlZmluZW1lbnRzX3RvX2RmLCBkZiwgZmllbGRfcmVmaW5lbWVudHMpOgogICAgcmVmaW5lZF9kZiA9IGFwcGx5X2ZpZWxkX3JlZmluZW1lbnRzX3RvX2RmKGRmLCBmaWVsZF9yZWZpbmVtZW50cykKICAgIHJlZmluZWRfZGYKICAgIHJldHVybiAocmVmaW5lZF9kZiwpCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhDYWxsYWJsZSwgSXRlcmFibGUsIE9wdGlvbmFsLCBUeXBlZERpY3QsIHBhLCBwbCk6CiAgICBTZW1hbnRpY1R5cGUgPSBzdHIKICAgIFNlbWFudGljU2NoZW1hID0gZGljdFtzdHIsIFNlbWFudGljVHlwZV0KCiAgICBjbGFzcyBGaWVsZFJlZmluZW1lbnQoVHlwZWREaWN0KToKICAgICAgICBmaWVsZDogc3RyCiAgICAgICAgc2VtYW50aWNfdHlwZTogc3RyCiAgICAgICAgc2VwYXJhdG9yOiBPcHRpb25hbFtzdHJdCiAgICAgICAgZGF0ZV9mb3JtYXQ6IE9wdGlvbmFsW3N0cl0KICAgICAgICBpc19jcnlwdGljX2NvZGU6IE9wdGlvbmFsW2Jvb2xdCiAgICAgICAgYm9vbGVhbl90cnV0aHlfdmFsdWU6IE9wdGlvbmFsW3N0ciB8IGludCB8IGZsb2F0XQoKICAgIGNsYXNzIFNlbWFudGljVHlwZWRFeHByKFR5cGVkRGljdCk6CiAgICAgICAgZXhwcjogcGwuRXhwcgogICAgICAgIHR5cGU6IFNlbWFudGljVHlwZQoKICAgIEZpZWxkUmVmaW5lbWVudEhhbmRsZXIgPSBDYWxsYWJsZVsKICAgICAgICBbcGwuU2VyaWVzLCBGaWVsZFJlZmluZW1lbnRdLAogICAgICAgIEl0ZXJhYmxlW1NlbWFudGljVHlwZWRFeHByXSwKICAgIF0KCiAgICBkZWYgX2hhbmRsZV9zZXBhcmF0b3IoCiAgICAgICAgXzogcGwuU2VyaWVzLCByZWZpbmVtZW50OiBGaWVsZFJlZmluZW1lbnQKICAgICkgLT4gbGlzdFtTZW1hbnRpY1R5cGVkRXhwcl06CiAgICAgICAgaWYgcmVmaW5lbWVudFsic2VwYXJhdG9yIl0gaXMgTm9uZToKICAgICAgICAgICAgcmV0dXJuIFtdCgogICAgICAgIGZpZWxkbmFtZSA9IHJlZmluZW1lbnRbImZpZWxkIl0KICAgICAgICBzZXBhcmF0b3IgPSByZWZpbmVtZW50WyJzZXBhcmF0b3IiXQogICAgICAgICMgQWNjb3VudCBmb3IgdW5zb2xpY2l0ZWQgY29tbWVudHMgaW4gdGhlIG91dHB1dCBieSBzcGxpdHRpbmcgb24gd2hpdGVzcGFjZSBhbmQgdGFraW5nIHRoZSBhY3R1YWwgc2VwYXJhdG9yCiAgICAgICAgc2VwID0gc2VwYXJhdG9yLnNwbGl0KCIgIilbMF0KICAgICAgICBsaXN0X2V4cHIgPSAoCiAgICAgICAgICAgIHBsLmNvbChmaWVsZG5hbWUpCiAgICAgICAgICAgIC5zdHIuc3BsaXQoc2VwKQogICAgICAgICAgICAuZmlsbF9udWxsKFtdKQogICAgICAgICAgICAubGlzdC5ldmFsKHBsLmVsZW1lbnQoKS5zdHIuc3RyaXBfY2hhcnMoIiAiKSkKICAgICAgICAgICAgIyAubGlzdC5maWx0ZXIocGwuZWxlbWVudCgpLnN0ci5sZW5fY2hhcnMoKSA+IDApCiAgICAgICAgKQoKICAgICAgICAjIElmIGNhdGVnb3J5LCB0aGVuIGFsc28gbm9ybWFsaXplIGNhc2luZyBvZiB0aGUgaXRlbXMKICAgICAgICBpZiByZWZpbmVtZW50WyJzZW1hbnRpY190eXBlIl0gPT0gIkNhdGVnb3J5IjoKICAgICAgICAgICAgbGlzdF9leHByID0gbGlzdF9leHByLmxpc3QuZXZhbChwbC5lbGVtZW50KCkuc3RyLnRvX2xvd2VyY2FzZSgpKQoKICAgICAgICByZXR1cm4gWwogICAgICAgICAgICB7ImV4cHIiOiBsaXN0X2V4cHIsICJ0eXBlIjogcmVmaW5lbWVudFsic2VtYW50aWNfdHlwZSJdfSwKICAgICAgICBdCgogICAgZGVmIF9oYW5kbGVfZGF0ZV9mb3JtYXQoCiAgICAgICAgc2VyaWVzOiBwbC5TZXJpZXMsIHJlZmluZW1lbnQ6IEZpZWxkUmVmaW5lbWVudAogICAgKSAtPiBsaXN0W1NlbWFudGljVHlwZWRFeHByXToKICAgICAgICBpZiByZWZpbmVtZW50WyJkYXRlX2Zvcm1hdCJdIGlzIE5vbmUgb3Igc2VyaWVzLmR0eXBlLmlzX3RlbXBvcmFsKCk6CiAgICAgICAgICAgIHJldHVybiBbXQoKICAgICAgICBmaWVsZG5hbWUgPSByZWZpbmVtZW50WyJmaWVsZCJdCiAgICAgICAgZGF0ZV9mb3JtYXQgPSByZWZpbmVtZW50WyJkYXRlX2Zvcm1hdCJdCiAgICAgICAgIyBpZiBhbnkgb2YgdGhlc2UgYXJlIHByZXNlbnQgaW4gYGRhdGVfZm9ybWF0YCB0aGVuIHdlIGhhdmUgYSBkYXRldGltZQogICAgICAgIGRhdGV0aW1lX3RlbXBsYXRlX2NoYXJzID0geyIlSCIsICIlTSIsICIlUyJ9CiAgICAgICAgaXNfZGF0ZXRpbWUgPSBhbnkoKGNoIGluIGRhdGVfZm9ybWF0IGZvciBjaCBpbiBkYXRldGltZV90ZW1wbGF0ZV9jaGFycykpCiAgICAgICAgaWYgaXNfZGF0ZXRpbWU6CiAgICAgICAgICAgIGV4cHIgPSBwbC5jb2woZmllbGRuYW1lKS5jYXN0KHBsLlN0cmluZykuc3RyLnRvX2RhdGV0aW1lKGRhdGVfZm9ybWF0KQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIGV4cHIgPSBwbC5jb2woZmllbGRuYW1lKS5jYXN0KHBsLlN0cmluZykuc3RyLnRvX2RhdGUoZGF0ZV9mb3JtYXQpCgogICAgICAgIHJldHVybiBbeyJleHByIjogZXhwciwgInR5cGUiOiByZWZpbmVtZW50WyJzZW1hbnRpY190eXBlIl19XQoKICAgIGRlZiBfaGFuZGxlX2Jvb2xlYW4oCiAgICAgICAgc2VyaWVzOiBwbC5TZXJpZXMsIHJlZmluZW1lbnQ6IEZpZWxkUmVmaW5lbWVudAogICAgKSAtPiBsaXN0W1NlbWFudGljVHlwZWRFeHByXToKICAgICAgICBpZiByZWZpbmVtZW50WyJib29sZWFuX3RydXRoeV92YWx1ZSJdIGlzIE5vbmUgb3Igc2VyaWVzLmR0eXBlID09IHBsLkJvb2xlYW46CiAgICAgICAgICAgIHJldHVybiBbXQogICAgICAgIGZpZWxkbmFtZSA9IHJlZmluZW1lbnRbImZpZWxkIl0KICAgICAgICBib29sZWFuX3RydXRoeV92YWx1ZSA9IHJlZmluZW1lbnRbImJvb2xlYW5fdHJ1dGh5X3ZhbHVlIl0KICAgICAgICBleHByID0gKAogICAgICAgICAgICBwbC5jb2woZmllbGRuYW1lKQogICAgICAgICAgICAuY2FzdChwbC5TdHJpbmcpCiAgICAgICAgICAgIC5lcShwbC5saXQoc3RyKGJvb2xlYW5fdHJ1dGh5X3ZhbHVlKSkpCiAgICAgICAgICAgIC5maWxsX251bGwoRmFsc2UpCiAgICAgICAgKQogICAgICAgIHJldHVybiBbeyJleHByIjogZXhwciwgInR5cGUiOiByZWZpbmVtZW50WyJzZW1hbnRpY190eXBlIl19XQoKICAgIGRlZiBfYXBwbHlfZmllbGRfcmVmaW5lbWVudHNfdG9fZGYoCiAgICAgICAgZGY6IHBsLkRhdGFGcmFtZSwKICAgICAgICByZWZpbmVtZW50czogbGlzdFtGaWVsZFJlZmluZW1lbnRdLAogICAgKSAtPiB0dXBsZVtwbC5EYXRhRnJhbWUsIFNlbWFudGljU2NoZW1hXToKICAgICAgICByZWZpbmVtZW50X2hhbmRsZXJzID0gWwogICAgICAgICAgICBfaGFuZGxlX3NlcGFyYXRvciwKICAgICAgICAgICAgX2hhbmRsZV9kYXRlX2Zvcm1hdCwKICAgICAgICAgICAgX2hhbmRsZV9ib29sZWFuLAogICAgICAgIF0KCiAgICAgICAgIyBHZW5lcmFsLCB1bmNvbmRpdGlvbmFsIHJlZmluZW1lbnQgZXhwcmVzc2lvbnMgdG8gYXBwbHkgY29tbW9uIG5vcm1hbGl6YXRpb25zCiAgICAgICAgc3RyaXBfc3BhY2VzX3NjYWxhciA9IHBsLmNvbChwbC5TdHJpbmcpLnN0ci5zdHJpcF9jaGFycygiICIpCiAgICAgICAgc3RyaXBfc3BhY2VzX2xpc3QgPSBwbC5jb2wocGwuTGlzdChwbC5TdHJpbmcpKS5saXN0LmV2YWwoCiAgICAgICAgICAgIHBsLmVsZW1lbnQoKS5zdHIuc3RyaXBfY2hhcnMoIiAiKQogICAgICAgICkKICAgICAgICBnZW5lcmFsX3JlZmluZW1lbnRfZXhwcnM6IGxpc3RbcGwuRXhwcl0gPSBbCiAgICAgICAgICAgIHN0cmlwX3NwYWNlc19zY2FsYXIsCiAgICAgICAgICAgIHN0cmlwX3NwYWNlc19saXN0LAogICAgICAgIF0KICAgICAgICByZWZpbmVkX2RmID0gZGYud2l0aF9jb2x1bW5zKCpnZW5lcmFsX3JlZmluZW1lbnRfZXhwcnMpCiAgICAgICAgc2VtYW50aWNfc2NoZW1hOiBTZW1hbnRpY1NjaGVtYSA9IHt9CgogICAgICAgIGZvciByZWZpbmVtZW50IGluIHJlZmluZW1lbnRzOgogICAgICAgICAgICBmb3IgaGFuZGxlciBpbiByZWZpbmVtZW50X2hhbmRsZXJzOgogICAgICAgICAgICAgICAgc2VyaWVzID0gZGYuZ2V0X2NvbHVtbihyZWZpbmVtZW50WyJmaWVsZCJdKQogICAgICAgICAgICAgICAgcmVmaW5lcl9leHByZXNzaW9ucyA9IGhhbmRsZXIoc2VyaWVzLCByZWZpbmVtZW50KQogICAgICAgICAgICAgICAgZXhwcnMgPSBbCiAgICAgICAgICAgICAgICAgICAgZXhwcl93aXRoX3NlbWFudGljX3R5cGVbImV4cHIiXQogICAgICAgICAgICAgICAgICAgIGZvciBleHByX3dpdGhfc2VtYW50aWNfdHlwZSBpbiByZWZpbmVyX2V4cHJlc3Npb25zCiAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICBzdWJzY2hlbWEgPSB7cmVmaW5lbWVudFsiZmllbGQiXTogcmVmaW5lbWVudFsic2VtYW50aWNfdHlwZSJdfSB8IHsKICAgICAgICAgICAgICAgICAgICBleHByX3dpdGhfc2VtYW50aWNfdHlwZVsKICAgICAgICAgICAgICAgICAgICAgICAgImV4cHIiCiAgICAgICAgICAgICAgICAgICAgXS5tZXRhLm91dHB1dF9uYW1lKCk6IGV4cHJfd2l0aF9zZW1hbnRpY190eXBlWyJ0eXBlIl0KICAgICAgICAgICAgICAgICAgICBmb3IgZXhwcl93aXRoX3NlbWFudGljX3R5cGUgaW4gcmVmaW5lcl9leHByZXNzaW9ucwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgcmVmaW5lZF9kZiA9IHJlZmluZWRfZGYud2l0aF9jb2x1bW5zKCpleHBycykKICAgICAgICAgICAgICAgIHNlbWFudGljX3NjaGVtYSA9IHNlbWFudGljX3NjaGVtYSB8IHN1YnNjaGVtYSAgIyB0eXBlOiBpZ25vcmUKCiAgICAgICAgIyBTZWxlY3QgY29sdW1ucyB0byBtYXRjaCB0aGUgb3JkZXIgb2YgdGhlIHNlbWFudGljIHNjaGVtYQogICAgICAgIHJlZmluZWRfZGYgPSByZWZpbmVkX2RmLnNlbGVjdChsaXN0KHNlbWFudGljX3NjaGVtYS5rZXlzKCkpKQoKICAgICAgICByZXR1cm4gcmVmaW5lZF9kZiwgc2VtYW50aWNfc2NoZW1hICAjIHR5cGU6IGlnbm9yZQoKICAgIGRlZiBhcHBseV9maWVsZF9yZWZpbmVtZW50c190b19kZigKICAgICAgICBkZjogcGEuVGFibGUsCiAgICAgICAgcmVmaW5lbWVudHM6IGxpc3RbRmllbGRSZWZpbmVtZW50XSwKICAgICkgLT4gcGEuVGFibGU6CiAgICAgICAgZGYsIF8gPSBfYXBwbHlfZmllbGRfcmVmaW5lbWVudHNfdG9fZGYocGwuZnJvbV9hcnJvdyhkZiksIHJlZmluZW1lbnRzKQogICAgICAgIHJldHVybiBwYS5UYWJsZS5mcm9tX3B5bGlzdChkZi50b19kaWN0cygpKQoKICAgIHJldHVybiAoYXBwbHlfZmllbGRfcmVmaW5lbWVudHNfdG9fZGYsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oSU5QVVRTKToKICAgICMgUmVmaW5lbWVudHMgc3VnZ2VzdGVkIGJ5IEFJIGFnZW50IGZvciBlYWNoIGZpZWxkIHRvIGdldCBhIHJlcHJlc2VudGF0aW9uIHRoYXQgYmV0dGVyIGNhcHR1cmVzIGZpZWxkIHNlbWFudGljcwogICAgZmllbGRfcmVmaW5lbWVudHMgPSBJTlBVVFNbImZpZWxkX3JlZmluZW1lbnRzIl0KICAgIHJldHVybiAoZmllbGRfcmVmaW5lbWVudHMsKQoKCkBhcHAuY2VsbChjb2x1bW49NCwgaGlkZV9jb2RlPVRydWUpCmRlZiBfKGRhdGFzZXRfdXJpLCBmbG93Y2hhcnQsIG1vKToKICAgIG1vLm1kKAogICAgICAgIHJmIiIiCiAgICAjIDEuIE9yaWdpbmFsIERhdGFzZXQKCiAgICB7Zmxvd2NoYXJ0KHNlbGVjdGVkPTEpfQoKICAgIFRoaXMgaXMgdGhlIHJhdyBkYXRhIHdlIHN0YXJ0ZWQgd2l0aCwgbG9hZGVkIGZyb20ge2RhdGFzZXRfdXJpfS4KICAgICIiIgogICAgKQogICAgcmV0dXJuCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhkYXRhc2V0X3VyaSwgcmVhZF9kYXRhc2V0KToKICAgIGRmID0gcmVhZF9kYXRhc2V0KGRhdGFzZXRfdXJpKQogICAgZGYKICAgIHJldHVybiAoZGYsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oZHVja2RiLCBwYSwgcGQpOgogICAgZGVmIHJlYWRfZGF0YXNldChkYXRhc2V0X3VyaTogc3RyKSAtPiBwYS5UYWJsZToKICAgICAgICAjIFVzaW5nIFBhbmRhcyB0byByZWFkIGRhdGFzZXQgc28gdGhhdCB3ZSBoYXZlIG5vIG5ldHdvcmtpbmcgaXNzdWVzIGluIFB5b2RpZGUtYmFzZWQgTWFyaW1vIGVudgogICAgICAgIGlmIGRhdGFzZXRfdXJpLmVuZHN3aXRoKCIuY3N2Iikgb3IgZGF0YXNldF91cmkuZW5kc3dpdGgoIi5jc3YuZ3oiKToKICAgICAgICAgICAgcGFuZGFzX2RmID0gcGQucmVhZF9jc3YoZGF0YXNldF91cmkpCiAgICAgICAgZWxpZiBkYXRhc2V0X3VyaS5lbmRzd2l0aCgiLnBhcnF1ZXQiKToKICAgICAgICAgICAgcGFuZGFzX2RmID0gcGQucmVhZF9wYXJxdWV0KGRhdGFzZXRfdXJpKQogICAgICAgIGVsaWYgZGF0YXNldF91cmkuZW5kc3dpdGgoIi5qc29uIik6CiAgICAgICAgICAgIHBhbmRhc19kZiA9IHBkLnJlYWRfanNvbihkYXRhc2V0X3VyaSkKICAgICAgICBlbHNlOgogICAgICAgICAgICByYWlzZSBOb3RJbXBsZW1lbnRlZEVycm9yKGYiTm8gc3VwcG9ydCBmb3IgcmVhZGluZyB7ZGF0YXNldF91cml9IikKCiAgICAgICAgcmV0dXJuIGR1Y2tkYi5xdWVyeSgic2VsZWN0ICogZnJvbSBwYW5kYXNfZGYiKS5hcnJvdygpCgogICAgcmV0dXJuIChyZWFkX2RhdGFzZXQsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oSU5QVVRTKToKICAgICMgT3JpZ2luYWwsIHVucHJvY2Vzc2VkIGRhdGFzZXQKICAgIGRhdGFzZXRfdXJpID0gSU5QVVRTWyJkYXRhc2V0X3VyaSJdCiAgICByZXR1cm4gKGRhdGFzZXRfdXJpLCkKCgpAYXBwLmNlbGwoaGlkZV9jb2RlPVRydWUpCmRlZiBfKGh0dHB4KToKICAgICMgVGhlc2UgYXJlIHRoZSBvbmx5IGlucHV0cyBvZiB0aGUgbm90ZWJvb2sgdGVtcGxhdGUsIGFsbCBvdGhlciBjZWxscyBhcmUgZnVuY3Rpb25zIG9mIHRoZXNlCgogICAgcHJvdmVuYW5jZV9qc29uX3VybCA9ICIkcHJvdmVuYW5jZV9qc29uX3VybCIKICAgIGdvYWwgPSAiJGdvYWwiCiAgICB2bF9zcGVjID0gIiIiJHZsX3NwZWMiIiIKCiAgICBJTlBVVFMgPSBodHRweC5nZXQocHJvdmVuYW5jZV9qc29uX3VybCkuanNvbigpCiAgICByZXR1cm4gSU5QVVRTLCBnb2FsLCB2bF9zcGVjCgoKQGFwcC5jZWxsKGhpZGVfY29kZT1UcnVlKQpkZWYgXyhtbyk6CiAgICBkZWYgZmxvd2NoYXJ0KHNlbGVjdGVkOiBpbnQpOgogICAgICAgIG5vZGVzID0gWyJBIiwgIkIiLCAiQyIsICJEIiwgIkUiXQogICAgICAgIHNlbGVjdGVkX25vZGUgPSBub2Rlc1tzZWxlY3RlZCAtIDFdCiAgICAgICAgcmV0dXJuIG1vLm1lcm1haWQocmYiIiIKICAgIGZsb3djaGFydCBSTAogICAgICAgICUlIERlZmluZSBOb2RlcwogICAgICAgIEEoMVwuIE9yaWdpbmFsIERhdGFzZXQpCiAgICAgICAgQlsyXC4gRGF0YXNldCBSZWZpbmVtZW50XQogICAgICAgIENbM1wuIEZpZWxkIFJlbWFwcGluZ10KICAgICAgICBEWzRcLiBEYXRhc2V0IERlcml2YXRpb25dCiAgICAgICAgRShbNVwuIFZpc3VhbGl6YXRpb25dKQoKICAgICAgICAlJSBEZWZpbmUgQ29ubmVjdGlvbnMKICAgICAgICBBIC0tPnxDbGVhbiAmIEZvcm1hdHwgQgogICAgICAgIEIgLS0+fE1ha2UgQ29kZXMgUmVhZGFibGV8IEMKICAgICAgICBDIC0tPnxGaWx0ZXIgJiBTaGFwZSBEYXRhIHVzaW5nIER1Y2tEQnwgRAogICAgICAgIEQgLS0+fEdlbmVyYXRlIENoYXJ0IFNwZWMgdXNpbmcgRHJhY298IEUKCiAgICAgICAgJSUgRGVmaW5lIGNsaWNrYWJsZSBsaW5rcyBmb3IgZWFjaCBub2RlCiAgICAgICAgY2xpY2sgQSAiIzEtb3JpZ2luYWwtZGF0YXNldCIgIkdvIHRvIE9yaWdpbmFsIERhdGFzZXQgc2VjdGlvbiIKICAgICAgICBjbGljayBCICIjMi1kYXRhc2V0LXJlZmluZW1lbnQiICJHbyB0byBEYXRhc2V0IFJlZmluZW1lbnQgc2VjdGlvbiIKICAgICAgICBjbGljayBDICIjMy1maWVsZC1yZW1hcHBpbmciICJHbyB0byBGaWVsZCBSZW1hcHBpbmcgc2VjdGlvbiIKICAgICAgICBjbGljayBEICIjNC1kYXRhc2V0LWRlcml2YXRpb24iICJHbyB0byBEYXRhc2V0IERlcml2YXRpb24gc2VjdGlvbiIKICAgICAgICBjbGljayBFICIjNS12aXN1YWxpemF0aW9uIiAiR28gdG8gVmlzdWFsaXphdGlvbiBzZWN0aW9uIgoKICAgICAgICAlJSBTdHlsZSB0aGUgc2VsZWN0ZWQgbm9kZQogICAgICAgIGNsYXNzRGVmIHNlbGVjdGVkIGZpbGw6I2NkZTRmZixzdHJva2U6IzVhOTZkOCxzdHJva2Utd2lkdGg6M3B4CiAgICAgICAgY2xhc3Mge3NlbGVjdGVkX25vZGV9IHNlbGVjdGVkCiAgICAiIiIpCgogICAgcmV0dXJuIChmbG93Y2hhcnQsKQoKCkBhcHAuY2VsbChoaWRlX2NvZGU9VHJ1ZSkKZGVmIF8oKToKICAgIGltcG9ydCBzdHJpbmcKICAgIGZyb20gdHlwaW5nIGltcG9ydCBDYWxsYWJsZSwgSXRlcmFibGUsIE9wdGlvbmFsCgogICAgaW1wb3J0IGFsdGFpciBhcyBhbHQKICAgIGltcG9ydCBkdWNrZGIKICAgIGltcG9ydCBodHRweAogICAgaW1wb3J0IG1hcmltbyBhcyBtbwogICAgaW1wb3J0IHBhbmRhcyBhcyBwZAogICAgaW1wb3J0IHBvbGFycyBhcyBwbAogICAgaW1wb3J0IHB5YXJyb3cgYXMgcGEKICAgIGZyb20gdHlwaW5nX2V4dGVuc2lvbnMgaW1wb3J0IFR5cGVkRGljdAoKICAgIHJldHVybiAoCiAgICAgICAgQ2FsbGFibGUsCiAgICAgICAgSXRlcmFibGUsCiAgICAgICAgT3B0aW9uYWwsCiAgICAgICAgVHlwZWREaWN0LAogICAgICAgIGFsdCwKICAgICAgICBkdWNrZGIsCiAgICAgICAgaHR0cHgsCiAgICAgICAgbW8sCiAgICAgICAgcGEsCiAgICAgICAgcGQsCiAgICAgICAgcGwsCiAgICAgICAgc3RyaW5nLAogICAgKQoKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBhcHAucnVuKCkK'
+    const provenanceNotebookTemplate = atob(provenanceNotebookTemplateBase64)
+  </script>
+  <script id="23" type="module">
+    const uiInitResult = initializeReportUI()
+  </script>
+</notebook>

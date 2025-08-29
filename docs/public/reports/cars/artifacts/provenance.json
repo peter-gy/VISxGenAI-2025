@@ -1,0 +1,320 @@
+{
+	"dataset_uri": "https://raw.githubusercontent.com/altair-viz/vega_datasets/refs/heads/master/vega_datasets/_data/cars.json",
+	"field_refinements": [
+		{
+			"field": "Name",
+			"semantic_type": "Name",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "0f865258fa7a221a"
+			}
+		},
+		{
+			"field": "Miles_per_Gallon",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "f6ce5cdfdd7bbb81"
+			}
+		},
+		{
+			"field": "Cylinders",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "e9a1b10889fc696a"
+			}
+		},
+		{
+			"field": "Displacement",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "2cd35aa4deb13044"
+			}
+		},
+		{
+			"field": "Horsepower",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "3ed6b2ce2a5c1e88"
+			}
+		},
+		{
+			"field": "Weight_in_lbs",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "0b1b92b10fdaf249"
+			}
+		},
+		{
+			"field": "Acceleration",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "2239d1ba737dd1c0"
+			}
+		},
+		{
+			"field": "Year",
+			"semantic_type": "Year",
+			"separator": null,
+			"date_format": "%Y-%m-%d",
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "8fdaee30c91dfb7c"
+			}
+		},
+		{
+			"field": "Origin",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "9e2ec4fecdc62b09190d325f68e52bfd",
+				"observation_id": "1bbd7cccd6f30110"
+			}
+		}
+	],
+	"field_expansions": [],
+	"goals": {
+		"Track the median Miles_per_Gallon over Year, segmented by Origin, to understand how fuel efficiency has evolved across different manufacturing regions.": {
+			"goal": "Track the median Miles_per_Gallon over Year, segmented by Origin, to understand how fuel efficiency has evolved across different manufacturing regions.",
+			"sql": "-- Calculate the median fuel efficiency over time, segmented by origin\nSELECT\n  \"Year\" AS year,\n  \"Origin\" AS origin,\n  MEDIAN(\"Miles_per_Gallon\") FILTER (WHERE \"Miles_per_Gallon\" IS NOT NULL) AS median_miles_per_gallon\nFROM $tablename\nGROUP BY\n  \"Year\",\n  \"Origin\"\nORDER BY\n  year ASC,\n  origin ASC;",
+			"fields": {
+				"summary": "A time-series analysis showing the median fuel efficiency (Miles per Gallon) of vehicles, tracked annually and segmented by their region of origin.",
+				"fields": [
+					{
+						"name": "year",
+						"label": "Year",
+						"description": "Original field [Year] used without modification.",
+						"semantic_type": "DateTime",
+						"role": "primary"
+					},
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field [Origin] used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "median_miles_per_gallon",
+						"label": "Median Miles per Gallon",
+						"description": "Derived from [Miles_per_Gallon]: Median of Miles_per_Gallon, aggregated by Year and Origin. NULL values were excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Analyze the correlation between individual Horsepower and Weight_in_lbs, colored by Origin and faceted by a derived Cylinders_Tier (e.g., 'low', 'medium', 'high' based on Cylinders count), to explore the power-to-weight relationship across vehicle types and origins.": {
+			"goal": "Analyze the correlation between individual Horsepower and Weight_in_lbs, colored by Origin and faceted by a derived Cylinders_Tier (e.g., 'low', 'medium', 'high' based on Cylinders count), to explore the power-to-weight relationship across vehicle types and origins.",
+			"sql": "-- This query prepares data for a scatter plot to analyze the relationship between vehicle horsepower and weight.\n-- It includes the vehicle's origin for color segmentation and a derived cylinder tier for faceting.\n-- Vehicle names are included for tooltips, and null values in key measures are excluded.\nSELECT\n  \"Name\" AS name,\n  \"Horsepower\" AS horsepower,\n  \"Weight_in_lbs\" AS weight_in_lbs,\n  \"Origin\" AS origin,\n  -- Categorize vehicles into tiers based on the number of engine cylinders for faceted analysis.\n  CASE\n    WHEN \"Cylinders\" <= 4 THEN 'Low (3-4)'\n    WHEN \"Cylinders\" <= 6 THEN 'Medium (5-6)'\n    ELSE 'High (8+)'\n  END AS cylinders_tier,\n  \"Year\" AS year,\n  \"Cylinders\" AS cylinders,\n  \"Displacement\" AS displacement,\n  \"Acceleration\" AS acceleration,\n  \"Miles_per_Gallon\" AS miles_per_gallon\nFROM\n  $tablename\nWHERE\n  \"Horsepower\" IS NOT NULL\n  AND \"Weight_in_lbs\" IS NOT NULL",
+			"fields": {
+				"summary": "A detailed view of individual vehicles, showing the correlation between horsepower and weight. Data is segmented by origin and categorized into cylinder tiers, with additional vehicle specifications provided for rich, interactive cross-filtering and tooltips.",
+				"fields": [
+					{
+						"name": "name",
+						"label": "Name",
+						"description": "Original field Name used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "horsepower",
+						"label": "Horsepower",
+						"description": "Original field Horsepower used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "weight_in_lbs",
+						"label": "Weight (lbs)",
+						"description": "Original field Weight_in_lbs used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field Origin used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "cylinders_tier",
+						"label": "Cylinders Tier",
+						"description": "Derived from Cylinders: Categorized into 'Low (3-4)', 'Medium (5-6)', and 'High (8+)' tiers based on the number of cylinders.",
+						"semantic_type": "Ordinal",
+						"role": "facet"
+					},
+					{
+						"name": "year",
+						"label": "Year",
+						"description": "Original field Year used without modification.",
+						"semantic_type": "DateTime",
+						"role": "detail"
+					},
+					{
+						"name": "cylinders",
+						"label": "Cylinders",
+						"description": "Original field Cylinders used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "displacement",
+						"label": "Displacement",
+						"description": "Original field Displacement used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "acceleration",
+						"label": "Acceleration",
+						"description": "Original field Acceleration used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "miles_per_gallon",
+						"label": "Miles per Gallon",
+						"description": "Original field Miles_per_Gallon used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Examine the distribution of individual Acceleration values across different Origin categories, using Displacement as a size or color encoding, to highlight regional differences in vehicle quickness and engine volume.": {
+			"goal": "Examine the distribution of individual Acceleration values across different Origin categories, using Displacement as a size or color encoding, to highlight regional differences in vehicle quickness and engine volume.",
+			"sql": "-- This query selects individual vehicle records to analyze the distribution of acceleration.\n-- It includes key performance and specification details for each vehicle.\nSELECT\n  \"Name\" AS vehicle_name,\n  \"Acceleration\" AS acceleration,\n  \"Displacement\" AS displacement,\n  \"Origin\" AS origin,\n  \"Miles_per_Gallon\" AS miles_per_gallon,\n  \"Cylinders\" AS cylinders,\n  \"Horsepower\" AS horsepower,\n  \"Weight_in_lbs\" AS weight_in_lbs,\n  \"Year\" AS model_year\nFROM $tablename\nWHERE\n  \"Acceleration\" IS NOT NULL AND \"Displacement\" IS NOT NULL AND \"Origin\" IS NOT NULL",
+			"fields": {
+				"summary": "A detailed list of individual vehicles, showing their acceleration, engine displacement, and origin, supplemented with other performance metrics for contextual analysis.",
+				"fields": [
+					{
+						"name": "vehicle_name",
+						"label": "Vehicle Name",
+						"description": "Original field Name used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "acceleration",
+						"label": "Acceleration",
+						"description": "Original field Acceleration used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "displacement",
+						"label": "Displacement",
+						"description": "Original field Displacement used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field Origin used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "miles_per_gallon",
+						"label": "Miles per Gallon",
+						"description": "Original field Miles_per_Gallon used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "cylinders",
+						"label": "Cylinders",
+						"description": "Original field Cylinders used without modification.",
+						"semantic_type": "Ordinal",
+						"role": "detail"
+					},
+					{
+						"name": "horsepower",
+						"label": "Horsepower",
+						"description": "Original field Horsepower used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "weight_in_lbs",
+						"label": "Weight (lbs)",
+						"description": "Original field Weight_in_lbs used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "model_year",
+						"label": "Model Year",
+						"description": "Original field Year used without modification.",
+						"semantic_type": "DateTime",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Rank Origins by their average derived MPG_per_Weight_Ratio (Miles_per_Gallon / Weight_in_lbs) to identify which regions produce vehicles with the best fuel efficiency relative to their mass.": {
+			"goal": "Rank Origins by their average derived MPG_per_Weight_Ratio (Miles_per_Gallon / Weight_in_lbs) to identify which regions produce vehicles with the best fuel efficiency relative to their mass.",
+			"sql": "-- Calculate the average fuel efficiency to weight ratio for each origin\nSELECT\n  \"Origin\" AS origin,\n  AVG(\"Miles_per_Gallon\" / \"Weight_in_lbs\") AS avg_mpg_per_weight_ratio\nFROM $tablename\nWHERE\n  \"Miles_per_Gallon\" IS NOT NULL AND \"Weight_in_lbs\" IS NOT NULL AND \"Weight_in_lbs\" != 0\nGROUP BY\n  \"Origin\"\nORDER BY\n  avg_mpg_per_weight_ratio DESC;",
+			"fields": {
+				"summary": "A ranking of vehicle manufacturing origins by their average fuel efficiency to weight ratio, highlighting regions that produce the most mass-efficient vehicles.",
+				"fields": [
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field Origin used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "avg_mpg_per_weight_ratio",
+						"label": "Avg MPG per Weight Ratio",
+						"description": "Derived from Miles_per_Gallon and Weight_in_lbs: Average of the ratio of Miles_per_Gallon to Weight_in_lbs, grouped by Origin. Records with null values for Miles_per_Gallon or Weight_in_lbs were excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		}
+	}
+}

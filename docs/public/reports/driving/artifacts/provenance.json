@@ -1,0 +1,176 @@
+{
+	"dataset_uri": "https://raw.githubusercontent.com/altair-viz/vega_datasets/refs/heads/master/vega_datasets/_data/driving.json",
+	"field_refinements": [
+		{
+			"field": "side",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "bc82e4881fffcd0e9632152fa630c4b8",
+				"observation_id": "73abc421556a4685"
+			}
+		},
+		{
+			"field": "year",
+			"semantic_type": "Year",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "bc82e4881fffcd0e9632152fa630c4b8",
+				"observation_id": "c817af9fa66c0b9e"
+			}
+		},
+		{
+			"field": "miles",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "bc82e4881fffcd0e9632152fa630c4b8",
+				"observation_id": "107a6a524f3b430e"
+			}
+		},
+		{
+			"field": "gas",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "bc82e4881fffcd0e9632152fa630c4b8",
+				"observation_id": "caaba646e82a5186"
+			}
+		}
+	],
+	"field_expansions": [],
+	"goals": {
+		"Track the annual total miles traveled over time, segmented by vehicle 'side'.": {
+			"goal": "Track the annual total miles traveled over time, segmented by vehicle 'side'.",
+			"sql": "-- Calculate the total miles traveled per year, segmented by vehicle side.\nSELECT\n  -- Convert the integer year into a proper DATE format for temporal analysis.\n  MAKE_DATE(year, 1, 1) AS year,\n  -- Clean and use the 'side' column for segmentation.\n  COALESCE(NULLIF(TRIM(side), ''), 'Unknown') AS side,\n  -- Sum the miles, ensuring NULLs are excluded from the calculation.\n  SUM(miles) FILTER (\n    WHERE\n      miles IS NOT NULL\n  ) AS total_miles\nFROM $tablename\nGROUP BY\n  year,\n  side\nORDER BY\n  year ASC,\n  side ASC;",
+			"fields": {
+				"summary": "A time-series analysis showing the total miles traveled annually, segmented by the vehicle's 'side'. This view aggregates mileage data to highlight trends over the years for different vehicle orientations.",
+				"fields": [
+					{
+						"name": "year",
+						"label": "Year",
+						"description": "Derived from [year]: The calendar year of the operational data, converted to a DATE type representing the first day of the year (YYYY-01-01) for proper temporal analysis.",
+						"semantic_type": "Year",
+						"role": "primary"
+					},
+					{
+						"name": "side",
+						"label": "Side",
+						"description": "Derived from [side]: The categorical orientation of the vehicle. Whitespace is trimmed, and any NULL or empty values are replaced with 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "total_miles",
+						"label": "Total Miles",
+						"description": "Derived from [miles]: The total distance traveled, calculated by summing the 'miles' for each year and side combination. Any records with NULL 'miles' are excluded from the sum.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Analyze the relationship between individual miles traveled and gas consumed, colored by vehicle 'side'.": {
+			"goal": "Analyze the relationship between individual miles traveled and gas consumed, colored by vehicle 'side'.",
+			"sql": "-- This query selects individual vehicle operation records to analyze the relationship\n-- between miles traveled and gas consumed, segmented by the vehicle's 'side'.\n-- It filters out records with null values for miles or gas to ensure data quality for the visualization.\nSELECT\n  \"miles\",\n  \"gas\",\n  \"side\",\n  -- Convert the 'year' integer into a proper DATE format for temporal context in tooltips.\n  MAKE_DATE(\"year\", 1, 1) AS year_of_operation\nFROM $tablename\nWHERE\n  \"miles\" IS NOT NULL AND \"gas\" IS NOT NULL;",
+			"fields": {
+				"summary": "A detailed view of individual vehicle operations, showing the relationship between miles traveled and gas consumed. Each data point is categorized by the vehicle's 'side' and includes the year of operation for contextual reference, suitable for a scatter plot analysis.",
+				"fields": [
+					{
+						"name": "miles",
+						"label": "Miles",
+						"description": "Original field miles used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "gas",
+						"label": "Gas Consumed",
+						"description": "Original field gas used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "side",
+						"label": "Side",
+						"description": "Original field side used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "year_of_operation",
+						"label": "Year of Operation",
+						"description": "Derived from year: Converted the integer year into a full date (YYYY-01-01) using MAKE_DATE(year, 1, 1) for use as a temporal detail field.",
+						"semantic_type": "DateTime",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Rank the average 'miles_per_gallon' (derived from miles / gas) for each vehicle 'side'.": {
+			"goal": "Rank the average 'miles_per_gallon' (derived from miles / gas) for each vehicle 'side'.",
+			"sql": "-- Calculate the average miles per gallon for each vehicle side\nSELECT\n  \"side\",\n  AVG(\"miles\" / \"gas\") AS average_miles_per_gallon\nFROM $tablename\nWHERE\n  \"gas\" IS NOT NULL AND \"gas\" > 0 -- Exclude records where gas is null or zero to prevent division errors\nGROUP BY\n  \"side\"\nORDER BY\n  average_miles_per_gallon DESC;",
+			"fields": {
+				"summary": "A ranked comparison of the average miles per gallon for each vehicle side, ordered from most to least efficient.",
+				"fields": [
+					{
+						"name": "side",
+						"label": "Side",
+						"description": "Original field [side] used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "average_miles_per_gallon",
+						"label": "Average Miles Per Gallon",
+						"description": "Derived from [miles, gas]: Calculated as the average of the ratio of miles to gas, grouped by side. Records with null or zero gas values are excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Examine the median gas consumption across different years, faceted by vehicle 'side'.": {
+			"goal": "Examine the median gas consumption across different years, faceted by vehicle 'side'.",
+			"sql": "-- Calculate the median gas consumption per year, faceted by vehicle side.\nSELECT\n  -- Convert the integer year into a proper DATE format for temporal analysis.\n  MAKE_DATE(year, 1, 1) AS year_date,\n  side,\n  -- Calculate the median gas consumption, ignoring any NULL values.\n  MEDIAN(gas) AS median_gas\nFROM $tablename\nWHERE\n  gas IS NOT NULL\nGROUP BY\n  year,\n  side\nORDER BY\n  year_date ASC,\n  side ASC;",
+			"fields": {
+				"summary": "A summary of median gas consumption over the years, broken down by vehicle side, to analyze trends in fuel efficiency.",
+				"fields": [
+					{
+						"name": "year_date",
+						"label": "Year",
+						"description": "Derived from [year]: The calendar year of the operational data, converted to a DATE format (January 1st of the year) for temporal analysis.",
+						"semantic_type": "DateTime",
+						"role": "primary"
+					},
+					{
+						"name": "side",
+						"label": "Side",
+						"description": "Original field [side] used without modification.",
+						"semantic_type": "Category",
+						"role": "facet"
+					},
+					{
+						"name": "median_gas",
+						"label": "Median Gas",
+						"description": "Derived from [gas]: The median gas consumption, aggregated by year and side.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		}
+	}
+}

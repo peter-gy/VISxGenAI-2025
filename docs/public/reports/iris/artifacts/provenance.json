@@ -1,0 +1,216 @@
+{
+	"dataset_uri": "https://raw.githubusercontent.com/altair-viz/vega_datasets/refs/heads/master/vega_datasets/_data/iris.json",
+	"field_refinements": [
+		{
+			"field": "sepalLength",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "27e85865f39917cc340df891d3112c45",
+				"observation_id": "b7e5b67a8475f415"
+			}
+		},
+		{
+			"field": "sepalWidth",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "27e85865f39917cc340df891d3112c45",
+				"observation_id": "6c49b640581f8092"
+			}
+		},
+		{
+			"field": "petalLength",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "27e85865f39917cc340df891d3112c45",
+				"observation_id": "f9564e8c61928cb2"
+			}
+		},
+		{
+			"field": "petalWidth",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "27e85865f39917cc340df891d3112c45",
+				"observation_id": "58d5efc237435c04"
+			}
+		},
+		{
+			"field": "species",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "27e85865f39917cc340df891d3112c45",
+				"observation_id": "3a6ca9bc86931e27"
+			}
+		}
+	],
+	"field_expansions": [],
+	"goals": {
+		"Show the median petalLength and petalWidth for each species to understand their typical sizes.": {
+			"goal": "Show the median petalLength and petalWidth for each species to understand their typical sizes.",
+			"sql": "-- Calculate the median petal length and width for each iris species\nSELECT\n  \"species\",\n  MEDIAN(\"petalLength\") FILTER (\n    WHERE\n      \"petalLength\" IS NOT NULL\n  ) AS median_petal_length,\n  MEDIAN(\"petalWidth\") FILTER (\n    WHERE\n      \"petalWidth\" IS NOT NULL\n  ) AS median_petal_width\nFROM $tablename\nGROUP BY\n  \"species\"\nORDER BY\n  \"species\" ASC",
+			"fields": {
+				"summary": "A summary of iris flower morphology, showing the median petal length and width for each species.",
+				"fields": [
+					{
+						"name": "species",
+						"label": "Species",
+						"description": "Original field species used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "median_petal_length",
+						"label": "Median Petal Length",
+						"description": "Derived from petalLength: Median aggregated by species, excluding NULL values.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "median_petal_width",
+						"label": "Median Petal Width",
+						"description": "Derived from petalWidth: Median aggregated by species, excluding NULL values.",
+						"semantic_type": "Numeric",
+						"role": "segment"
+					}
+				]
+			}
+		},
+		"Analyze the correlation between individual sepalLength and petalLength, segmented by species, to see how these dimensions relate within and across different iris types.": {
+			"goal": "Analyze the correlation between individual sepalLength and petalLength, segmented by species, to see how these dimensions relate within and across different iris types.",
+			"sql": "-- Retrieve individual flower measurements to analyze the correlation between sepal and petal length, segmented by species.\nSELECT\n  \"sepalLength\" AS sepal_length,\n  \"petalLength\" AS petal_length,\n  \"species\",\n  \"sepalWidth\" AS sepal_width,\n  \"petalWidth\" AS petal_width\nFROM $tablename",
+			"fields": {
+				"summary": "A dataset showing the relationship between sepal length and petal length for individual iris flowers, segmented by species. Includes sepal and petal width for additional contextual analysis.",
+				"fields": [
+					{
+						"name": "sepal_length",
+						"label": "Sepal Length",
+						"description": "Original field sepalLength used without modification",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "petal_length",
+						"label": "Petal Length",
+						"description": "Original field petalLength used without modification",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "species",
+						"label": "Species",
+						"description": "Original field species used without modification",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "sepal_width",
+						"label": "Sepal Width",
+						"description": "Original field sepalWidth used without modification. Included to provide additional context for interactive exploration.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "petal_width",
+						"label": "Petal Width",
+						"description": "Original field petalWidth used without modification. Included to provide additional context for interactive exploration.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Compare the average sepalWidth across different species to identify which species tend to have wider or narrower sepals.": {
+			"goal": "Compare the average sepalWidth across different species to identify which species tend to have wider or narrower sepals.",
+			"sql": "-- Calculate the average sepal width for each iris species\nSELECT\n  \"species\",\n  AVG(\"sepalWidth\") FILTER (\n    WHERE\n      \"sepalWidth\" IS NOT NULL\n  ) AS average_sepal_width\nFROM $tablename\nGROUP BY\n  \"species\"\nORDER BY\n  average_sepal_width DESC;",
+			"fields": {
+				"summary": "A summary of the average sepal width for each iris species, ordered from widest to narrowest.",
+				"fields": [
+					{
+						"name": "species",
+						"label": "Species",
+						"description": "Original field [species] used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "average_sepal_width",
+						"label": "Average Sepal Width",
+						"description": "Derived from [sepalWidth]: Average aggregated by species. NULL values were excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Examine the distribution of a derived 'petalArea' (petalLength * petalWidth) for each species to understand the overall size of petals.": {
+			"goal": "Examine the distribution of a derived 'petalArea' (petalLength * petalWidth) for each species to understand the overall size of petals.",
+			"sql": "-- Calculate petal area for each flower to analyze its distribution by species\nSELECT\n  \"species\",\n  \"petalLength\" * \"petalWidth\" AS petal_area,\n  \"petalLength\" AS petal_length,\n  \"petalWidth\" AS petal_width,\n  \"sepalLength\" AS sepal_length,\n  \"sepalWidth\" AS sepal_width\nFROM $tablename\nWHERE\n  \"petalLength\" IS NOT NULL AND \"petalWidth\" IS NOT NULL",
+			"fields": {
+				"summary": "A dataset of individual iris flowers, showing the calculated petal area for each species to analyze its distribution. Includes original measurements for additional context.",
+				"fields": [
+					{
+						"name": "species",
+						"label": "Species",
+						"description": "Original field species used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "petal_area",
+						"label": "Petal Area",
+						"description": "Derived from petalLength, petalWidth: Calculated as the product of \"petalLength\" and \"petalWidth\".",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "petal_length",
+						"label": "Petal Length",
+						"description": "Original field petalLength used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "petal_width",
+						"label": "Petal Width",
+						"description": "Original field petalWidth used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "sepal_length",
+						"label": "Sepal Length",
+						"description": "Original field sepalLength used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "sepal_width",
+						"label": "Sepal Width",
+						"description": "Original field sepalWidth used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		}
+	}
+}

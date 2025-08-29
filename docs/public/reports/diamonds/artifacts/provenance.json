@@ -1,0 +1,282 @@
+{
+	"dataset_uri": "https://visxgenai-cdn.peter.gy/datasets/ibis/diamonds.parquet",
+	"field_refinements": [
+		{
+			"field": "carat",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "ca2ef1b61be7c7b6"
+			}
+		},
+		{
+			"field": "cut",
+			"semantic_type": "Ordinal",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "79a112ac73e28383"
+			}
+		},
+		{
+			"field": "color",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": true,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "24b207e6acf2b29d"
+			}
+		},
+		{
+			"field": "clarity",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": true,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "947a8b3dc1b0a069"
+			}
+		},
+		{
+			"field": "depth",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "d0ad0128571fbe3b"
+			}
+		},
+		{
+			"field": "table",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "705f6cbbac711a5b"
+			}
+		},
+		{
+			"field": "price",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "4a0ff1042fec7755"
+			}
+		},
+		{
+			"field": "x",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "eea657215d5f320e"
+			}
+		},
+		{
+			"field": "y",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "af3c476c30e7286b"
+			}
+		},
+		{
+			"field": "z",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "6ba71bfb0d5c6c98"
+			}
+		}
+	],
+	"field_expansions": [
+		{
+			"field": "color",
+			"mapping": {
+				"D": "Colorless",
+				"E": "Near Colorless",
+				"F": "Near Colorless",
+				"G": "Slightly Yellow",
+				"H": "Slightly Yellow",
+				"I": "Slightly Yellow",
+				"J": "Light Yellow"
+			},
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "4cdfc6b06b35aa16"
+			}
+		},
+		{
+			"field": "clarity",
+			"mapping": {
+				"I1": "Included 1",
+				"IF": "Internally Flawless",
+				"SI1": "Slightly Included 1",
+				"SI2": "Slightly Included 2",
+				"VS1": "Very Slightly Included 1",
+				"VS2": "Very Slightly Included 2",
+				"VVS1": "Very Very Slightly Included 1",
+				"VVS2": "Very Very Slightly Included 2"
+			},
+			"__metadata__": {
+				"trace_id": "99c00a1cc6866b7e04c474f01566688d",
+				"observation_id": "134882d17732a5ab"
+			}
+		}
+	],
+	"goals": {
+		"Analyze the relationship between individual diamond price and carat weight, segmented by cut quality to observe how cut influences this correlation.": {
+			"goal": "Analyze the relationship between individual diamond price and carat weight, segmented by cut quality to observe how cut influences this correlation.",
+			"sql": "-- This query aggregates diamond properties to analyze the average relationship\n-- between price and carat weight, segmented by the quality of the cut,\n-- to address the row limit error by summarizing data.\nSELECT\n  TRIM(cut) AS cut,\n  AVG(carat) FILTER (WHERE carat IS NOT NULL) AS avg_carat,\n  AVG(price) FILTER (WHERE price IS NOT NULL) AS avg_price\nFROM $tablename\nWHERE\n  cut IS NOT NULL -- Exclude rows with null cut quality before aggregation\nGROUP BY\n  TRIM(cut)\nORDER BY\n  avg_price DESC;",
+			"fields": {
+				"summary": "Aggregated view of average diamond price and carat weight by cut quality.",
+				"fields": [
+					{
+						"name": "cut",
+						"label": "Cut",
+						"description": "Derived from cut: Trimmed string value of the diamond's cut quality.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "avg_carat",
+						"label": "Avg Carat",
+						"description": "Derived from carat: Average carat weight of diamonds, excluding NULL values, grouped by cut quality.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "avg_price",
+						"label": "Avg Price",
+						"description": "Derived from price: Average price of diamonds, excluding NULL values, grouped by cut quality.",
+						"semantic_type": "Money",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Examine the median price of diamonds across different combinations of color and clarity grades.": {
+			"goal": "Examine the median price of diamonds across different combinations of color and clarity grades.",
+			"sql": "-- Calculate the median price for each combination of diamond color and clarity\nSELECT\n  \"color\",\n  \"clarity\",\n  MEDIAN(\"price\") FILTER (\n    WHERE\n      \"price\" IS NOT NULL\n  ) AS median_price\nFROM\n  $tablename\nWHERE\n  \"color\" IS NOT NULL AND \"clarity\" IS NOT NULL\nGROUP BY\n  \"color\",\n  \"clarity\"\nORDER BY\n  \"color\",\n  \"clarity\";",
+			"fields": {
+				"summary": "A summary of the median diamond price, segmented by color and clarity grades, providing insight into how these two key attributes collectively influence market value.",
+				"fields": [
+					{
+						"name": "color",
+						"label": "Color",
+						"description": "Original field [color] used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "clarity",
+						"label": "Clarity",
+						"description": "Original field [clarity] used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "median_price",
+						"label": "Median Price",
+						"description": "Derived from [price]: Median price calculated for each combination of color and clarity. Null price values are excluded from the calculation.",
+						"semantic_type": "Money",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Rank the average carat weight of diamonds by their cut and color grades to identify typical sizes for quality combinations.": {
+			"goal": "Rank the average carat weight of diamonds by their cut and color grades to identify typical sizes for quality combinations.",
+			"sql": "-- Calculate the average carat weight for each combination of diamond cut and color\nSELECT\n  \"cut\",\n  \"color\",\n  AVG(\"carat\") FILTER (\n    WHERE\n      \"carat\" IS NOT NULL\n  ) AS average_carat\nFROM $tablename\nGROUP BY\n  \"cut\",\n  \"color\"\nORDER BY\n  average_carat DESC;",
+			"fields": {
+				"summary": "A view ranking the average carat weight of diamonds, grouped by their cut and color grades, to identify typical sizes for different quality combinations.",
+				"fields": [
+					{
+						"name": "cut",
+						"label": "Cut",
+						"description": "Original field cut used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "color",
+						"label": "Color",
+						"description": "Original field color used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "average_carat",
+						"label": "Average Carat",
+						"description": "Derived from carat: Average aggregated by cut and color.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Explore the relationships between individual diamond dimensions (length 'x', width 'y', depth 'z') and carat weight, segmented by clarity.": {
+			"goal": "Explore the relationships between individual diamond dimensions (length 'x', width 'y', depth 'z') and carat weight, segmented by clarity.",
+			"sql": "SELECT\n  clarity AS clarity,\n  AVG(carat) AS avg_carat, -- Calculate average carat\n  AVG(x * y * z) AS avg_volume -- Calculate average volume (derived from x, y, z)\nFROM $tablename\nWHERE\n  x IS NOT NULL\n  AND y IS NOT NULL\n  AND z IS NOT NULL\n  AND carat IS NOT NULL\n  AND clarity IS NOT NULL\nGROUP BY\n  clarity\nORDER BY\n  clarity;",
+			"fields": {
+				"summary": "Aggregated diamond properties to explore relationships between clarity, carat weight, and diamond dimensions.",
+				"fields": [
+					{
+						"name": "clarity",
+						"label": "Clarity",
+						"description": "Original field clarity used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "avg_carat",
+						"label": "Avg Carat",
+						"description": "Derived from carat: Average of carat grouped by clarity.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "avg_volume",
+						"label": "Avg Volume",
+						"description": "Derived from x, y, and z: Average of the product of x, y, and z (representing volume) grouped by clarity.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		}
+	}
+}

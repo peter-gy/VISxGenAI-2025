@@ -1,0 +1,146 @@
+{
+	"dataset_uri": "https://raw.githubusercontent.com/altair-viz/vega_datasets/refs/heads/master/vega_datasets/_data/barley.json",
+	"field_refinements": [
+		{
+			"field": "yield",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "0f916ff69107d4a5a2e7b2516ab364d7",
+				"observation_id": "70543679f39198b1"
+			}
+		},
+		{
+			"field": "variety",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "0f916ff69107d4a5a2e7b2516ab364d7",
+				"observation_id": "9bb0355c11c7fda1"
+			}
+		},
+		{
+			"field": "year",
+			"semantic_type": "Year",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "0f916ff69107d4a5a2e7b2516ab364d7",
+				"observation_id": "892b8452108845f0"
+			}
+		},
+		{
+			"field": "site",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "0f916ff69107d4a5a2e7b2516ab364d7",
+				"observation_id": "4103c4fd0a7994b9"
+			}
+		}
+	],
+	"field_expansions": [],
+	"goals": {
+		"Track the average crop yield over time (year) for each variety to identify temporal trends and performance differences among crop types.": {
+			"goal": "Track the average crop yield over time (year) for each variety to identify temporal trends and performance differences among crop types.",
+			"sql": "-- Calculate the average crop yield per variety for each year\nSELECT\n  -- Convert the integer year into a proper DATE format for time-series analysis\n  MAKE_DATE(\"year\", 1, 1) AS year_date,\n  \"variety\",\n  -- Calculate the average yield, ensuring NULLs are excluded from the calculation\n  AVG(\"yield\") FILTER (\n    WHERE\n      \"yield\" IS NOT NULL\n  ) AS average_yield\nFROM\n  $tablename\nGROUP BY\n  \"year\",\n  \"variety\"\nORDER BY\n  year_date ASC,\n  \"variety\" ASC;",
+			"fields": {
+				"summary": "This view calculates the average crop yield for each variety over the years, enabling the analysis of temporal performance trends and comparisons between different crop types.",
+				"fields": [
+					{
+						"name": "year_date",
+						"label": "Year",
+						"description": "Derived from year: The calendar year of the harvest, converted to a DATE format (YYYY-01-01) for temporal analysis.",
+						"semantic_type": "DateTime",
+						"role": "primary"
+					},
+					{
+						"name": "variety",
+						"label": "Variety",
+						"description": "Original field variety used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "average_yield",
+						"label": "Average Yield",
+						"description": "Derived from yield: The average crop yield, calculated by averaging the 'yield' for each variety within each year. NULL values in 'yield' are excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Rank agricultural sites by their average crop yield to identify the most productive locations.": {
+			"goal": "Rank agricultural sites by their average crop yield to identify the most productive locations.",
+			"sql": "-- Rank agricultural sites by their average crop yield\nSELECT\n    COALESCE(NULLIF(TRIM(site), ''), 'Unknown') AS site,\n    AVG(yield) FILTER (WHERE yield IS NOT NULL) AS average_yield\nFROM $tablename\nGROUP BY\n    1 -- Group by site\nORDER BY\n    average_yield DESC",
+			"fields": {
+				"summary": "A ranked list of agricultural sites based on their average crop yield, from highest to lowest, to identify the most productive locations.",
+				"fields": [
+					{
+						"name": "site",
+						"label": "Site",
+						"description": "Derived from [site]: The agricultural site location. Leading and trailing whitespace has been removed, and any NULL or empty values are replaced with 'Unknown'.",
+						"semantic_type": "Name",
+						"role": "primary"
+					},
+					{
+						"name": "average_yield",
+						"label": "Average Yield",
+						"description": "Derived from [yield]: The average crop yield, aggregated by site. Any rows with a NULL yield were excluded from the calculation to ensure accuracy.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Examine the distribution of individual crop yield values, segmented by site and variety, to understand the spread and variability of production under different conditions.": {
+			"goal": "Examine the distribution of individual crop yield values, segmented by site and variety, to understand the spread and variability of production under different conditions.",
+			"sql": "-- This query retrieves individual crop yield records, segmented by site and variety.\n-- The 'year' field is converted to a proper date format for temporal analysis.\nSELECT\n  yield,\n  site,\n  variety,\n  -- Convert the integer year into a DATE for proper temporal handling.\n  MAKE_DATE(year, 1, 1) AS harvest_date\nFROM $tablename",
+			"fields": {
+				"summary": "A detailed view of individual crop yields, segmented by agricultural site and crop variety, to analyze production distribution and variability.",
+				"fields": [
+					{
+						"name": "yield",
+						"label": "Yield",
+						"description": "Original field yield used without modification",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "site",
+						"label": "Site",
+						"description": "Original field site used without modification",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "variety",
+						"label": "Variety",
+						"description": "Original field variety used without modification",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "harvest_date",
+						"label": "Harvest Date",
+						"description": "Derived from year: Converted to a DATE type using MAKE_DATE(year, 1, 1).",
+						"semantic_type": "DateTime",
+						"role": "detail"
+					}
+				]
+			}
+		}
+	}
+}

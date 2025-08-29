@@ -1,0 +1,557 @@
+{
+	"dataset_uri": "https://visxgenai-cdn.peter.gy/datasets/ibis/Cars93.parquet",
+	"field_refinements": [
+		{
+			"field": "manufacturer",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "ec30937b8c95822f"
+			}
+		},
+		{
+			"field": "model",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "2266cfdf9611e7af"
+			}
+		},
+		{
+			"field": "type",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "abc12f59cc101937"
+			}
+		},
+		{
+			"field": "min_price",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "241909bfc3325be1"
+			}
+		},
+		{
+			"field": "price",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "f79388c45ec95a15"
+			}
+		},
+		{
+			"field": "max_price",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "54d03f337317df8b"
+			}
+		},
+		{
+			"field": "mpg_city",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "b2126633e6d601b8"
+			}
+		},
+		{
+			"field": "mpg_highway",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "70c69971602eb2ab"
+			}
+		},
+		{
+			"field": "air_bags",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "235a0598672ddd45"
+			}
+		},
+		{
+			"field": "drive_train",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "f1963b6316d4ebd4"
+			}
+		},
+		{
+			"field": "cylinders",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "93bd0a36eed6954d"
+			}
+		},
+		{
+			"field": "engine_size",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "dfc85c32076353b2"
+			}
+		},
+		{
+			"field": "horsepower",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "8c32de1cbde34ce6"
+			}
+		},
+		{
+			"field": "rpm",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "0fc80ebcb9a4132d"
+			}
+		},
+		{
+			"field": "rev_per_mile",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "8e918fa0b41baa92"
+			}
+		},
+		{
+			"field": "man_trans_avail",
+			"semantic_type": "Boolean",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": "True",
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "1df44946717a9850"
+			}
+		},
+		{
+			"field": "fuel_tank_capacity",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "5db1f831bb6f0fcf"
+			}
+		},
+		{
+			"field": "passengers",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "8b48ed40d09d55fb"
+			}
+		},
+		{
+			"field": "length",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "d03f67f6d8b070eb"
+			}
+		},
+		{
+			"field": "wheelbase",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "1fdad39ef82bb8ab"
+			}
+		},
+		{
+			"field": "width",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "2251980aa2f9e428"
+			}
+		},
+		{
+			"field": "turn_circle",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "dfca0eab668aeb59"
+			}
+		},
+		{
+			"field": "rear_seat_room",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "350b7bd98d8da8c1"
+			}
+		},
+		{
+			"field": "luggage_room",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "ef70928dc2ffc8a8"
+			}
+		},
+		{
+			"field": "weight",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "ba6373f69b51fc2a"
+			}
+		},
+		{
+			"field": "origin",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "6feb6584b2221c1b"
+			}
+		},
+		{
+			"field": "make",
+			"semantic_type": "Name",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "17763fbb819c1bf7d6eb76d13231b4c5",
+				"observation_id": "72f08ecd5f38bd17"
+			}
+		}
+	],
+	"field_expansions": [],
+	"goals": {
+		"Show individual vehicle prices against horsepower, segmented by origin and faceted by drive_train, to understand how power influences cost across different manufacturing regions and drivetrain types.": {
+			"goal": "Show individual vehicle prices against horsepower, segmented by origin and faceted by drive_train, to understand how power influences cost across different manufacturing regions and drivetrain types.",
+			"sql": "-- This query selects individual vehicle data to analyze the relationship between price and horsepower.\n-- It includes origin and drive_train for segmentation and faceting, and adds contextual fields for richer tooltips and cross-filtering.\nSELECT\n  make,\n  model,\n  price,\n  horsepower,\n  origin,\n  drive_train,\n  -- Additional detail fields for enhanced interactive exploration\n  manufacturer,\n  type,\n  cylinders,\n  CASE\n    WHEN man_trans_avail THEN 'Manual Available'\n    ELSE 'Manual Not Available'\n  END AS manual_transmission_availability,\n  passengers\nFROM\n  $tablename\nWHERE\n  price IS NOT NULL\n  AND horsepower IS NOT NULL",
+			"fields": {
+				"summary": "A dataset of individual vehicles, showing the relationship between price and horsepower, segmented by origin and faceted by drivetrain type, with additional contextual details for interactive exploration.",
+				"fields": [
+					{
+						"name": "make",
+						"label": "Make",
+						"description": "Original field make used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "model",
+						"label": "Model",
+						"description": "Original field model used without modification.",
+						"semantic_type": "Identifier",
+						"role": "detail"
+					},
+					{
+						"name": "price",
+						"label": "Price",
+						"description": "Original field price used without modification.",
+						"semantic_type": "Money",
+						"role": "primary"
+					},
+					{
+						"name": "horsepower",
+						"label": "Horsepower",
+						"description": "Original field horsepower used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field origin used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "drive_train",
+						"label": "Drive Train",
+						"description": "Original field drive_train used without modification.",
+						"semantic_type": "Category",
+						"role": "facet"
+					},
+					{
+						"name": "manufacturer",
+						"label": "Manufacturer",
+						"description": "Original field manufacturer used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "type",
+						"label": "Type",
+						"description": "Original field type used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "cylinders",
+						"label": "Cylinders",
+						"description": "Original field cylinders used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "manual_transmission_availability",
+						"label": "Manual Transmission",
+						"description": "Derived from man_trans_avail: Transformed boolean into human-readable labels 'Manual Available' or 'Manual Not Available'.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "passengers",
+						"label": "Passengers",
+						"description": "Original field passengers used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Analyze the median mpg_city for each vehicle type, faceted by whether a manual transmission is available, to identify fuel efficiency trends across vehicle categories and transmission options.": {
+			"goal": "Analyze the median mpg_city for each vehicle type, faceted by whether a manual transmission is available, to identify fuel efficiency trends across vehicle categories and transmission options.",
+			"sql": "-- Calculate the median city MPG for each vehicle type, faceted by manual transmission availability\nSELECT\n  \"type\" AS vehicle_type,\n  CASE\n    WHEN \"man_trans_avail\"\n    THEN 'Manual Available'\n    ELSE 'Manual Not Available'\n  END AS manual_transmission,\n  MEDIAN(\"mpg_city\") AS median_city_mpg\nFROM\n  $tablename\nWHERE\n  \"type\" IS NOT NULL AND \"mpg_city\" IS NOT NULL\nGROUP BY\n  \"type\",\n  \"man_trans_avail\"\nORDER BY\n  vehicle_type,\n  manual_transmission;",
+			"fields": {
+				"summary": "A summary of median city MPG for each vehicle type, segmented by the availability of manual transmission, to highlight fuel efficiency trends.",
+				"fields": [
+					{
+						"name": "vehicle_type",
+						"label": "Vehicle Type",
+						"description": "Original field [type] used without modification.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "manual_transmission",
+						"label": "Transmission",
+						"description": "Derived from [man_trans_avail]: Transformed boolean values into human-readable labels: 'Manual Available' for true and 'Manual Not Available' for false.",
+						"semantic_type": "Category",
+						"role": "facet"
+					},
+					{
+						"name": "median_city_mpg",
+						"label": "Median City MPG",
+						"description": "Derived from [mpg_city]: Median of city MPG, calculated for each vehicle type and transmission availability.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Rank manufacturers by their average fuel_tank_capacity, segmented by the type of air_bags offered, to highlight which manufacturers prioritize larger fuel tanks and how this relates to safety features.": {
+			"goal": "Rank manufacturers by their average fuel_tank_capacity, segmented by the type of air_bags offered, to highlight which manufacturers prioritize larger fuel tanks and how this relates to safety features.",
+			"sql": "SELECT\n    TRIM(manufacturer) AS manufacturer,\n    COALESCE(NULLIF(TRIM(air_bags), ''), 'Not Specified') AS air_bags,\n    AVG(fuel_tank_capacity) FILTER (WHERE fuel_tank_capacity IS NOT NULL) AS average_fuel_tank_capacity\nFROM\n    $tablename\nWHERE\n    manufacturer IS NOT NULL\nGROUP BY\n    1, 2\nORDER BY\n    average_fuel_tank_capacity DESC;",
+			"fields": {
+				"summary": "A ranked list of automobile manufacturers by their average fuel tank capacity, segmented by the type of airbags offered. This highlights which brands provide larger fuel tanks and how this capacity varies with the vehicle's safety features.",
+				"fields": [
+					{
+						"name": "manufacturer",
+						"label": "Manufacturer",
+						"description": "Derived from manufacturer: Vehicle manufacturer, used as a grouping dimension. TRIM() has been applied to remove leading/trailing whitespace.",
+						"semantic_type": "Name",
+						"role": "primary"
+					},
+					{
+						"name": "air_bags",
+						"label": "Air Bags",
+						"description": "Derived from air_bags: Type of airbags, used as a grouping dimension. Cleaned using TRIM() and COALESCE() to handle empty or NULL values, defaulting to 'Not Specified'.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "average_fuel_tank_capacity",
+						"label": "Avg Fuel Tank Capacity",
+						"description": "Derived from fuel_tank_capacity: The average fuel tank capacity, calculated for each manufacturer and airbag type combination. NULL values in the source data were excluded from the average calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Examine the relationship between individual vehicle weight and length, segmented by vehicle type and faceted by the number of cylinders, to understand how physical dimensions contribute to mass across different vehicle configurations.": {
+			"goal": "Examine the relationship between individual vehicle weight and length, segmented by vehicle type and faceted by the number of cylinders, to understand how physical dimensions contribute to mass across different vehicle configurations.",
+			"sql": "SELECT\n  make,\n  model,\n  weight,\n  length,\n  type AS vehicle_type,\n  cylinders,\n  manufacturer,\n  origin,\n  drive_train,\n  CASE\n    WHEN man_trans_avail THEN 'Available'\n    ELSE 'Not Available'\n  END AS manual_transmission_available\nFROM $tablename\nWHERE\n  weight IS NOT NULL AND length IS NOT NULL AND type IS NOT NULL AND cylinders IS NOT NULL\nORDER BY\n  make ASC;",
+			"fields": {
+				"summary": "A detailed view of individual vehicles, showing the relationship between weight and length, segmented by vehicle type and faceted by the number of cylinders, to analyze how physical dimensions relate to mass across different configurations.",
+				"fields": [
+					{
+						"name": "make",
+						"label": "Make",
+						"description": "Original field make used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "model",
+						"label": "Model",
+						"description": "Original field model used without modification.",
+						"semantic_type": "Identifier",
+						"role": "detail"
+					},
+					{
+						"name": "weight",
+						"label": "Weight",
+						"description": "Original field weight used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "length",
+						"label": "Length",
+						"description": "Original field length used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "vehicle_type",
+						"label": "Type",
+						"description": "Original field type used without modification.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "cylinders",
+						"label": "Cylinders",
+						"description": "Original field cylinders used without modification.",
+						"semantic_type": "Category",
+						"role": "facet"
+					},
+					{
+						"name": "manufacturer",
+						"label": "Manufacturer",
+						"description": "Original field manufacturer used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "origin",
+						"label": "Origin",
+						"description": "Original field origin used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "drive_train",
+						"label": "Drivetrain",
+						"description": "Original field drive_train used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "manual_transmission_available",
+						"label": "Manual Transmission",
+						"description": "Derived from man_trans_avail: Transformed boolean into 'Available'/'Not Available' labels using a CASE statement.",
+						"semantic_type": "Boolean",
+						"role": "detail"
+					}
+				]
+			}
+		}
+	}
+}

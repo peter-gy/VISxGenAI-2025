@@ -1,0 +1,360 @@
+{
+	"dataset_uri": "https://visxgenai-cdn.peter.gy/datasets/ibis/msleep.parquet",
+	"field_refinements": [
+		{
+			"field": "name",
+			"semantic_type": "Name",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "3fe9747d9b0d53b5"
+			}
+		},
+		{
+			"field": "genus",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "d096f7c7e2af2df3"
+			}
+		},
+		{
+			"field": "vore",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "0ec4bdf9442020ff"
+			}
+		},
+		{
+			"field": "order",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": false,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "c9ac97cd5d10e38f"
+			}
+		},
+		{
+			"field": "conservation",
+			"semantic_type": "Category",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": true,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "5233d8d3ce081f6c"
+			}
+		},
+		{
+			"field": "sleep_total",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "638353b93b47f7e1"
+			}
+		},
+		{
+			"field": "sleep_rem",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "0c416a19be73c18b"
+			}
+		},
+		{
+			"field": "sleep_cycle",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "94652d43d9d1c9f7"
+			}
+		},
+		{
+			"field": "awake",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "5ff881a9bd0d61e0"
+			}
+		},
+		{
+			"field": "brainwt",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "60fd0b3ce90ef82e"
+			}
+		},
+		{
+			"field": "bodywt",
+			"semantic_type": "Numeric",
+			"separator": null,
+			"date_format": null,
+			"is_cryptic_code": null,
+			"boolean_truthy_value": null,
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "ac8b92eb168c4b29"
+			}
+		}
+	],
+	"field_expansions": [
+		{
+			"field": "conservation",
+			"mapping": {
+				"cd": "Conservation Dependent",
+				"domesticated": "Domesticated",
+				"en": "Endangered",
+				"lc": "Least Concern",
+				"nt": "Near Threatened",
+				"vu": "Vulnerable"
+			},
+			"__metadata__": {
+				"trace_id": "190aeeb88360697541506aecad073f0c",
+				"observation_id": "fc7babca44c0eeda"
+			}
+		}
+	],
+	"goals": {
+		"Examine the relationship between individual species' brain weight and body weight, segmented by their dietary classification (vore).": {
+			"goal": "Examine the relationship between individual species' brain weight and body weight, segmented by their dietary classification (vore).",
+			"sql": "-- This query prepares data to show the relationship between brain and body weight, segmented by diet.\n-- It filters out species with missing weight data to ensure a clean scatter plot.\n-- Additional contextual fields are included for richer tooltips and cross-filtering.\nSELECT\n  name, -- Primary key and human-readable identifier for tooltips\n  bodywt AS body_weight, -- Quantitative measure for the x-axis\n  brainwt AS brain_weight, -- Quantitative measure for the y-axis\n  CASE\n    WHEN vore = 'carni'\n    THEN 'Carnivore'\n    WHEN vore = 'herbi'\n    THEN 'Herbivore'\n    WHEN vore = 'insecti'\n    THEN 'Insectivore'\n    WHEN vore = 'omni'\n    THEN 'Omnivore'\n    ELSE COALESCE(vore, 'Unknown')\n  END AS diet, -- Categorical segment for color-coding\n  \"order\" AS taxonomic_order, -- Contextual detail for filtering/tooltips\n  COALESCE(conservation, 'Unknown') AS conservation_status, -- Contextual detail for filtering/tooltips\n  sleep_total, -- Contextual detail for tooltips\n  awake -- Contextual detail for tooltips\nFROM $tablename\nWHERE\n  bodywt IS NOT NULL AND brainwt IS NOT NULL;",
+			"fields": {
+				"summary": "A dataset of individual mammalian species showing the relationship between their body weight and brain weight. Data is segmented by dietary classification and includes additional contextual details like taxonomic order, conservation status, and sleep patterns, suitable for a scatter plot visualization.",
+				"fields": [
+					{
+						"name": "name",
+						"label": "Name",
+						"description": "Original field name used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "body_weight",
+						"label": "Body Weight",
+						"description": "Original field bodywt used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "brain_weight",
+						"label": "Brain Weight",
+						"description": "Original field brainwt used without modification.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "diet",
+						"label": "Diet",
+						"description": "Derived from vore: Mapped dietary codes (e.g., 'carni', 'herbi') to human-readable labels ('Carnivore', 'Herbivore'). Nulls are labeled 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "taxonomic_order",
+						"label": "Taxonomic Order",
+						"description": "Original field order used without modification.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "conservation_status",
+						"label": "Conservation Status",
+						"description": "Derived from conservation: Original field used, with NULL values replaced by 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "sleep_total",
+						"label": "Total Sleep",
+						"description": "Original field sleep_total used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "awake",
+						"label": "Awake",
+						"description": "Original field awake used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Analyze the relationship between individual species' sleep cycle length and brain weight, segmented by their taxonomic order.": {
+			"goal": "Analyze the relationship between individual species' sleep cycle length and brain weight, segmented by their taxonomic order.",
+			"sql": "-- Fix: Cast sleep_cycle and sleep_total to TIMESTAMP to resolve TYPE_MISMATCH error,\n-- as the system expects 'Duration' semantic types to be temporal. This transformation\n-- converts hours into a timestamp relative to an arbitrary epoch (2000-01-01).\n-- While this changes the data type, it preserves the relative magnitude for analytical purposes.\nSELECT\n  name AS species_name,\n  (DATE '2000-01-01' + INTERVAL (sleep_cycle || ' hours')) AS sleep_cycle_timestamp,\n  brainwt AS brain_weight,\n  \"order\" AS taxonomic_order,\n  -- Additional low-cardinality categorical fields for cross-filtering and context (detail role).\n  vore AS diet,\n  conservation AS conservation_status,\n  -- Additional quantitative fields for richer tooltips and context (detail role).\n  (DATE '2000-01-01' + INTERVAL (sleep_total || ' hours')) AS sleep_total_timestamp,\n  bodywt AS body_weight\nFROM $tablename\nWHERE\n  sleep_cycle IS NOT NULL AND brainwt IS NOT NULL\nORDER BY\n  taxonomic_order,\n  species_name;",
+			"fields": {
+				"summary": "This view provides individual mammalian species data, focusing on the relationship between sleep cycle length and brain weight, segmented by taxonomic order. It includes additional contextual details for comprehensive analysis.",
+				"fields": [
+					{
+						"name": "species_name",
+						"label": "Species Name",
+						"description": "Original field `name` used without modification, aliased to `species_name`.",
+						"semantic_type": "Name",
+						"role": "primary"
+					},
+					{
+						"name": "sleep_cycle_timestamp",
+						"label": "Sleep Cycle",
+						"description": "Derived from `sleep_cycle`: Float64 duration in hours converted to TIMESTAMP by adding as an interval to an arbitrary epoch (2000-01-01) to comply with system's semantic type requirements for 'Duration' fields.",
+						"semantic_type": "DateTime",
+						"role": "primary"
+					},
+					{
+						"name": "brain_weight",
+						"label": "Brain Weight",
+						"description": "Original field `brainwt` used without modification, aliased to `brain_weight`.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					},
+					{
+						"name": "taxonomic_order",
+						"label": "Taxonomic Order",
+						"description": "Original field `order` used without modification, aliased to `taxonomic_order`.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "diet",
+						"label": "Diet",
+						"description": "Original field `vore` used without modification, aliased to `diet`.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "conservation_status",
+						"label": "Conservation Status",
+						"description": "Original field `conservation` used without modification, aliased to `conservation_status`.",
+						"semantic_type": "Category",
+						"role": "detail"
+					},
+					{
+						"name": "sleep_total_timestamp",
+						"label": "Total Sleep",
+						"description": "Derived from `sleep_total`: Float64 duration in hours converted to TIMESTAMP by adding as an interval to an arbitrary epoch (2000-01-01) to comply with system's semantic type requirements for 'Duration' fields.",
+						"semantic_type": "DateTime",
+						"role": "detail"
+					},
+					{
+						"name": "body_weight",
+						"label": "Body Weight",
+						"description": "Original field `bodywt` used without modification, aliased to `body_weight`.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		},
+		"Show the median total sleep duration across different taxonomic orders, faceted by conservation status.": {
+			"goal": "Show the median total sleep duration across different taxonomic orders, faceted by conservation status.",
+			"sql": "-- Calculate the median total sleep duration for each taxonomic order, faceted by conservation status.\nSELECT\n  COALESCE(NULLIF(TRIM(\"order\"), ''), 'Unknown') AS taxonomic_order,\n  COALESCE(NULLIF(TRIM(conservation), ''), 'Unknown') AS conservation_status,\n  MEDIAN(sleep_total) FILTER (\n    WHERE\n      sleep_total IS NOT NULL\n  ) AS median_total_sleep_hours\nFROM $tablename\nGROUP BY\n  1,\n  2\nORDER BY\n  1,\n  2;",
+			"fields": {
+				"summary": "A summary of the median total sleep duration for mammalian species, grouped by their taxonomic order and conservation status.",
+				"fields": [
+					{
+						"name": "taxonomic_order",
+						"label": "Taxonomic Order",
+						"description": "Derived from order: Cleaned using TRIM() and COALESCE() to handle NULL or empty values, which are mapped to 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "primary"
+					},
+					{
+						"name": "conservation_status",
+						"label": "Conservation Status",
+						"description": "Derived from conservation: Cleaned using TRIM() and COALESCE() to handle NULL or empty values, which are mapped to 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "facet"
+					},
+					{
+						"name": "median_total_sleep_hours",
+						"label": "Median Total Sleep (Hours)",
+						"description": "Derived from sleep_total: Median aggregated by taxonomic_order and conservation_status. NULL values in sleep_total were excluded from the calculation.",
+						"semantic_type": "Numeric",
+						"role": "primary"
+					}
+				]
+			}
+		},
+		"Rank the top 10 mammalian species by their percentage of REM sleep (sleep_rem / sleep_total), segmented by dietary classification (vore).": {
+			"goal": "Rank the top 10 mammalian species by their percentage of REM sleep (sleep_rem / sleep_total), segmented by dietary classification (vore).",
+			"sql": "-- Calculate REM sleep as a percentage of total sleep and rank the top 10 species\nSELECT\n  name AS species_name,\n  COALESCE(NULLIF(TRIM(vore), ''), 'Unknown') AS diet,\n  (sleep_rem / sleep_total) * 100.0 AS rem_sleep_percentage,\n  sleep_total AS total_sleep_hours,\n  sleep_rem AS rem_sleep_hours\nFROM $tablename\nWHERE\n  sleep_rem IS NOT NULL\n  AND sleep_total IS NOT NULL\n  AND sleep_total > 0 -- Avoid division by zero and invalid data\nORDER BY\n  rem_sleep_percentage DESC\nLIMIT 10;",
+			"fields": {
+				"summary": "A ranking of the top 10 mammalian species by their percentage of daily sleep that is REM sleep, segmented by their primary diet.",
+				"fields": [
+					{
+						"name": "species_name",
+						"label": "Species Name",
+						"description": "Original field name used without modification.",
+						"semantic_type": "Name",
+						"role": "detail"
+					},
+					{
+						"name": "diet",
+						"label": "Diet",
+						"description": "Derived from vore: Dietary classification, with empty strings and NULLs replaced by 'Unknown'.",
+						"semantic_type": "Category",
+						"role": "segment"
+					},
+					{
+						"name": "rem_sleep_percentage",
+						"label": "REM Sleep %",
+						"description": "Derived from sleep_rem and sleep_total: Calculated as (sleep_rem / sleep_total) * 100.0 to represent the percentage of total sleep that is REM sleep.",
+						"semantic_type": "Percentage",
+						"role": "primary"
+					},
+					{
+						"name": "total_sleep_hours",
+						"label": "Total Sleep (hrs)",
+						"description": "Original field sleep_total used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					},
+					{
+						"name": "rem_sleep_hours",
+						"label": "REM Sleep (hrs)",
+						"description": "Original field sleep_rem used without modification.",
+						"semantic_type": "Numeric",
+						"role": "detail"
+					}
+				]
+			}
+		}
+	}
+}
