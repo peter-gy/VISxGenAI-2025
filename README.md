@@ -1,4 +1,4 @@
-# Agentic Visual Reporting <div align="right" style="background-color: white; padding: 12px; border-radius: 12px; display: inline-block;"><img src="/docs/public/assets/vis-logo-light.svg" alt="IEEE VIS 25 Logo" width="256"/></div>
+# Agentic Visual Reporting <img src="/docs/public/assets/vis-logo-light.svg" align="right" alt="IEEE VIS 25 Logo" width="256"/>
 
 > A composable agentic system for automated visual data reporting, implementing a Human-AI Partnership model for transparent and steerable data analysis.
 
