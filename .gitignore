@@ -1,2 +1,4 @@
 *cache*
 .env
+node_modules
+docs/.vitepress
