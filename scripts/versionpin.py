@@ -23,13 +23,17 @@ CONFIG = {
 
 def notebook_src_with_pinned_versions(notebook_src: str) -> str:
     """E.g. "npm:@uwdata/vgplot" -> "npm:@uwdata/vgplot@0.18.0" in observables notebooks."""
+    import re
+
     for pkg, version in CONFIG.items():
+        # Use word boundaries to match exact package names
+        # This pattern matches "npm:pkg" but not "npm:pkg-something"
+        pattern = rf"\bnpm:{re.escape(pkg)}(?![@\w-])"
+        replacement = f"npm:{pkg}@{version}"
+
         # Only replace if version is not already pinned
-        unpinned_pattern = f"npm:{pkg}"
-        if unpinned_pattern in notebook_src and f"npm:{pkg}@" not in notebook_src:
-            notebook_src = notebook_src.replace(
-                unpinned_pattern, f"npm:{pkg}@{version}"
-            )
+        if re.search(pattern, notebook_src) and f"npm:{pkg}@" not in notebook_src:
+            notebook_src = re.sub(pattern, replacement, notebook_src)
 
     return notebook_src
 

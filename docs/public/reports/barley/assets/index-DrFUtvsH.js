@@ -2626,12 +2626,12 @@ L(
 						return I;
 					}),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/@uwdata/vgplot/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/@uwdata/vgplot@0.18.0/+esm"),
 						[],
 						import.meta.url,
 					),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/anchor-js/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/+esm"),
 						[],
 						import.meta.url,
 					).then((I) => {
@@ -2640,7 +2640,7 @@ L(
 						return I;
 					}),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/lz-string/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/lz-string@1.5.0/+esm"),
 						[],
 						import.meta.url,
 					).then((I) => {
@@ -2649,7 +2649,7 @@ L(
 						return I;
 					}),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/tippy.js/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm"),
 						[],
 						import.meta.url,
 					).then((I) => {
@@ -2658,17 +2658,17 @@ L(
 						return I;
 					}),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/tocbot/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/tocbot@4.36.4/+esm"),
 						[],
 						import.meta.url,
 					),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/vega/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/vega@6.1.2/+esm"),
 						[],
 						import.meta.url,
 					),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/vega-embed/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/vega-embed@7.0.2/+esm"),
 						[],
 						import.meta.url,
 					).then((I) => {
@@ -2677,7 +2677,7 @@ L(
 						return I;
 					}),
 					C(
-						() => import("https://cdn.jsdelivr.net/npm/vega-loader-arrow/+esm"),
+						() => import("https://cdn.jsdelivr.net/npm/vega-loader-arrow@0.3.2/+esm"),
 						[],
 						import.meta.url,
 					).then((I) => {
