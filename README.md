@@ -1,4 +1,4 @@
-# Agentic Visual Reporting <img src="/docs/public/assets/vis-logo-light.svg" align="right" alt="IEEE VIS 25 Logo" width="256"/>
+# Agentic Visual Reporting <img src="docs/public/assets/vis-logo-light.svg" align="right" alt="IEEE VIS 25 Logo" width="256"/>
 
 [![arXiv](https://img.shields.io/badge/arXiv-2509.05721-b31b1b.svg)](https://arxiv.org/abs/2509.05721)
 
@@ -11,20 +11,20 @@ This prototype system demonstrates a multi-agent architecture that strategically
 - **Interactive [Observable](https://github.com/observablehq/notebook-kit) reports** with [Mosaic](https://github.com/uwdata/mosaic) for reader exploration
 - **Executable [Marimo](https://marimo.io/) notebooks** for deep, analyst-facing traceability
 
-For complete details, see our [whitepaper](docs/public/assets/paper.pdf).
+For complete details, see our [whitepaper](https://arxiv.org/abs/2509.05721).
 
 ## Architecture
 
-![System Architecture](docs/public/assets/teaser.svg)
+![System Architecture](docs/public/assets/teaser.png)
 
 The system consists of 11 specialized agents orchestrated in a multi-stage pipeline:
 
 1. **Data Understanding**: Field Refiner → Dataset Describer → Field Expander → Dataset Profiler
 2. **Analysis**: Insight Planner → Dataset Deriver → Dataset Publisher
-3. **Visualization**: Dataset Visualizer (powered by Draco)
+3. **Visualization**: Dataset Visualizer (powered by [Draco](https://github.com/cmudig/draco2/pull/949/commits/599fb3c7705e6e0c874fdf37b0c11820ee4056ad))
 4. **Reporting**: Report Narrator → Dataset Reporter
 
-Read more in our [whitepaper](docs/public/assets/paper.pdf).
+Read more in our [whitepaper](https://arxiv.org/abs/2509.05721).
 
 ## Gallery
 
