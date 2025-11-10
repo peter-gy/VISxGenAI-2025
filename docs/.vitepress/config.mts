@@ -139,7 +139,7 @@ export default defineConfig({
 
 		footer: {
 			message: `Collaboration between <a href="https://vda.cs.univie.ac.at/" target="_blank" rel="noopener noreferrer">UniWien Visualization and Data Analysis Group</a>, <a href="https://dig.cmu.edu/" target="_blank" rel="noopener noreferrer">CMU Data Interaction Group</a>, and <a href="https://mbzuai.ac.ae/" target="_blank" rel="noopener noreferrer">MBZUAI Human-computer interaction Group</a>.`,
-			copyright: `A submission to the <a href="https://visxgenai.github.io/" target="_blank" rel="noopener noreferrer">2025 IEEE VISxGenAI Workshop Challenge</a>`,
+			copyright: `🏆 1st Place Winner of the <a href="https://visxgenai.github.io/" target="_blank" rel="noopener noreferrer">2025 IEEE VISxGenAI Workshop Challenge</a>`,
 		},
 
 		// Improves search functionality

@@ -8,7 +8,7 @@ hero:
     light: /assets/agents/flow-light.svg
     dark: /assets/agents/flow-dark.svg
 
-  tagline: A prototype autonomous agentic system for steerable, explainable, and collaborative analytics, exploring human–AI partnership in visualization for the generative AI era. Workshop Challenge submission for <a class="outlink" href="https://visxgenai.github.io/" target="_blank">IEEE VISxGenAI 2025</a>.
+  tagline: A prototype autonomous agentic system for steerable, explainable, and collaborative analytics, exploring human–AI partnership in visualization for the generative AI era.<br/><br/>🏆 1st Place Winner of the <a class="outlink" href="https://visxgenai.github.io/" target="_blank">IEEE VISxGenAI 2025</a> Workshop Challenge.
 
   actions:
     - theme: brand
