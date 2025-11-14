@@ -14,14 +14,14 @@ app = marimo.App(width="columns")
 
 @app.cell(column=0, hide_code=True)
 def _(flowchart, mo):
-    mo.md(
-        rf"""
-    # 5. Visualization
-
-    {flowchart(selected=5)}
-
-    The system picked the key fields from the [derived data](#dataset-derivation) and used [Draco](https://github.com/cmudig/draco2) to create this chart.
-    """
+    mo.vstack(
+        [
+            mo.md("# 5. Visualization"),
+            flowchart(selected=5),
+            mo.md(
+                """The system picked the key fields from the [derived data](#dataset-derivation) and used [Draco](https://github.com/cmudig/draco2) to create this chart."""
+            ),
+        ]
     )
     return
 
@@ -35,8 +35,7 @@ def _(alt, derived_df, pl, vl_spec):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""
+    mo.md(r"""
     # From Source Data to Final Chart
 
     This notebook shows how coordinated AI agents turned input data into the visualization you see in the report. We'll walk through each step, starting with the final chart and working backwards to see how it was built. Start scrolling to the right or use the links below to jump to any section.
@@ -46,18 +45,18 @@ def _(mo):
     - [3. Field Remapping](#3-field-remapping): Making cryptic codes readable
     - [4. Dataset Derivation](#4-dataset-derivation): The [DuckDB](http://duckdb.org) query that filtered and shaped the data
     - [5. Visualization](#5-visualization): The chart created by [Draco](https://github.com/cmudig/draco2)
-    """
-    )
+    """)
     return
 
 
 @app.cell(column=1, hide_code=True)
 def _(flowchart, mo):
-    mo.md(rf"""
-    # 4. Dataset Derivation
-
-    {flowchart(selected=4)}
-    """)
+    mo.vstack(
+        [
+            mo.md("# 4. Dataset Derivation"),
+            flowchart(selected=4),
+        ]
+    )
     return
 
 
@@ -101,18 +100,18 @@ def _(INPUTS, goal, string):
 
 @app.cell(column=2, hide_code=True)
 def _(flowchart, mo):
-    mo.md(rf"""
-    # 3. Field Remapping
-
-    {flowchart(selected=3)}
-    """)
+    mo.vstack(
+        [
+            mo.md("# 3. Field Remapping"),
+            flowchart(selected=3),
+        ]
+    )
     return
 
 
 @app.cell(hide_code=True)
 def _(expanded_fields, field_expansions, field_expansions_to_md, mo):
-    mo.md(
-        rf"""
+    mo.md(rf"""
     The system looked at sample values and decided that fields {", ".join([f"`{field}`" for field in expanded_fields])} needed to be made more readable.
 
     Here are the mappings that were applied to the [cleaned data](#dataset-refinement):
@@ -120,8 +119,7 @@ def _(expanded_fields, field_expansions, field_expansions_to_md, mo):
     {field_expansions_to_md(field_expansions)}
 
     This gave us a dataset where cryptic codes are replaced with clear, human-readable labels.
-    """
-    )
+    """)
     return
 
 
@@ -227,14 +225,14 @@ def _(field_expansions):
 
 @app.cell(column=3, hide_code=True)
 def _(flowchart, mo):
-    mo.md(
-        rf"""
-    # 2. Dataset Refinement
-
-    {flowchart(selected=2)}
-
-    The system looked at sample data from each field and made these improvements to fix formatting issues and match how the data should really be used.
-    """
+    mo.vstack(
+        [
+            mo.md("# 2. Dataset Refinement"),
+            flowchart(selected=2),
+            mo.md(
+                "The system looked at sample data from each field and made these improvements to fix formatting issues and match how the data should really be used."
+            ),
+        ]
     )
     return
 
@@ -247,9 +245,9 @@ def _(field_refinements, pa, pd):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""After applying these changes, we get the cleaned dataset below, which comes directly from the [original data](#original-dataset)."""
-    )
+    mo.md(r"""
+    After applying these changes, we get the cleaned dataset below, which comes directly from the [original data](#original-dataset).
+    """)
     return
 
 
@@ -404,14 +402,12 @@ def _(INPUTS):
 
 @app.cell(column=4, hide_code=True)
 def _(dataset_uri, flowchart, mo):
-    mo.md(
-        rf"""
-    # 1. Original Dataset
-
-    {flowchart(selected=1)}
-
-    This is the raw data we started with, loaded from {dataset_uri}.
-    """
+    mo.vstack(
+        [
+            mo.md("# 1. Original Dataset"),
+            flowchart(selected=1),
+            mo.md(f"This is the raw data we started with, loaded from {dataset_uri}"),
+        ]
     )
     return
 
