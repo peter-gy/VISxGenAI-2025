@@ -8,7 +8,7 @@ This is a Marimo notebook template requiring the following template variables as
 
 import marimo
 
-__generated_with = "0.14.17.dev13"
+__generated_with = "unknown"
 app = marimo.App(width="columns")
 
 
@@ -196,7 +196,6 @@ def _(TypedDict, pa, pl):
     ) -> pa.Table:
         df = _apply_field_expansions_to_df(pl.from_arrow(df), field_expansions)
         return pa.Table.from_pylist(df.to_dicts())
-
     return (apply_field_expansions_to_df,)
 
 
@@ -219,7 +218,6 @@ def _(field_expansions):
                 for item in field_expansions
             ]
         )
-
     return expanded_fields, field_expansions_to_md
 
 
@@ -389,7 +387,6 @@ def _(Callable, Iterable, Optional, TypedDict, pa, pl):
     ) -> pa.Table:
         df, _ = _apply_field_refinements_to_df(pl.from_arrow(df), refinements)
         return pa.Table.from_pylist(df.to_dicts())
-
     return (apply_field_refinements_to_df,)
 
 
@@ -429,11 +426,14 @@ def _(duckdb, pa, pd):
             pandas_df = pd.read_parquet(dataset_uri)
         elif dataset_uri.endswith(".json"):
             pandas_df = pd.read_json(dataset_uri)
+        elif dataset_uri.endswith(".xlsx") or dataset_uri.endswith(".xls"):
+            import openpyxl
+
+            pandas_df = pd.read_excel(f'https://corsproxy.io/?url={dataset_uri}')
         else:
             raise NotImplementedError(f"No support for reading {dataset_uri}")
 
         return duckdb.query("select * from pandas_df").arrow()
-
     return (read_dataset,)
 
 
@@ -487,7 +487,6 @@ def _(mo):
         classDef selected fill:#cde4ff,stroke:#5a96d8,stroke-width:3px
         class {selected_node} selected
     """)
-
     return (flowchart,)
 
 
@@ -504,7 +503,6 @@ def _():
     import polars as pl
     import pyarrow as pa
     from typing_extensions import TypedDict
-
     return (
         Callable,
         Iterable,
