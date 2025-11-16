@@ -58,10 +58,17 @@ def _handle_date_format(
     # if any of these are present in `date_format` then we have a datetime
     datetime_template_chars = {"%H", "%M", "%S"}
     is_datetime = any((ch in date_format for ch in datetime_template_chars))
+
+    expr = pl.col(fieldname)
+
+    # In some cases years read from CSV or XLSX are e.g. in double format, so we cast to Int64 first
+    if series.dtype.is_numeric():
+        expr = expr.cast(pl.Int64)
+
     if is_datetime:
-        expr = pl.col(fieldname).cast(pl.String).str.to_datetime(date_format)
+        expr = expr.cast(pl.String).str.to_datetime(date_format)
     else:
-        expr = pl.col(fieldname).cast(pl.String).str.to_date(date_format)
+        expr = expr.cast(pl.String).str.to_date(date_format)
 
     return [{"expr": expr, "type": refinement["semantic_type"]}]
 
