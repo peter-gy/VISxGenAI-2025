@@ -54,9 +54,9 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "InsightPlanner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-pro",
+            "model": "vertex_ai/gemini-2.5-flash",
             "max_tokens": 64_000,
-            # "reasoning_effort": "disable",
+            "reasoning_effort": "disable",
         }
     },
     "InsightPlanJudge": {
