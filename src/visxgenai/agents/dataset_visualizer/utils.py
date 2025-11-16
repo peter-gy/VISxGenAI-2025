@@ -8,6 +8,8 @@ import polars as pl
 
 from .agent import FieldWithRole
 
+alt.data_transformers.enable("vegafusion")
+
 
 def altair_chart_to_image(chart: alt.Chart, **kwargs) -> PIL.Image.Image:
     buf = io.BytesIO()

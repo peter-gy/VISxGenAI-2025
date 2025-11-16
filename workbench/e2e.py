@@ -31,15 +31,19 @@ def _():
     DIAMONDS = "https://visxgenai-cdn.peter.gy/datasets/ibis/diamonds.parquet"
     CARS93 = "https://visxgenai-cdn.peter.gy/datasets/ibis/Cars93.parquet"
     MSLEEP = "https://visxgenai-cdn.peter.gy/datasets/ibis/msleep.parquet"
-    return (VISPUB,)
+
+    # Abu Dhabi - Government Open Data
+    AD_782 = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/782-Distribution%20of%20Number%20of%20Warnings%2C%20Violations%20and%20Notice%20By%20Activity%20for%20each%20Region%202024_0.xlsx"
+    AD_STUDENT_ENROLLMENTS = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/student_enrollment_grade_2025.xlsx"
+    return (AD_STUDENT_ENROLLMENTS,)
 
 
 @app.cell
-def _(VISPUB, orchestrator):
+def _(AD_STUDENT_ENROLLMENTS, orchestrator):
     report_output = orchestrator(
-        dataset_uri=VISPUB,
-        report_goal="I want an accessible yet insightful report on the dataset.",
-        report_length="At most 3-5 distinct, non-repetitive insights balanced across types",
+        dataset_uri=AD_STUDENT_ENROLLMENTS,
+        report_goal="I want an understandable yet insightful report on the dataset, uncovering relationships in the data across facets.",
+        report_length="At most 5-8 distinct, non-repetitive insights balanced across types",
         tags=["dev"],
     )
     return (report_output,)
@@ -69,7 +73,6 @@ def _():
         lm_registry_from_env,
         load_env,
     )
-
     return OrchestratorAgent, lm_registry_from_env, load_env, mo
 
 

@@ -52,6 +52,10 @@ def collect_report_components(
             chart = draco_completion.render(df, field_label_map, altair_renderer)
 
             # Prepare Vega-Lite spec for the Observable notebook
+            import altair as alt
+
+            alt.data_transformers.enable("default")
+            alt.data_transformers.disable_max_rows()
             vegalite = chart.to_dict()
             del vegalite["datasets"]
             vegalite["$schema"] = "https://vega.github.io/schema/vega-lite/v6.1.0.json"

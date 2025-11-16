@@ -18,6 +18,8 @@ if TYPE_CHECKING:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+alt.data_transformers.enable("vegafusion")
+
 
 def create_recommender_inputs(
     queried_insights: list[dict],

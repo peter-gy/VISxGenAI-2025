@@ -58,10 +58,17 @@ def _handle_date_format(
     # if any of these are present in `date_format` then we have a datetime
     datetime_template_chars = {"%H", "%M", "%S"}
     is_datetime = any((ch in date_format for ch in datetime_template_chars))
+
+    expr = pl.col(fieldname)
+
+    # In some cases years read from CSV or XLSX are e.g. in double format, so we cast to Int64 first
+    if series.dtype.is_numeric():
+        expr = expr.cast(pl.Int64)
+
     if is_datetime:
-        expr = pl.col(fieldname).cast(pl.String).str.to_datetime(date_format)
+        expr = expr.cast(pl.String).str.to_datetime(date_format)
     else:
-        expr = pl.col(fieldname).cast(pl.String).str.to_date(date_format)
+        expr = expr.cast(pl.String).str.to_date(date_format)
 
     return [{"expr": expr, "type": refinement["semantic_type"]}]
 
@@ -92,6 +99,23 @@ def _handle_text(
     return [{"expr": expr, "type": "Count"}]
 
 
+def _handle_duplicated_entities(
+    series: pl.Series, refinement: FieldRefinement
+) -> list[SemanticTypedExpr]:
+    if not (duplicated_entities := refinement["duplicated_entities"]):
+        return []
+
+    fieldname = refinement["field"]
+    expr = pl.col(fieldname)
+
+    # Replace duplicate representations with their canonical forms
+    for canonical, variants in duplicated_entities.items():
+        for variant in variants:
+            expr = expr.replace(variant, canonical)
+
+    return [{"expr": expr, "type": refinement["semantic_type"]}]
+
+
 def apply_field_refinements_to_df(
     df: pl.DataFrame,
     refinements: list[FieldRefinement],
@@ -100,6 +124,7 @@ def apply_field_refinements_to_df(
         _handle_separator,
         _handle_date_format,
         _handle_boolean,
+        _handle_duplicated_entities,
         # _handle_text,
     ]
 

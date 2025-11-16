@@ -160,7 +160,7 @@ def check_df(df: pl.DataFrame, provenance: ViewProvenance) -> QueryCheckResult:
             )
 
     # Check max row limit for downstream altair rendering
-    max_height = 4_999
+    max_height = 4_999_999
     if df.height > max_height:
         errors.append(
             f"ROW_LIMIT_EXCEEDED: DataFrame has {df.height} rows, "

@@ -25,6 +25,7 @@ dependencies = [
     "pydantic==2.11.7",
     "sqlglot==27.6.0",
     "typing-extensions==4.14.1",
+    "vegafusion>=2.0.3",
     "vl-convert-python==1.8.0",
 ]
 
