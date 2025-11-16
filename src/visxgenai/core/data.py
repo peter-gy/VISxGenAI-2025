@@ -12,6 +12,8 @@ def read_dataset(uri: str) -> pl.DataFrame:
         return pl.read_parquet(uri)
     elif dataset_format == "json":
         return duckdb.query(f"select * from read_json('{uri}')").pl()
+    elif dataset_format == "xlsx" or dataset_format == "xls":
+        return duckdb.query(f"select * from read_xlsx('{uri}')").pl()
     else:
         raise ValueError(f"Unsupported dataset format: {dataset_format}")
 
