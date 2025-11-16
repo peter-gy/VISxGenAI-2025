@@ -31,7 +31,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "marimo[recommended]>=0.15.1",
+    "marimo[recommended]>=0.17.8",
     "python-lsp-server>=1.12.2",
     "ruff>=0.12.0",
 ]
