@@ -33,14 +33,15 @@ def _():
     MSLEEP = "https://visxgenai-cdn.peter.gy/datasets/ibis/msleep.parquet"
 
     # Abu Dhabi - Government Open Data
-    AD_782 = "https://visxgenai-cdn.peter.gy/datasets/data.abudhabi/782-Distribution%20of%20Number%20of%20Warnings%2C%20Violations%20and%20Notice%20By%20Activity%20for%20each%20Region%202024_0.xlsx"
-    return (AD_782,)
+    AD_782 = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/782-Distribution%20of%20Number%20of%20Warnings%2C%20Violations%20and%20Notice%20By%20Activity%20for%20each%20Region%202024_0.xlsx"
+    AD_STUDENT_ENROLLMENTS = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/student_enrollment_grade_2025.xlsx"
+    return (AD_STUDENT_ENROLLMENTS,)
 
 
 @app.cell
-def _(AD_782, orchestrator):
+def _(AD_STUDENT_ENROLLMENTS, orchestrator):
     report_output = orchestrator(
-        dataset_uri=AD_782,
+        dataset_uri=AD_STUDENT_ENROLLMENTS,
         report_goal="I want an understandable yet insightful report on the dataset, uncovering relationships in the data across facets.",
         report_length="At most 5-8 distinct, non-repetitive insights balanced across types",
         tags=["dev"],
