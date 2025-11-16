@@ -30,19 +30,19 @@ logger = logging.getLogger(__name__)
 _DEFAULT_AGENT_CONFIG = {
     "FieldRefiner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash-lite",
+            "model": "vertex_ai/gemini-2.5-flash",
             "max_tokens": 16_000,
         }
     },
     "DatasetDescriber": {
         "lm": {
-            "model": "vertex_ai/gemini-2.0-flash",
+            "model": "vertex_ai/gemini-2.5-flash",
             "max_tokens": 8_000,
         }
     },
     "FieldExpander": {
         "lm": {
-            "model": "gemini/gemini-2.0-flash",
+            "model": "gemini/gemini-2.5-flash",
             "max_tokens": 6_000,
             "tools": [
                 {"googleSearch": {}},
@@ -54,14 +54,14 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "InsightPlanner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
-            "max_tokens": 32_000,
-            "reasoning_effort": "disable",
+            "model": "vertex_ai/gemini-2.5-pro",
+            "max_tokens": 64_000,
+            # "reasoning_effort": "disable",
         }
     },
     "InsightPlanJudge": {
         "lm": {
-            "model": "vertex_ai/gemini-2.0-flash",
+            "model": "vertex_ai/gemini-2.5-flash",
             "max_tokens": 8_000,
         }
     },
