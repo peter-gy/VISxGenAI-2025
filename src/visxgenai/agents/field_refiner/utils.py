@@ -99,6 +99,23 @@ def _handle_text(
     return [{"expr": expr, "type": "Count"}]
 
 
+def _handle_duplicated_entities(
+    series: pl.Series, refinement: FieldRefinement
+) -> list[SemanticTypedExpr]:
+    if not (duplicated_entities := refinement["duplicated_entities"]):
+        return []
+
+    fieldname = refinement["field"]
+    expr = pl.col(fieldname)
+
+    # Replace duplicate representations with their canonical forms
+    for canonical, variants in duplicated_entities.items():
+        for variant in variants:
+            expr = expr.replace(variant, canonical)
+
+    return [{"expr": expr, "type": refinement["semantic_type"]}]
+
+
 def apply_field_refinements_to_df(
     df: pl.DataFrame,
     refinements: list[FieldRefinement],
@@ -107,6 +124,7 @@ def apply_field_refinements_to_df(
         _handle_separator,
         _handle_date_format,
         _handle_boolean,
+        _handle_duplicated_entities,
         # _handle_text,
     ]
 

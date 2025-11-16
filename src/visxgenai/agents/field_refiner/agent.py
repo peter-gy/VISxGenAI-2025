@@ -87,6 +87,7 @@ class FieldRefinerAgent(ObservedModule):
                 "date_format": result.get("date_format"),
                 "is_cryptic_code": result.get("is_cryptic_code"),
                 "boolean_truthy_value": result.get("boolean_truthy_value"),
+                "duplicated_entities": result.get("duplicated_entities"),
                 "__metadata__": result.get("__metadata__", {}),
             }
             for example, result in zip(examples, results)
@@ -149,7 +150,7 @@ class FieldRefiner(dspy.Signature):
     separator: Optional[str] = dspy.OutputField(
         desc="""
         Character separating items in a list (e.g., ',', ';', '|').
-        Return None if not a separator-delimited string.
+        Return None if not a separator-delimited string or these separators are used naturally in the data.
         """
     )
 
@@ -175,8 +176,18 @@ class FieldRefiner(dspy.Signature):
         ONLY for 'Category' semantic type:
         - True: Labels are non-obvious abbreviations (e.g., 'M'/'F', 'C1'/'C2')
         - False: Labels are readable words (e.g., 'Male'/'Female', 'Active'/'Inactive')
-        
+
         Note: Standard public codes (e.g., 'US', 'JFK') belong to 'Code' type, not 'Category'.
         MUST be None for all non-Category semantic types.
+        """
+    )
+
+    duplicated_entities: dict[str, list[str]] = dspy.OutputField(
+        desc="""
+        If the field contains identifiers or names that refer to the same underlying entity,
+        provide a mapping of the canonical entity name to its duplicate representations found in the data.
+        For example, if 'NYC', 'New York', and 'New York City' all refer to the same location,
+        the output should include: {'New York City': ['NYC', 'New York']}.
+        Return an empty dictionary if no duplicates are found or not applicable.
         """
     )
