@@ -33,23 +33,20 @@ logger = logging.getLogger(__name__)
 _DEFAULT_AGENT_CONFIG = {
     "FieldRefiner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
+            "model": "openrouter/x-ai/grok-4-fast",
             "max_tokens": 16_000,
         }
     },
     "DatasetDescriber": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
+            "model": "openrouter/x-ai/grok-4-fast",
             "max_tokens": 8_000,
         }
     },
     "FieldExpander": {
         "lm": {
-            "model": "gemini/gemini-2.5-flash",
+            "model": "openrouter/x-ai/grok-4-fast",
             "max_tokens": 6_000,
-            "tools": [
-                {"googleSearch": {}},
-            ],
         }
     },
     "DatasetProfiler": {
@@ -57,27 +54,26 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "InsightPlanner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-pro",
-            "max_tokens": 64_000,
-            # "reasoning_effort": "disable",
+            "model": "openrouter/google/gemini-2.5-flash-preview-09-2025",
+            "max_tokens": 32_000,
         }
     },
     "InsightPlanJudge": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash-lite",
+            "model": "openrouter/x-ai/grok-4-fast",
             "max_tokens": 8_000,
         }
     },
     "SQLQueryDrafter": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-pro",
-            "max_tokens": 60_000,
+            "model": "openrouter/google/gemini-2.5-pro",
+            "max_tokens": 32_000,
         }
     },
     "SQLQueryRepairer": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
-            "max_tokens": 60_000,
+            "model": "openrouter/google/gemini-2.5-flash-preview-09-2025",
+            "max_tokens": 32_000,
         }
     },
     "DatasetPublisher": {
@@ -88,15 +84,14 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "DataReportSectionNarrator": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-pro",
-            "max_tokens": 32_000,
+            "model": "openrouter/google/gemini-2.5-pro",
+            "max_tokens": 16_000,
         }
     },
     "DataReportStructurer": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
-            "max_tokens": 32_000,
-            "reasoning_effort": "disable",
+            "model": "openrouter/google/gemini-2.5-flash-preview-09-2025",
+            "max_tokens": 16_000,
         }
     },
     "DatasetReporter": {
@@ -104,8 +99,8 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "PresentationNarrator": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-pro",
-            "max_tokens": 32_000,
+            "model": "openrouter/google/gemini-2.5-flash-preview-09-2025",
+            "max_tokens": 16_000,
         }
     },
 }
@@ -202,14 +197,14 @@ class OrchestratorAgent(dspy.Module):
         logger.info(f"👀 {trace_url}")
 
         # Identify mis-typed fields and represent them with appropriate technical types
-        logger.info("🔧 Step 1/11: Refining field types...")
+        logger.info("🔧 Step 1/12: Refining field types...")
         field_refiner_output = self.field_refiner(df=df)
         logger.info(
             f"Field refinement complete: {len(field_refiner_output.refinements)} refinements applied"
         )
 
         # Describe the dataset and its fields semantically
-        logger.info("🔍 Step 2/11: Describing dataset semantically...")
+        logger.info("🔍 Step 2/12: Describing dataset semantically...")
         dataset_describer_output = self.dataset_describer(
             df=field_refiner_output.df,
             semantic_schema=field_refiner_output.semantic_schema,
@@ -217,7 +212,7 @@ class OrchestratorAgent(dspy.Module):
         logger.info(f"Dataset description complete: '{dataset_describer_output.title}'")
 
         # Expand cryptic low-cardinality field values into human-readable ones
-        logger.info("🔄 Step 3/11: Expanding field values...")
+        logger.info("🔄 Step 3/12: Expanding field values...")
         field_expander_output = self.field_expander(
             df=field_refiner_output.df,
             dataset_summary=str(dict(dataset_describer_output)),
@@ -229,7 +224,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Construct statistical dataset profile
-        logger.info("📈 Step 4/11: Profiling dataset...")
+        logger.info("📈 Step 4/12: Profiling dataset...")
         dataset_profiler_output = self.dataset_profiler(
             df=field_expander_output.df,
             semantic_schema=field_refiner_output.semantic_schema,
@@ -237,7 +232,7 @@ class OrchestratorAgent(dspy.Module):
         logger.info("Dataset profiling complete: Statistical profile generated")
 
         # Plan interesting insights guided by the dataset profile and semantic schema
-        logger.info("💡 Step 5/11: Planning insights...")
+        logger.info("💡 Step 5/12: Planning insights...")
         insight_planner_output = self.insight_planner(
             dataset_title=dataset_describer_output.title,
             dataset_description=dataset_describer_output.summary,
@@ -252,7 +247,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Generate SQL queries to satisfy the planned insights
-        logger.info("🗄️ Step 6/11: Generating SQL queries for insights...")
+        logger.info("🗄️ Step 6/12: Generating SQL queries for insights...")
         dataset_deriver_output = self.dataset_deriver(
             df=field_expander_output.df,
             dataset_title=dataset_describer_output.title,
@@ -266,7 +261,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Materialize datasets for each insight
-        logger.info("🔧 Step 7/11: Materializing insight datasets...")
+        logger.info("🔧 Step 7/12: Materializing insight datasets...")
         materialized_insights = [
             {"goal": ds["goal"]} | dict(zip(("dataset", "sql"), ds["materialize"]()))
             for ds in dataset_deriver_output.datasets
@@ -276,7 +271,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Publish materialized datasets to object store
-        logger.info("☁️ Step 8/11: Publishing datasets to object store...")
+        logger.info("☁️ Step 8/12: Publishing datasets to object store...")
         dataset_publisher_output = self.dataset_publisher(
             materialized_insights=materialized_insights,
             session=session,
@@ -286,7 +281,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Visualize the materialized datasets
-        logger.info("📊 Step 9/11: Generating visualizations...")
+        logger.info("📊 Step 9/12: Generating visualizations...")
         dataset_visualizer_output = self.dataset_visualizer(
             queried_insights=dataset_deriver_output.datasets,
             materialized_insights=materialized_insights,
@@ -297,7 +292,7 @@ class OrchestratorAgent(dspy.Module):
         )
 
         # Narrate the report sections with vision-enabled language model and draft final report structure
-        logger.info("📖 Step 10/11: Narrating report sections...")
+        logger.info("📖 Step 10/12: Narrating report sections...")
         report_narrator_output = self.report_narrator(
             parent_dataset_description=dataset_describer_output.summary,
             queried_insights=dataset_deriver_output.datasets,
@@ -306,11 +301,11 @@ class OrchestratorAgent(dspy.Module):
             user_goal=report_goal,
         )
         logger.info(
-            f"Report narration complete: Generated narrative structure with {len(report_narrator_output.content.get('sections', []))} sections"
+            f"Report narration complete: Generated narrative structure with {len(report_narrator_output.content.get('sections', []))} main sections"
         )
 
         # Organize all traces so that they can be communicated in the final report
-        logger.info("🔗 Step 11/11: Organizing traces and building report...")
+        logger.info("🔗 Step 11/12: Organizing traces and building report...")
         organized_traces = organize_traces(
             field_refiner_output=field_refiner_output,
             dataset_describer_output=dataset_describer_output,
@@ -338,10 +333,11 @@ class OrchestratorAgent(dspy.Module):
             },
         )
         logger.info(
-            f"🎉 Report generation complete! Final report available at: {dataset_reporter_output.url}"
+            f"Report generation complete! Final report available at: {dataset_reporter_output.url}"
         )
 
         # Narrate and generate the presentation
+        logger.info("🎤 Step 12/12: Narrating and generating presentation...")
         presentation_narrator_output = self.presentation_narrator(
             report_content=report_narrator_output.content,
         )
@@ -357,6 +353,9 @@ class OrchestratorAgent(dspy.Module):
         pptx_buffer = io.BytesIO()
         presentation.save(pptx_buffer)
         pptx_buffer.seek(0)
+        logger.info(
+            f"Presentation generation complete: {len(presentation.slides)} slides created"
+        )
 
         # Upload constructed Observable notebook source code as artifact
         logger.info("📦 Uploading artifacts...")
@@ -410,7 +409,8 @@ class OrchestratorAgent(dspy.Module):
             credentials=store_credentials,
         )
 
-        logger.info("All artifacts uploaded successfully")
+        logger.info("📦 All artifacts uploaded successfully")
+        logger.info("🎉 Complete! All outputs generated and uploaded.")
 
         return dspy.Prediction(
             artifacts={
