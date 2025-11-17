@@ -46,8 +46,14 @@ def _():
 def _(AD_SCHOOLS, orchestrator):
     report_output = orchestrator(
         dataset_uri=AD_SCHOOLS,
-        report_goal="I want an accessible report surfacing actionable insights for executives",
-        report_length="At most 4-7 distinct, non-repetitive insights balanced across types",
+        report_goal="\n".join(
+            [
+                "A digestible, uncomplicated report of the unmissable insights an executive needs to see.",
+                "Strictly simple insights, no more than 3 fields involved per insight to avoid cognitive overload.",
+                "Professional, clear concise language with crisp, non-didactic titles and explanatory sentences.",
+            ]
+        ),
+        report_length="At most 6-9 distinct, structurally non-repetitive insights balanced across types",
         tags=["dev"],
     )
     return (report_output,)
@@ -77,19 +83,13 @@ def _():
         lm_registry_from_env,
         load_env,
     )
+
     return OrchestratorAgent, lm_registry_from_env, load_env, mo
 
 
 @app.cell(column=1, hide_code=True)
 def _(mo, report_output):
     mo.iframe(report_output.html)
-    return
-
-
-@app.cell
-def _(report_output):
-    import pathlib
-    pathlib.Path('index.html').write_text(report_output.html)
     return
 
 
