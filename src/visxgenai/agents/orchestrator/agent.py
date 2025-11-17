@@ -1,3 +1,4 @@
+import io
 import logging
 
 import dspy
@@ -10,11 +11,13 @@ from ...core import (
     make_session_id,
     put_html,
     put_json,
+    put_object,
     read_dataset,
 )
+from ...slide_kit import render_presentation
 from ..dataset_deriver.agent import DatasetDeriverAgent
 from ..dataset_describer.agent import DatasetDescriberAgent
-from ..dataset_narrator.agent import DataReportNarratorAgent
+from ..dataset_narrator.agent import DataReportNarratorAgent, PresentationNarratorAgent
 from ..dataset_profiler.agent import DatasetProfilerAgent
 from ..dataset_publisher.agent import DatasetPublisherAgent
 from ..dataset_reporter.agent import DatasetReporterAgent
@@ -54,14 +57,14 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "InsightPlanner": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
+            "model": "vertex_ai/gemini-2.5-pro",
             "max_tokens": 64_000,
-            "reasoning_effort": "disable",
+            # "reasoning_effort": "disable",
         }
     },
     "InsightPlanJudge": {
         "lm": {
-            "model": "vertex_ai/gemini-2.5-flash",
+            "model": "vertex_ai/gemini-2.5-flash-lite",
             "max_tokens": 8_000,
         }
     },
@@ -98,6 +101,12 @@ _DEFAULT_AGENT_CONFIG = {
     },
     "DatasetReporter": {
         "lm": None,
+    },
+    "PresentationNarrator": {
+        "lm": {
+            "model": "vertex_ai/gemini-2.5-pro",
+            "max_tokens": 32_000,
+        }
     },
 }
 
@@ -162,6 +171,10 @@ class OrchestratorAgent(dspy.Module):
             aws_cdn_base_url=env["AWS_CDN_BASE_URL"],
             langfuse=self.lm_registry.langfuse,
             api_base_url=env["NB_BUILDER_API_BASE_URL"],
+        )
+        self.presentation_narrator = PresentationNarratorAgent(
+            init_lm=self.lm_init_for("PresentationNarrator"),
+            langfuse=self.lm_registry.langfuse,
         )
 
     def forward(
@@ -328,6 +341,23 @@ class OrchestratorAgent(dspy.Module):
             f"🎉 Report generation complete! Final report available at: {dataset_reporter_output.url}"
         )
 
+        # Narrate and generate the presentation
+        presentation_narrator_output = self.presentation_narrator(
+            report_content=report_narrator_output.content,
+        )
+        charts_by_goal = {
+            rec["goal"]: rec["chart"]
+            for rec in dataset_visualizer_output.recommendations
+        }
+        presentation = render_presentation(
+            content=presentation_narrator_output.presentation_content,
+            charts_by_goal=charts_by_goal,
+            web_report_url=dataset_reporter_output.url,
+        )
+        pptx_buffer = io.BytesIO()
+        presentation.save(pptx_buffer)
+        pptx_buffer.seek(0)
+
         # Upload constructed Observable notebook source code as artifact
         logger.info("📦 Uploading artifacts...")
         store_credentials = {
@@ -350,6 +380,15 @@ class OrchestratorAgent(dspy.Module):
             bucket=self.env["AWS_BUCKET"],
             key=llm_history_json_key,
             data=GLOBAL_HISTORY,
+            credentials=store_credentials,
+        )
+
+        pptx_key = f"sessions/{session}/artifacts/presentation.pptx"
+        pptx_url = f"{self.env['AWS_CDN_BASE_URL']}/{pptx_key}"
+        put_object(
+            bucket=self.env["AWS_BUCKET"],
+            key=pptx_key,
+            file=pptx_buffer.read(),
             credentials=store_credentials,
         )
 
@@ -380,6 +419,7 @@ class OrchestratorAgent(dspy.Module):
                 "traces": trace_url,
                 "history": llm_history_json_url,
                 "provenance": organized_provenance_json_url,
+                "presentation": pptx_url,
                 "datasets": dataset_publisher_output.records,
             },
             html=dataset_reporter_output.html,

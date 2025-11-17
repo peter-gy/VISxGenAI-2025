@@ -194,6 +194,12 @@ def report_components_to_notebook(
             if traces
             else ""
         }
+                <a href="./artifacts/presentation.pptx" 
+                   download 
+                   data-tippy-content="Download executive PowerPoint presentation version of this report">
+                    <i data-lucide="presentation"></i>
+                    <span>PowerPoint</span>
+                </a>
                 <a href="./artifacts/notebook.html" 
                    download 
                    data-tippy-content="Download Observable Notebook 2.0 source code of this report">

@@ -23,6 +23,8 @@ dependencies = [
     "pillow==11.3.0",
     "polars==1.32.0",
     "pydantic==2.11.7",
+    "python-pptx>=1.0.2",
+    "qrcode>=8.2",
     "sqlglot==27.6.0",
     "typing-extensions==4.14.1",
     "vegafusion>=2.0.3",

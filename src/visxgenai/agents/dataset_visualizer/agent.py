@@ -140,6 +140,7 @@ class VisualizationRecommenderAgent(dspy.Module):
                 draco_program="\n".join(program),
                 draco_completion=optimal_spec,
                 image=image,
+                chart=chart,
             )
         except Exception as e:
             import traceback

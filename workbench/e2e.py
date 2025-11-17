@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.15.1"
+__generated_with = "0.17.8"
 app = marimo.App(width="columns")
 
 
@@ -34,16 +34,20 @@ def _():
 
     # Abu Dhabi - Government Open Data
     AD_782 = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/782-Distribution%20of%20Number%20of%20Warnings%2C%20Violations%20and%20Notice%20By%20Activity%20for%20each%20Region%202024_0.xlsx"
-    AD_STUDENT_ENROLLMENTS = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/student_enrollment_grade_2025.xlsx"
-    return (AD_STUDENT_ENROLLMENTS,)
+    AD_STUDENT_ENROLLMENTS_BY_GRADE = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/student_enrollment_grade_2025.xlsx"
+    AD_STUDENT_ENROLLMENTS_BY_GENDER_AND_NAT = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/student_enrollment_gender_nationality_2025.xlsx"
+    AD_SCHOOLS = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/schools_private_charter_nurseries_2025.xlsx"
+    AD_785 = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/785-Distribution%20of%20Inspection%20visits%20to%20Agricultural%20facilities%20categorized%20by%20visits%20type%20for%20each%20Region%202024_1.xlsx"
+    AD_727 = "https://data.abudhabi/opendata/sites/default/files/uploaded_resources/727-Distribution%20of%20farms%20by%20Agricultural%20Land%20uses%20and%20Agricultural%20Centers%20for%20each%20Region%202024.xlsx"
+    return (AD_SCHOOLS,)
 
 
 @app.cell
-def _(AD_STUDENT_ENROLLMENTS, orchestrator):
+def _(AD_SCHOOLS, orchestrator):
     report_output = orchestrator(
-        dataset_uri=AD_STUDENT_ENROLLMENTS,
-        report_goal="I want an understandable yet insightful report on the dataset, uncovering relationships in the data across facets.",
-        report_length="At most 5-8 distinct, non-repetitive insights balanced across types",
+        dataset_uri=AD_SCHOOLS,
+        report_goal="I want an accessible report surfacing actionable insights for executives",
+        report_length="At most 4-7 distinct, non-repetitive insights balanced across types",
         tags=["dev"],
     )
     return (report_output,)
@@ -79,6 +83,13 @@ def _():
 @app.cell(column=1, hide_code=True)
 def _(mo, report_output):
     mo.iframe(report_output.html)
+    return
+
+
+@app.cell
+def _(report_output):
+    import pathlib
+    pathlib.Path('index.html').write_text(report_output.html)
     return
 
 

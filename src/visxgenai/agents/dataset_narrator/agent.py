@@ -13,6 +13,148 @@ if TYPE_CHECKING:
     from langfuse import Langfuse
 
 
+class PresentationNarratorAgent(ObservedModule):
+    """Agent that transforms data report content into presentation-friendly format."""
+
+    def __init__(
+        self,
+        init_lm: LMInitializer,
+        langfuse: "Langfuse",
+    ):
+        super().__init__(langfuse=langfuse)
+        self.narrator = self.make_module_observed(dspy.Predict(PresentationNarrator))
+        self.init_lm = init_lm
+
+    def _forward(
+        self,
+        *,
+        report_content: dict,
+    ) -> dspy.Prediction:
+        """Transform report content into presentation format.
+
+        Args:
+            report_content: The structured data report content to transform
+
+        Returns:
+            dspy.Prediction with presentation_content field containing the transformed dict
+        """
+        # Serialize report content for the LM
+        report_content_str = fence_object(report_content)
+
+        with dspy.context(lm=self.init_lm()):
+            result = self.narrator(report_content=report_content_str)
+
+        return result
+
+
+DATASET_DOMAIN_EXAMPLES = [
+    "Agriculture",
+    "Business",
+    "Demographic",
+    "Economy",
+    "Education",
+    "Energy",
+    "Environment",
+    "Finance",
+    "Health",
+    "Technology",
+    "Tourism",
+    "Transportation",
+]
+
+
+class PresentationNarrator(dspy.Signature):
+    """Transform web-based data report content into executive PowerPoint-friendly presentation format."""
+
+    report_content: str = dspy.InputField(
+        desc="The structured content of the data report (dict serialized as string) created for web-based presentation."
+    )
+    presentation_content: dict = dspy.OutputField(
+        desc="\n".join(
+            (
+                "PRESENTATION TRANSFORMATION GUIDELINES: ",
+                "Transform web report content into crisp, executive PowerPoint-friendly format. ",
+                "",
+                "STRUCTURE PRESERVATION: ",
+                "- Preserve report title exactly as-is ",
+                "- Preserve all section titles exactly as-is ",
+                "- Add a compelling subtitle for the title slide that sets the stage and implies the overall presentation narrative ",
+                "- Identify the dataset domain based on the report content (choose from examples below) ",
+                "- Preserve `goal` fields exactly as-is ",
+                "",
+                "DOMAIN IDENTIFICATION: ",
+                "Based on the report content, identify the most appropriate domain from these examples: ",
+                f"- {', '.join(DATASET_DOMAIN_EXAMPLES)} ",
+                "If the content doesn't clearly fit one of these examples, choose the closest match or use a concise, appropriate domain label. ",
+                "",
+                "CONTENT TRANSFORMATION: ",
+                "- Convert all longer text blocks into crisp, bullet-point friendly insights ",
+                "- Each content item should be a distilled, actionable insight ",
+                "- Remove ALL HTML tags from content ",
+                "- Focus on executive-level brevity and impact ",
+                "- Eliminate ALL report-style meta-references (e.g., 'in this report...', 'this analysis shows...', 'we examine...') ",
+                "- Frame everything as natural presentation language for executive slide decks ",
+                "- Use direct, assertive statements rather than referential phrases ",
+                "- GOOD: 'Revenue increased 25% across all regions' ",
+                "- AVOID: 'This report shows that revenue increased 25%' ",
+                "",
+                "CRITICAL: RESPECT AUDIENCE TIME AND ATTENTION ",
+                "- Be ruthlessly concise - every word must earn its place ",
+                "- Cut unnecessary qualifiers, hedging, and filler words ",
+                "- Never use three words when one will do ",
+                "- Executives value precision over verbosity ",
+                "- If it doesn't add insight or clarity, delete it ",
+                "- Get to the point immediately - no preamble ",
+                "",
+                "CONTENT FORMATTING: ",
+                "- Top-level intro: Maximum 2-3 sentences, crisp and essential only ",
+                "- Section intros: 1-2 concise sentences maximum - no fluff ",
+                "- Subsection content: Instead of single string, return list of strings ",
+                "  - Each list item = one bullet-point worthy insight ",
+                "  - Each insight should be a complete, standalone statement ",
+                "  - Keep bullets tight and meaningful - trim all excess ",
+                "  - Focus on key findings, patterns, and actionable observations ",
+                "- Key takeaways: Transform conclusion into list of 2-4 crisp, rounded sentences ",
+                "  - Each takeaway should be a complete, impactful statement ",
+                "  - Distill the most important insights and implications ",
+                "  - Make each point actionable and executive-friendly ",
+                "  - Suitable for bullet-point display on final slide ",
+                "  - No redundancy with earlier content ",
+                "",
+                "OUTPUT STRUCTURE: ",
+                "{ ",
+                "  'title': str,  # Original report title preserved ",
+                "  'subtitle': str,  # New: compelling subtitle for title slide ",
+                "  'domain': str,  # Dataset domain (from examples or closest match) ",
+                "  'intro': str,  # Somewhat longer but crisp intro focusing on the significance of the entire presentation (2-3 sentences) ",
+                "  'sections': [ ",
+                "    { ",
+                "      'title': str,  # Original section title preserved ",
+                "      'intro': str,  # Crisp 1-2 sentence section intro focusing on the significance of the section ",
+                "      'sections': [ ",
+                "        { ",
+                "          'title': str,  # Original subsection title preserved ",
+                "          'content': list[str],  # List of bullet-point insights (NO HTML) ",
+                "          'goal': str,  # Original goal preserved exactly as-is ",
+                "        } ",
+                "      ] ",
+                "    } ",
+                "  ], ",
+                "  'key_takeaways': list[str]  # 3-4 key takeaway bullets (crisp, impactful statements) ",
+                "} ",
+                "",
+                "TONE: ",
+                "- Executive-friendly: clear, direct, action-oriented ",
+                "- Each bullet should deliver genuine insight ",
+                "- Avoid fluff and obvious statements ",
+                "- Focus on what matters for decision-making ",
+                "- Brevity is respect - honor the audience's time ",
+                "- Impact over word count - make every word count ",
+            )
+        )
+    )
+
+
 class DataReportNarratorAgent(ObservedModule):
     def __init__(
         self,
