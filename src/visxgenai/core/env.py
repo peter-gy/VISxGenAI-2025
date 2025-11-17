@@ -30,10 +30,24 @@ class AutovisEnv(TypedDict):
 
 
 def _load_env_from_dict(secrets_dict: Mapping[str, str]) -> AutovisEnv:
+    MANDATORY_VARS = {
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_ENDPOINT_URL",
+        "AWS_CDN_BASE_URL",
+        "AWS_BUCKET",
+        "NB_BUILDER_API_BASE_URL",
+        "NB_BUILDER_API_USERNAME",
+        "NB_BUILDER_API_PASSWORD",
+    }
+
     def get_value(key: str) -> str:
-        if key not in secrets_dict:
-            raise KeyError(f"Missing required environment variable: {key}")
-        return secrets_dict[key]
+        if key in MANDATORY_VARS and key not in secrets_dict:
+            raise KeyError(
+                f"Missing mandatory environment variable: '{key}'. The system cannot function without it."
+            )
+
+        return secrets_dict.get(key, "")
 
     return AutovisEnv(
         ANTHROPIC_API_KEY=get_value("ANTHROPIC_API_KEY"),
