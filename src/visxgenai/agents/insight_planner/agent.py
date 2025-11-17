@@ -69,6 +69,10 @@ class PlannedInsightGroup(pydantic.BaseModel):
 
 class InsightPlanner(dspy.Signature):
     """
+    ⚠️ CRITICAL: The user_goal is the ABSOLUTE, AUTHORITATIVE directive. Every decision MUST align with it.
+    ALL principles, patterns, and heuristics below are SUBORDINATE to the user_goal.
+    If user_goal conflicts with any guideline here, ALWAYS follow user_goal without exception.
+
     Create a structured analytical narrative to maximally satisfy the user goal.
 
     If the user does not state a specific focus, then default to a broad, accessible overview of the dataset.
@@ -98,6 +102,11 @@ class InsightPlanner(dspy.Signature):
       * Correlation (C): numeric vs numeric + categorical segments
       * Ranking (R): aggregated numeric by 1-2 dimensions
       * Distribution (D): numeric across categorical dimensions
+
+    **HIERARCHY OF DIRECTIVES:**
+    🔴 LEVEL 0 (ABSOLUTE): user_goal - Non-negotiable, overrides everything below
+    🟡 LEVEL 1 (STRONG): Field diversity, breadth-first exploration, segmentation
+    🟢 LEVEL 2 (FLEXIBLE): Specific pattern distributions, aggregation choices
 
     **CORE RULES:**
 
@@ -169,7 +178,22 @@ class InsightPlanner(dspy.Signature):
     """
 
     user_goal: str = dspy.InputField(
-        desc="High-level analysis goal from the user. Always takes precedence over all other instructions."
+        desc="\n".join(
+            (
+                "🔴 ABSOLUTE AUTHORITY: The user's high-level analysis goal.",
+                "This field has SUPREME PRECEDENCE over ALL other instructions, principles, patterns, and heuristics.",
+                "If user_goal specifies a focus (e.g., 'analyze sales performance', 'focus on temporal patterns'),",
+                "you MUST prioritize those aspects even if it means deviating from breadth-first exploration,",
+                "field diversity targets, or any other guideline in this signature.",
+                "",
+                "INTERPRETATION RULES:",
+                "- Explicit focus → Honor it completely, adjust all other principles accordingly",
+                "- General/vague goal → Apply full breadth-first exploration as default",
+                "- Conflicting directives → user_goal ALWAYS wins, no exceptions",
+                "",
+                "When user_goal is specific, treat it as the PRIMARY SUCCESS CRITERION.",
+            )
+        )
     )
     insight_count_target: str = dspy.InputField(
         desc="Target total insights, balanced across types"
@@ -194,26 +218,39 @@ class InsightPlanner(dspy.Signature):
 
 class InsightPlanJudge(dspy.Signature):
     """
-    Evaluate plan quality and return concise, actionable guidance.
+    ⚠️ CRITICAL: Evaluate alignment with user_goal FIRST, then plan quality.
+    The user_goal is AUTHORITATIVE - any issue with user_goal alignment is automatically SEVERE.
 
     Return a compact JSON object with fields:
     - status: "ACCEPTABLE" | "REVISE"
     - issues: list of strings highlighting only severe problems
     - fix_suggestions: up to 3 concrete, minimal edits to improve breadth and quality
 
+    Evaluation priority:
+    1. 🔴 FIRST: Does plan satisfy user_goal? If not, this is SEVERE.
+    2. 🟡 SECOND: Check severe technical issues below
+
     Severe issues to check:
-    1. NO BREADTH: <50% of available numeric/temporal fields explored
-    2. TASK IMBALANCE: Worse than 80/20 summary/value ratio
+    0. 🔴 USER_GOAL MISALIGNMENT: Plan does not address user's stated focus/goal (ALWAYS SEVERE)
+    1. NO BREADTH: <50% of available numeric/temporal fields explored (UNLESS user_goal specifies narrow focus)
+    2. TASK IMBALANCE: Worse than 80/20 summary/value ratio (UNLESS user_goal requests specific task type)
     3. MISSING SEGMENTATION: Categorical fields exist but plan ignores segmentation/faceting
-    4. PATTERN MONOTONY: >=80% insights use the same analytical pattern
+    4. PATTERN MONOTONY: >=80% insights use the same analytical pattern (UNLESS user_goal specifies pattern)
     5. ZERO CREATIVITY: No derived fields/ratios or interesting combinations
     6. TASK VIOLATIONS: Value tasks aggregate or summary tasks omit aggregation
 
-    Be lenient: minor imperfections are fine; only request REVISE if clear improvements are needed.
+    Be lenient on technical issues IF user_goal is satisfied. User_goal alignment is non-negotiable.
+    Only request REVISE if user_goal misalignment OR clear technical improvements are needed.
     """
 
     user_goal: str = dspy.InputField(
-        desc="High-level analysis goal from the user. Same as in InsightPlanner. Always takes precedence over all other instructions."
+        desc="\n".join(
+            (
+                "🔴 ABSOLUTE AUTHORITY: The user's high-level analysis goal.",
+                "Same as in InsightPlanner. Has SUPREME PRECEDENCE over all other evaluation criteria.",
+                "Plan MUST satisfy this goal or status MUST be REVISE.",
+            )
+        )
     )
     plan: str = dspy.InputField(desc="Draft plan with groups and insights")
     hints: str = dspy.InputField(
