@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use Agentic Visual Reporting in your work, please cite our workshop paper."
+type: software
+title: "Agentic Visual Reporting"
+version: "0.1.0"
+authors:
+  - family-names: "Gyarmati"
+    given-names: "Péter Ferenc"
+    orcid: "https://orcid.org/0009-0006-6122-2709"
+  - family-names: "Moritz"
+    given-names: "Dominik"
+    orcid: "https://orcid.org/0000-0002-3110-1053"
+  - family-names: "Möller"
+    given-names: "Torsten"
+    orcid: "https://orcid.org/0000-0003-1192-0710"
+  - family-names: "Koesten"
+    given-names: "Laura"
+    orcid: "https://orcid.org/0000-0003-4110-1759"
+repository-code: "https://github.com/peter-gy/VISxGenAI-2025"
+url: "https://peter-gy.github.io/VISxGenAI-2025/"
+preferred-citation:
+  type: generic
+  title: "A Composable Agentic System for Automated Visual Data Reporting"
+  authors:
+    - family-names: "Gyarmati"
+      given-names: "Péter Ferenc"
+      orcid: "https://orcid.org/0009-0006-6122-2709"
+    - family-names: "Moritz"
+      given-names: "Dominik"
+      orcid: "https://orcid.org/0000-0002-3110-1053"
+    - family-names: "Möller"
+      given-names: "Torsten"
+      orcid: "https://orcid.org/0000-0003-1192-0710"
+    - family-names: "Koesten"
+      given-names: "Laura"
+      orcid: "https://orcid.org/0000-0003-4110-1759"
+  collection-title: "1st Workshop on GenAI, Agents, and the Future of VIS at IEEE VIS 2025"
+  date-published: "2025-11-03"
+  location:
+    name: "Vienna, Austria"
+  doi: "10.48550/arXiv.2509.05721"
+  notes: "Workshop paper for the 1st Workshop on GenAI, Agents, and the Future of VIS at IEEE VIS 2025."
+  url: "https://visxgenai.github.io/subs-2025/3765/3765-doc.pdf"
+  year: 2025
